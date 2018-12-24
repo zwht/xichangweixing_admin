@@ -21,24 +21,24 @@ export class PermissionGuardService implements CanActivate {
     // 暂时屏蔽守卫
     return true;
     // token过期跳转登录
-    if (!this.sessionService.getItem('token')) {
-      this.checkLogin();
-      return false;
-    }
-    const roleIds = this.sessionService.getItem('roles') ? this.sessionService.getItem('roles').split(',') : []
-    let key = false;
+    // if (!this.sessionService.getItem('token')) {
+    //   this.checkLogin();
+    //   return false;
+    // }
+    // const roleIds = this.sessionService.getItem('roles') ? this.sessionService.getItem('roles').split(',') : []
+    // let key = false;
 
-    if (route.data.roles && route.data.roles.length) {
-      route.data.roles.forEach(item => {
-        roleIds.forEach(obj => {
-          if (item === parseInt(obj, 10)) {
-            key = true;
-          }
-        });
-      });
-    } else {
-      key = true;
-    }
-    return key;
+    // if (route.data.roles && route.data.roles.length) {
+    //   route.data.roles.forEach(item => {
+    //     roleIds.forEach(obj => {
+    //       if (item === parseInt(obj, 10)) {
+    //         key = true;
+    //       }
+    //     });
+    //   });
+    // } else {
+    //   key = true;
+    // }
+    // return key;
   }
 }
