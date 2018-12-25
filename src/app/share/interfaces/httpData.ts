@@ -5,4 +5,5 @@ export interface HttpData {
   params?: Object;
   roles?: Array<Number>;
   observable?: Observable<any>;
+  contentType?: string;
 }

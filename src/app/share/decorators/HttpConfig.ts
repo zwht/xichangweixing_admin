@@ -78,13 +78,26 @@ export const HttpConfig = function (httpData: HttpData) {
             }
           }
           headers = new HttpHeaders({
-            'Authorization': sessionService.getItem('token') || ''
+            'authorization': sessionService.getItem('token') || ''
           });
         } else {
-          body = JSON.stringify(setData(httpData, arguments[0]));
+          // const formData = new FormData();
+          if (httpData.contentType === 'application/x-www-form-urlencoded;charset=UTF-8') {
+            let st = '';
+            const ss = setData(httpData, arguments[0]);
+            for (const i in ss) {
+              if (i) {
+                st += i + '=' + ss[i] + '&';
+              }
+            }
+            st = st.substring(0, st.length - 1);
+            body = st;
+          } else {
+            body = JSON.stringify(setData(httpData, arguments[0]));
+          }
           headers = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': sessionService.getItem('token') || ''
+            'Content-Type': httpData.contentType || 'application/json; charset=utf-8',
+            'authorization': sessionService.getItem('token') || ''
           });
         }
         // 配置HttpRequest

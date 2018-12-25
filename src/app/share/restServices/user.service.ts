@@ -21,7 +21,8 @@ export class UserService {
       params1: 'auth',
       params2: 'login'
     },
-    roles: []
+    roles: [],
+    contentType: 'application/x-www-form-urlencoded;charset=UTF-8'
   })
   login(data: HttpData): Observable<any> {
     return data.observable;
