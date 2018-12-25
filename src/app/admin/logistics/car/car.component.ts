@@ -6,7 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./car.component.less']
 })
 export class CarComponent implements OnInit {
-
+  dataSet = {
+    data: []
+  };
+  dateRange = [];
+  search = {
+    name: '',
+  }
   constructor() { }
 
   ngOnInit() {

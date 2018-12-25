@@ -1,3 +1,37 @@
-<p>
-  food works!
-</p>
+<div class="food-cpt">
+  <div class="search">
+    <div>
+      <input nz-input placeholder="姓名" [(ngModel)]="search.name">
+    </div>
+    <div>
+      <nz-range-picker [(ngModel)]="dateRange" nzShowTime></nz-range-picker>
+    </div>
+    <button nz-button nzType="primary">查询</button>
+  </div>
+  <nz-table #basicTable [nzData]="dataSet">
+    <thead>
+    <tr>
+      <th>序号</th>
+      <th>用餐人姓名</th>
+      <th>身份证号</th>
+      <th>联系电话</th>
+      <th>工作单位</th>
+      <th>用餐人数</th>
+      <th>用餐时间</th>
+      <th>备注</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{data.name}}</td>
+      <td>{{data.age}}</td>
+      <td>{{data.address}}</td>
+      <td>{{data.address}}</td>
+      <td>{{data.address}}</td>
+      <td>{{data.address}}</td>
+      <td></td>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>

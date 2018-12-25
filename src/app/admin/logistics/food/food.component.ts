@@ -6,7 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./food.component.less']
 })
 export class FoodComponent implements OnInit {
-
+  dataSet = {
+    data: []
+  };
+  dateRange = [];
+  search = {
+    name: '',
+  }
   constructor() { }
 
   ngOnInit() {

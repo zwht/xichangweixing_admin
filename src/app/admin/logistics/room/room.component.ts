@@ -6,7 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./room.component.less']
 })
 export class RoomComponent implements OnInit {
+  dataSet = {
+    data: []
+  };
+  dateRange = [];
+  search = {
+    name: '',
 
+  }
   constructor() { }
 
   ngOnInit() {
