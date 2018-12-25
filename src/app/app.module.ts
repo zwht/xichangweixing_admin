@@ -10,6 +10,7 @@ import { NZ_I18N, zh_CN, NgZorroAntdModule } from 'ng-zorro-antd';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import { LoginComponent } from './login/login.component';
+import { PermissionGuardService } from './share/services/permission-guard.service';
 
 registerLocaleData(zh);
 
@@ -37,7 +38,8 @@ registerLocaleData(zh);
                     // type: [1, 2],
                     hideChild: true,
                     menu: true
-                }
+                },
+                canActivate: [PermissionGuardService]
             }
         ], { useHash: true }),
         FormsModule,

@@ -39,73 +39,73 @@ export class IndexComponent implements OnInit {
     if (num) {
       this.pageNum = num;
     }
-    this.userService.list({
-      params: {
-        params2: this.pageNum,
-        params3: this.pageSize
-      },
-      data: {
-        loginName: this.loginName,
-        name: this.name,
-        phone: this.juese,
-        email: this.zhungtai
-      }
-    })
-      .subscribe(response => {
-        if (response.code === 200) {
-          response.data.pageData.forEach(aaa => {
-            aaa.roles = aaa.roles.split(',');
-          });
-          this.list = response.data.pageData;
-          this.totalCount = response.data.totalCount;
-        }
-      });
+    // this.userService.list({
+    //   params: {
+    //     params2: this.pageNum,
+    //     params3: this.pageSize
+    //   },
+    //   data: {
+    //     loginName: this.loginName,
+    //     name: this.name,
+    //     phone: this.juese,
+    //     email: this.zhungtai
+    //   }
+    // })
+    //   .subscribe(response => {
+    //     if (response.code === 200) {
+    //       response.data.pageData.forEach(aaa => {
+    //         aaa.roles = aaa.roles.split(',');
+    //       });
+    //       this.list = response.data.pageData;
+    //       this.totalCount = response.data.totalCount;
+    //     }
+    //   });
   }
   cancel() { }
 
   deldeldel(id) {
-    this.userService.del({
-      params: {
-        params2: id
-      },
-      data: {}
-    })
-      .subscribe(response => {
-        if (response.code === 200) {
-          this.getList();
-        }
-      });
+    // this.userService.del({
+    //   params: {
+    //     params2: id
+    //   },
+    //   data: {}
+    // })
+    //   .subscribe(response => {
+    //     if (response.code === 200) {
+    //       this.getList();
+    //     }
+    //   });
   }
 
   StateOK(id) {
-    this.userService.updateState({
-      params: {
-        id: id,
-        state: true
-      },
-      data: {}
-    })
-      .subscribe(response => {
-        if (response.code === 200) {
-          this.getList();
-        }
-      });
+    // this.userService.updateState({
+    //   params: {
+    //     id: id,
+    //     state: true
+    //   },
+    //   data: {}
+    // })
+    //   .subscribe(response => {
+    //     if (response.code === 200) {
+    //       this.getList();
+    //     }
+    //   });
   }
 
   StateNO(id) {
-    this.userService.updateState({
-      params: {
-        id: id,
-        state: false
+    // this.userService.updateState({
+    //   params: {
+    //     id: id,
+    //     state: false
 
-      },
-      data: {}
-    })
-      .subscribe(response => {
-        if (response.code === 200) {
-          this.getList();
-        }
-      });
+    //   },
+    //   data: {}
+    // })
+    //   .subscribe(response => {
+    //     if (response.code === 200) {
+    //       this.getList();
+    //     }
+    //   });
   }
 
   fanyi() {

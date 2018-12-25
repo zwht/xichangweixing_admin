@@ -14,51 +14,63 @@ export class NewsService {
   ) { }
   private url = '/v1/news/:params1/:params2/:params3/:params4/:params5';
 
-  // add
+  // addOrUpdate
   @HttpConfig({
     method: 'post',
     params: {
-      params1: 'add'
+      params1: 'addAndUpdate'
     },
     roles: [1001]
   })
-  add(data: HttpData): Observable<any> {
+  addAndUpdate(data: HttpData): Observable<any> {
     return data.observable;
   }
 
   // list
   @HttpConfig({
-    method: 'post',
-    params: {
-      params1: 'list'
-    },
-    roles: []
-  })
-  list(data: HttpData): Observable<any> {
-    return data.observable;
-  }
-
-  // del
-  @HttpConfig({
     method: 'get',
     params: {
-      params1: 'del'
+      params1: 'getAll'
     },
     roles: []
   })
-  del(data: HttpData): Observable<any> {
+  getAll(data: HttpData): Observable<any> {
     return data.observable;
   }
 
-  // update
+  // push
   @HttpConfig({
     method: 'post',
     params: {
-      params1: 'update'
+      params1: 'push'
     },
     roles: []
   })
-  update(data: HttpData): Observable<any> {
+  push(data: HttpData): Observable<any> {
+    return data.observable;
+  }
+  
+  // top
+  @HttpConfig({
+    method: 'post',
+    params: {
+      params1: 'top'
+    },
+    roles: []
+  })
+  top(data: HttpData): Observable<any> {
+    return data.observable;
+  }
+
+  // line
+  @HttpConfig({
+    method: 'post',
+    params: {
+      params1: 'line'
+    },
+    roles: []
+  })
+  line(data: HttpData): Observable<any> {
     return data.observable;
   }
 

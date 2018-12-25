@@ -123,8 +123,12 @@ export class MenuComponent implements OnInit {
             }
             return true;
         });
-        console.log(this.router.url,this.menu)
         this.setActiveMenu(this.router.url, '/admin/');
+        if(this.router.url == '/admin'){
+
+            this.router.navigate(['/admin/news']);
+            this.setActiveMenu('/admin/news', '/admin/');
+        }
     }
     goCollect() {
         this.menu.forEach(item => {

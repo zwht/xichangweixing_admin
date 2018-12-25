@@ -12,13 +12,27 @@ export class UserService {
   constructor(
     private httpClient: HttpClient
   ) { }
-  private url = '/v1/user/:params1/:params2/:params3/:params4/:params5';
+  private url = '/v1/:params1/:params2/:params3/:params4/:params5';
 
+  // login
+  @HttpConfig({
+    method: 'post',
+    params: {
+      params1: 'auth',
+      params2: 'login'
+    },
+    roles: []
+  })
+  login(data: HttpData): Observable<any> {
+    return data.observable;
+  }
+  
   // add
   @HttpConfig({
     method: 'post',
     params: {
-      params1: 'add'
+      params1: 'user',
+      params2: 'addUser'
     },
     roles: [1001]
   })
@@ -26,39 +40,16 @@ export class UserService {
     return data.observable;
   }
 
-  // list
-  @HttpConfig({
-    method: 'post',
-    params: {
-      params1: 'list'
-    },
-    roles: []
-  })
-  list(data: HttpData): Observable<any> {
-    return data.observable;
-  }
-
-  // del
+  // getAllUser
   @HttpConfig({
     method: 'get',
     params: {
-      params1: 'del'
+      params1: 'user',
+      params2: 'getAllUser'
     },
     roles: []
   })
-  del(data: HttpData): Observable<any> {
-    return data.observable;
-  }
-
-  // update
-  @HttpConfig({
-    method: 'post',
-    params: {
-      params1: 'update'
-    },
-    roles: []
-  })
-  update(data: HttpData): Observable<any> {
+  getAllUser(data: HttpData): Observable<any> {
     return data.observable;
   }
 
@@ -66,7 +57,8 @@ export class UserService {
   @HttpConfig({
     method: 'get',
     params: {
-      params1: 'getById'
+      params1: 'user',
+      params2: 'getById'
     },
     roles: []
   })
@@ -74,60 +66,25 @@ export class UserService {
     return data.observable;
   }
 
-  // registerEmail
+  // disableUser
   @HttpConfig({
     method: 'post',
     params: {
-      params1: 'register/email'
+      params1: 'user',
+      params2: 'disableUser'
     },
     roles: []
   })
-  registerEmail(data: HttpData): Observable<any> {
+  disableUser(data: HttpData): Observable<any> {
     return data.observable;
   }
-
-  // registerPhone
-  @HttpConfig({
-    method: 'post',
-    params: {
-      params1: 'register/phone'
-    },
-    roles: []
-  })
-  registerPhone(data: HttpData): Observable<any> {
-    return data.observable;
-  }
-
-  // login
-  @HttpConfig({
-    method: 'post',
-    params: {
-      params1: 'login'
-    },
-    roles: []
-  })
-  login(data: HttpData): Observable<any> {
-    return data.observable;
-  }
-
-  // updateState
-  @HttpConfig({
-    method: 'get',
-    params: {
-      params1: 'updateState'
-    },
-    roles: []
-  })
-  updateState(data: HttpData): Observable<any> {
-    return data.observable;
-  }
-
 
   // updatePassword
   @HttpConfig({
-    method: 'get',
+    method: 'post',
     params: {
-      params1: 'updatePassword'
+      params1: 'user',
+      params2: 'updatePassword'
     },
     roles: []
   })
@@ -135,29 +92,17 @@ export class UserService {
     return data.observable;
   }
 
-  // getCaptchaEmail
+  // updateUser
   @HttpConfig({
-    method: 'get',
+    method: 'post',
     params: {
-      params1: 'captcha',
-      params2: 'email'
+      params1: 'user',
+      params2: 'updateUser'
     },
     roles: []
   })
-  getCaptchaEmail(data: HttpData): Observable<any> {
+  updateUser(data: HttpData): Observable<any> {
     return data.observable;
   }
 
-  // getCaptchaPhone
-  @HttpConfig({
-    method: 'get',
-    params: {
-      params1: 'captcha',
-      params2: 'phone'
-    },
-    roles: []
-  })
-  getCaptchaPhone(data: HttpData): Observable<any> {
-    return data.observable;
-  }
 }

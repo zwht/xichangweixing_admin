@@ -18,13 +18,12 @@ export class PermissionGuardService implements CanActivate {
     return false;
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    // 暂时屏蔽守卫
-    return true;
     // token过期跳转登录
-    // if (!this.sessionService.getItem('token')) {
-    //   this.checkLogin();
-    //   return false;
-    // }
+    if (!this.sessionService.getItem('token')) {
+      return this.checkLogin();
+    }
+    return true;
+    // 屏蔽角色导向
     // const roleIds = this.sessionService.getItem('roles') ? this.sessionService.getItem('roles').split(',') : []
     // let key = false;
 

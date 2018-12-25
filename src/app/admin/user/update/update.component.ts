@@ -76,25 +76,25 @@ export class UpdateComponent implements OnInit {
       }).map(item => {
         return item.code;
       });
-      this.userService.update({
-        data: {
-          id: this.id,
-          loginName: this.validateForm.value.loginName,
-          name: this.validateForm.value.name,
-          phone: this.validateForm.value.phone,
-          email: this.validateForm.value.email,
-          roles: this.fanyi(roles),
-          img: this.validateForm.value.img
-        }
-      })
-        .subscribe(response => {
-          this.loading = false;
-          if (response.code === 200) {
-            this.router.navigate(['/admin/user']);
-          } else {
-            this._message.create('error', response.msg, { nzDuration: 4000 });
-          }
-        });
+      // this.userService.update({
+      //   data: {
+      //     id: this.id,
+      //     loginName: this.validateForm.value.loginName,
+      //     name: this.validateForm.value.name,
+      //     phone: this.validateForm.value.phone,
+      //     email: this.validateForm.value.email,
+      //     roles: this.fanyi(roles),
+      //     img: this.validateForm.value.img
+      //   }
+      // })
+      //   .subscribe(response => {
+      //     this.loading = false;
+      //     if (response.code === 200) {
+      //       this.router.navigate(['/admin/user']);
+      //     } else {
+      //       this._message.create('error', response.msg, { nzDuration: 4000 });
+      //     }
+      //   });
     }
   }
   getById(id) {

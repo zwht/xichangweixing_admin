@@ -53,13 +53,12 @@ export class LoginComponent implements OnInit {
 
     panduan2(): void {
         if (this.validateForm.value.remember === true) {
-            if (this.panduan1 === false) {
+            if (this.panduan1) {
                 this.sessionService.setItem('loginKey', this.validateForm.value.userName);
                 this.sessionService.setItem('password', this.validateForm.value.password);
             } else {
                 this.sessionService.setItem('loginKey', this.validateForm.value.userName);
-                this.sessionService.setItem('password',
-                    btoa(encodeURIComponent(this.validateForm.value.password)));
+                this.sessionService.setItem('password', this.validateForm.value.password);
             }
         }
         this.sessionService.setItem('loginKey', this.validateForm.value.userName);
@@ -76,33 +75,34 @@ export class LoginComponent implements OnInit {
         if (this.validateForm.valid) {
             this.loading = true;
             this.userService['login']({
-                data: {
-                    password: this.panduan1 ? btoa(encodeURIComponent(this.validateForm.value.password)) : this.validateForm.value.password,
-                    loginName: this.validateForm.value.userName
+                params: {
+                    password: this.panduan1 ? this.validateForm.value.password : this.validateForm.value.password,
+                    userName: this.validateForm.value.userName
                 }
             })
                 .subscribe(response => {
                     this.loading = false;
-                    if (response.code === 200) {
+                    if (response.errorCode === 0) {
                         this.panduan2();
-                        this.sessionService.setItem('userName', response.data.name, '2h');
                         this.sessionService.setItem('token', response.data.token, '2h');
-                        this.sessionService.setItem('hardImg', response.data.img, '2h');
-                        this.sessionService.setItem('roles', response.data.roles, '2h');
-                        this.sessionService.setItem('id', response.data.id, '2h');
+                        this.sessionService.setItem('userName', response.data.userInfoVO.userName, '2h');
+                        this.sessionService.setItem('id', response.data.userInfoVO.uid, '2h');
+                        // this.sessionService.setItem('hardImg', response.data.img, '2h');
+                        // this.sessionService.setItem('roles', response.data.roles, '2h');
+                        // this.router.navigateByUrl('/admin');
                         setTimeout(() => {
-                            if (response.data.roles.indexOf('1001') !== -1) {
-                                this.router.navigateByUrl('/admin/user');
-                            } else if (response.data.roles.indexOf('1002') !== -1) {
-                                this.router.navigateByUrl('/admin/self');
-                            } else if (response.data.roles.indexOf('1003') !== -1) {
-                                this.router.navigateByUrl('/admin/self');
-                            } else {
-                                this.router.navigateByUrl('/admin/self');
-                            }
+                            this.router.navigateByUrl('/admin');
+                            // if (response.data.roles.indexOf('1001') !== -1) {
+                            // } else if (response.data.roles.indexOf('1002') !== -1) {
+                            //     this.router.navigateByUrl('/admin/self');
+                            // } else if (response.data.roles.indexOf('1003') !== -1) {
+                            //     this.router.navigateByUrl('/admin/self');
+                            // } else {
+                            //     this.router.navigateByUrl('/admin/self');
+                            // }
                         }, 200);
                     } else {
-                        this._message.create('error', response.msg, { nzDuration: 4000 });
+                        this._message.create('error', response.msg||"网络异常！", { nzDuration: 4000 });
                     }
                 });
         }
