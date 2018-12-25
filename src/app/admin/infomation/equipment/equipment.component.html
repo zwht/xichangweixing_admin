@@ -1,3 +1,57 @@
-<p>
-  设备
-</p>
+<div class="tou">
+  <span>类型:</span>
+  <nz-select style="width: 15%;margin-right: 15px;" [(ngModel)]="selectedValue" nzAllowClear nzPlaceHolder="Choose">
+    <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
+    <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+  </nz-select>
+  <span>设备名称:</span>
+  <input style="width: 15%;margin-right: 15px;" nz-input placeholder="Basic usage" [(ngModel)]="value">
+  <span>供应商:</span>
+  <input style="width: 15%;margin-right: 15px;" nz-input placeholder="Basic usage" [(ngModel)]="value">
+  <span>状态:</span>
+  <nz-select style="width: 15%;margin-right: 15px;" [(ngModel)]="selectedValue" nzAllowClear nzPlaceHolder="Choose">
+    <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
+    <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+  </nz-select>
+  <button nz-button nzType="primary" style="float: right;">查询</button>
+</div>
+
+<div style="margin: 20px auto;width: 80%">
+  <div style="overflow:auto">
+    <div style="margin-bottom: 16px; float: right;">
+      <span style="margin-right: 8px;" *ngIf="checkedNumber">您已选择{{checkedNumber}}项</span>
+      <button style="margin:0 10px" nz-button [disabled]="disabledButton" [nzType]="'primary'" [nzLoading]="operating"
+        (click)="operateData()">批量删除</button>
+      <button style="margin:0 10px" nz-button (click)="goto('infomation/equipment/add','')">新增设备</button>
+      <button style="margin:0 10px" nz-button>导入设备</button>
+    </div>
+  </div>
+  <nz-table #rowSelectionTable [nzData]="dataSet" (nzCurrentPageDataChange)="currentPageDataChange($event)"
+    (nzPageIndexChange)="refreshStatus()" (nzPageSizeChange)="refreshStatus()">
+    <thead>
+      <tr>
+        <th style="text-align: center" nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
+        <th style="text-align: center">编号</th>
+        <th style="text-align: center">设备名称</th>
+        <th style="text-align: center">类型</th>
+        <th style="text-align: center">供应商</th>
+        <th style="text-align: center">状态</th>
+        <th style="text-align: center">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of rowSelectionTable.data">
+        <td style="text-align: center" nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="refreshStatus()"></td>
+        <td style="text-align: center">{{data.name}}</td>
+        <td style="text-align: center">{{data.age}}</td>
+        <td style="text-align: center">{{data.address}}</td>
+        <td style="text-align: center">{{data.address}}</td>
+        <td style="text-align: center">{{data.address}}</td>
+        <td style="text-align: center">
+          <button style="margin:0 2px" nz-button nzType="default">编辑</button>
+          <button style="margin:0 2px" nz-button nzType="default">删除</button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

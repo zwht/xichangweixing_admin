@@ -1,0 +1,57 @@
+<div style="width: 60%;margin: 30px auto;">
+  <div class="title">新增供应商</div>
+  <div nz-row style="margin-bottom: 70px;">
+    <div nz-col nzSpan="4" class="ennn">供应商名称:</div>
+    <div nz-col nzSpan="20" class="emmm"><input nz-input placeholder="请输入设备编号" [(ngModel)]="code"></div>
+    <div nz-col nzSpan="4" class="ennn">类型:</div>
+    <div nz-col nzSpan="20" class="emmm">
+      <nz-select style="width: 50%;" [(ngModel)]="equipTypeNum" nzAllowClear nzPlaceHolder="Choose" nzPlaceHolder="请选择类型">
+        <nz-option [nzValue]="equipType" [nzLabel]="equipTypeName"></nz-option>
+      </nz-select>
+    </div>
+    <div nz-col nzSpan="4" class="ennn">所在地区:</div>
+    <div nz-col nzSpan="10" class="emmm">
+      <nz-select style="width: 24%;margin-right: 2%" [(ngModel)]="equipTypeNum" nzAllowClear nzPlaceHolder="Choose" nzPlaceHolder="请选择省">
+        <nz-option [nzValue]="equipType" [nzLabel]="equipTypeName"></nz-option>
+      </nz-select>
+      <nz-select style="width: 24%;" [(ngModel)]="equipTypeNum" nzAllowClear nzPlaceHolder="Choose" nzPlaceHolder="请选择市">
+          <nz-option [nzValue]="equipType" [nzLabel]="equipTypeName"></nz-option>
+        </nz-select>
+    </div>
+    <div nz-col nzSpan="4" class="ennn">详细地址:</div>
+    <div nz-col nzSpan="20" class="emmm"><input nz-input placeholder="请输入规格" [(ngModel)]="format"></div>
+    <div nz-col nzSpan="4" class="ennn">统一社会信用代码:</div>
+    <div nz-col nzSpan="20" class="emmm">
+      <input nz-input placeholder="请输入包装规格" [(ngModel)]="packageFormat">
+    </div>
+    <div nz-col nzSpan="4" class="ennn">注册日期:</div>
+    <div nz-col nzSpan="20" class="emmm">
+      <nz-date-picker [(ngModel)]="manufactureDate"></nz-date-picker>
+    </div>
+    <div nz-col nzSpan="4" class="ennn">法人姓名</div>
+    <div nz-col nzSpan="20" class="emmm">
+      <input nz-input placeholder="请输入法人姓名" [(ngModel)]="measurement">
+    </div>
+    <div nz-col nzSpan="4" class="ennn">法人身份证号:</div>
+    <div nz-col nzSpan="20" class="emmm"><input nz-input placeholder="请输入法人身份证号" [(ngModel)]="standard"></div>
+    <div nz-col nzSpan="4" class="ennn">联系人姓名:</div>
+    <div nz-col nzSpan="20" class="emmm"><input nz-input placeholder="请输入联系人姓名" [(ngModel)]="standard"></div>
+    <div nz-col nzSpan="4" class="ennn">联系人身份证号:</div>
+    <div nz-col nzSpan="20" class="emmm"><input nz-input placeholder="请输入联系人身份证号" [(ngModel)]="standard"></div>
+    <div nz-col nzSpan="4" class="ennn">联系人电话:</div>
+    <div nz-col nzSpan="20" class="emmm"><input nz-input placeholder="请输入联系人电话" [(ngModel)]="standard"></div>
+    <div nz-col nzSpan="4" class="ennn">供应商logo:</div>
+    <div nz-col nzSpan="20" class="emmm">
+      <input type="file" id="upload_file1" style="display: none" accept="image/*" />
+      <div><button nz-button nzType="primary" (click)="chooseType()">点击上传图片</button></div>
+    </div>
+    <div nz-col nzSpan="4" class="ennn">备注:</div>
+    <div nz-col nzSpan="20" class="emmm">
+      <textarea rows="4" nz-input [(ngModel)]="remark" nzPlaceHolder="请输入备注"></textarea>
+    </div>
+  </div>
+  <div class="baocun">
+    <button nz-button nzType="primary">保存</button>
+    <button nz-button nzType="primary">取消</button>
+  </div>
+</div>
