@@ -38,11 +38,11 @@ export class ZwHttpInterceptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
     let authReq = req;
     // 如果请求不是通过装饰器函数过来的，添加headers设置
-    if (!req.headers.get('Content-Type')) {
+    if (!req.headers.get('Authorization')) {
       authReq = req.clone({
         setHeaders: {
           Authorization: this.sessionService.getItem('token') || '',
-          'Content-Type': 'application/json; charset=utf-8'
+          // 'Content-Type': 'application/json; charset=utf-8'
         }
       });
     }

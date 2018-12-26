@@ -4,6 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { NzMessageService } from 'ng-zorro-antd';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NewsService } from 'src/app/share/restServices/news.service';
+import { FileService } from 'src/app/share/restServices/file.service';
 
 @Component({
   selector: 'app-news-add',
@@ -19,7 +20,7 @@ export class NewsAddComponent implements OnInit {
   title = "新增新闻";
   roleList = [];
   id = 0;
-
+  upLoading = false;
   region = {
     "cityCode": "5134",
     "cityName": "凉山彝族自治州",
@@ -30,6 +31,9 @@ export class NewsAddComponent implements OnInit {
   }
   townList = [];
   villageList = [];
+  nzHeaders = {
+    // Authorization:"Banner eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJmb3JtZXIiLCJVU0VSIjoie1wiZGF0YVwiOntcImlkXCI6MTAwLFwibG9ja2VkXCI6dHJ1ZSxcInVzZXJOYW1lXCI6XCJhZG1pblwifSxcImVycm9yQ29kZVwiOjAsXCJtc2dcIjpcIlwifSIsImV4cCI6MTU0NTcyNjU3NSwiaWF0IjoxNTQ1NzI1OTc1fQ.01-ktpjd0Vn_xRhBicZ4Z1qYN3rbrQaZVfKQhYlf3aM"
+  }
   preivewShow = false;
   preivewHtml;
 
@@ -37,6 +41,7 @@ export class NewsAddComponent implements OnInit {
   constructor(
     private newsService: NewsService,
     private sanitizer: DomSanitizer,
+    private fileService: FileService,
     // private regionService: RegionService,
     // private sessionService: SessionService,
     private _message: NzMessageService,
@@ -87,6 +92,7 @@ export class NewsAddComponent implements OnInit {
       payment: [null, []],
       payProcess: [null, []],
       departmentPhone: [null, []],
+      photo:[null,[]]
     });
   }
   // 选择资金类别
@@ -103,20 +109,43 @@ export class NewsAddComponent implements OnInit {
     }
   }
 
-  selectCategory() {
-    this.currentList = [];
-    for (let o of this.treeList) {
-      for (let vos of o.fundsVOS) {
-        if (this.categorysFoundId.indexOf(vos.id) >= 0) {
-          this.currentList.push(JSON.parse(JSON.stringify(vos)));
-          vos.cur = true;
-        } else {
-          vos.cur = false;
-        }
-      }
+  openFile(){
+    if(this.upLoading){
+      return this._message.create('info','文件上传中，请稍后')
     }
-    this.selectCategoryShow = true;
+    document.getElementById('file').click()
   }
+  uploadFile(element){
+    if(!element.target.files.length){
+      return
+    }   
+    let file = element.target.files[0];       
+    let param = new FormData(); 
+    console.log(param)
+    param.append('file',file,file.name);
+    //param.append('chunk','0'); 
+    // if(param.get('file')['size'] > 2 * 1024 * 1024){
+    //   return  this._message.create('info', '回复文件不能大于2M', { nzDuration: 4000 });
+    // }
+    let a = param.get('file')['type']
+    if(a != 'image/png' && a != 'image/jpeg' && a != 'image/gif' && a != 'image/bmp'){
+      element.target.value = ''
+      return this._message.create('info', '请上传图片', { nzDuration: 4000 });
+    }
+    // this.fileName = file.name
+    this.upLoading = true
+    this.fileService.uploadHead({
+      data: param
+    }).subscribe(res => {
+      console.log(res)
+      element.target.value = '';
+      this.upLoading = false;
+      if(res.errorCode == 0){
+        // res.data.fileUrl
+      }
+    })
+  }
+
   selectThis(v) {
     if (v.cur) {
       v.cur = false;

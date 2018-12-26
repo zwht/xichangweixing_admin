@@ -19,13 +19,21 @@ export class FileService {
     method: 'post',
     params: {
       params1: 'upload'
-    },
-    roles: [1001]
+    }
   })
   add(data: HttpData): Observable<any> {
     return data.observable;
   }
-
+  // uploadHead
+  @HttpConfig({
+    method: 'post',
+    params: {
+      params1: 'uploadHead'
+    }
+  })
+  uploadHead(data: HttpData): Observable<any> {
+    return data.observable;
+  }
   // list
   @HttpConfig({
     method: 'post',
