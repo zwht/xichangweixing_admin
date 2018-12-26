@@ -121,10 +121,9 @@
           </span>
         </nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
-          <textarea appTrim nz-input placeholder="输入补助标准" id="standard" formControlName="standard"></textarea>
-          <nz-form-explain *ngIf="validateForm.get('standard').dirty && validateForm.get('standard').errors">
-            请输入补助标准描述
-          </nz-form-explain>
+          <a nz-button [nzLoading]="upLoading" nzType="primary"  (click)='openFile()'>{{upLoading?'上传中...':'选择文件'}}</a>
+          <img src="" style="max-width:200px;" alt="">
+          <input (change)='uploadFile($event)' accept="image/png,image/jpeg,image/gif,image/bmp" style="display: none" type="file"  id='file'>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>

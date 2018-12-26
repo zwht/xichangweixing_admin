@@ -26,7 +26,16 @@ export class FileService {
   add(data: HttpData): Observable<any> {
     return data.observable;
   }
-
+  // uploadHead
+  @HttpConfig({
+    method: 'post',
+    params: {
+      params1: 'uploadHead'
+    }
+  })
+  uploadHead(data: HttpData): Observable<any> {
+    return data.observable;
+  }
   // list
   @HttpConfig({
     method: 'post',
