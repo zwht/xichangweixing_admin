@@ -20,7 +20,8 @@ export class FileService {
     params: {
       params1: 'upload'
     },
-    roles: [1001]
+    roles: [],
+    // contentType: 'multipart/form-data'
   })
   add(data: HttpData): Observable<any> {
     return data.observable;

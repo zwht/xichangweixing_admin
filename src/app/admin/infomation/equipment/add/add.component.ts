@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EquipmentService } from '../../../../share/restServices/equipment.service';
+import { FileService } from '../../../../share/restServices/file.service';
 import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
@@ -25,11 +26,13 @@ export class AddComponent implements OnInit {
   supplierName = ''; // 供应商名字
   images = ''; // 图片
   remark = ''; // 备注
+  imgName = null; // 图片名字
 
   constructor(
     private router: Router,
     private message: NzMessageService,
     private equipmentService: EquipmentService,
+    private fileService: FileService,
   ) { }
 
   ngOnInit() {
@@ -37,6 +40,28 @@ export class AddComponent implements OnInit {
 
   chooseType() {
     document.getElementById('upload_file1').click();
+  }
+
+  fileChange(e) {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append(file.name, file);
+    this.fileService['add']({
+      data: formData
+    })
+      .subscribe(response => {
+        if (response.errorCode === 0) {
+          this.message.create('Success', '添加成功');
+        } else {
+          this.message.create('error', '错误!错误代码' + response.errorCode);
+        }
+      });
+    // const reader = new FileReader();
+    // reader.readAsDataURL(file);
+    // reader.onload = function () {
+    //   file.src = this.result;
+    // };
+    // this.imgName = file.name;
   }
 
   tianjia() {
@@ -65,6 +90,5 @@ export class AddComponent implements OnInit {
           this.message.create('error', '错误!错误代码' + response.errorCode);
         }
       });
-
   }
 }
