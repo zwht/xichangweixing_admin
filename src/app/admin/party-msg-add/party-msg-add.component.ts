@@ -3,8 +3,8 @@ import { FormGroup, FormBuilder, FormControl,Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NzMessageService } from 'ng-zorro-antd';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NewsService } from 'src/app/share/restServices/news.service';
 import { FileService } from 'src/app/share/restServices/file.service';
+import { PartyService } from 'src/app/share/restServices/party.service';
 
 @Component({
   selector: 'app-party-msg-add',
@@ -39,7 +39,7 @@ export class PartyMsgAddComponent implements OnInit {
 
   categorysFoundId = [];
   constructor(
-    private newsService: NewsService,
+    private partyService: PartyService,
     private sanitizer: DomSanitizer,
     private fileService: FileService,
     // private regionService: RegionService,
@@ -56,7 +56,7 @@ export class PartyMsgAddComponent implements OnInit {
     if(this.router.url.indexOf("edit")>-1){
       this.title = '编辑党建要闻'
       this.id = this.route.snapshot.params['id'];
-      this.newsService['getById']({
+      this.partyService['getById']({
         params:{
           id: this.id,
         }
@@ -147,9 +147,7 @@ export class PartyMsgAddComponent implements OnInit {
       this.loading = true;
       let data = {
         title: this.validateForm.value.title,
-        abstracts:this.validateForm.value.abstracts,
         content: this.validateForm.value.content,
-        face:this.validateForm.value.face,
         top: Number(this.validateForm.value.top),
         status:0,
         attachments:[],
@@ -161,13 +159,13 @@ export class PartyMsgAddComponent implements OnInit {
         data['status'] = 1
       }
 
-      this.newsService.addAndUpdate({
+      this.partyService.addAndUpdate({
         data: data
       })
         .subscribe(response => {
           this.loading = false;
           if (response.errorCode === 0) {
-            this.router.navigate(['/admin/news']);
+            this.router.navigate(['/admin/party-msg']);
           } else {
             this._message.create('error', response.msg, { nzDuration: 4000 });
           }

@@ -47,8 +47,8 @@ export class PartyMsgComponent implements OnInit {
   getList(){
     let params = {
       title:"",
-      params2:this.pageNum,
-      params3:this.pageSize,
+      params3:this.pageNum,
+      params2:this.pageSize,
     };
     if(this.endTime){
       params["endTime"] = this.endTime;
@@ -63,7 +63,8 @@ export class PartyMsgComponent implements OnInit {
         params
     }).subscribe(response =>{
       if (response.errorCode === 0) {
-        this.list = response.data;
+        this.list = response.data.pageData;
+        this.totalCount = response.data.totalCount;
       }
     })
   }
