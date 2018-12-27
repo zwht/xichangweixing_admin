@@ -5,63 +5,33 @@
     </div>
     <div class="preview-content">
       <div class="fileHead">
-        <div class="fileTitle">{{validateForm.value.name}}</div>
+        <div class="fileTitle">{{validateForm.value.title}}</div>
         <div class="policy_fbt"></div>
         <!-- <div class="policy_ly">
-              <span>政策文号：川助函〔2018〕15号</span>&nbsp;&nbsp;&nbsp;
+              <span>新闻标题：川助函〔2018〕15号</span>&nbsp;&nbsp;&nbsp;
               <span>单位：四川省</span>&nbsp;&nbsp;&nbsp;
               <span>日期：2018-03-19</span>			
           </div> -->
-        <div class="policy_tjlc" *ngIf="!!validateForm.value.categoryFundsNames">
+        <div class="policy_tjlc">
           <fieldset>
-            <legend>关联资金类别</legend>
-            <p>{{validateForm.value.categoryFundsNames}}</p>
+            <legend>摘要</legend>
+            <p>{{validateForm.value.abstracts}}</p>
           </fieldset>
         </div>
-        <div class="policy_tjlc" *ngIf="!!validateForm.value.publishDateTime">
+        <div class="policy_tjlc">
           <fieldset>
-            <legend>发布时间</legend>
-            <p>{{validateForm.value.publishDateTime |date:'yyyy/MM/dd'}}</p>
+            <legend>封面</legend>
+            <img [src]="'/v1/file/downloadHead?fileUrl='+validateForm.value.face" style="max-height:100px;vertical-align: top;" alt="">
           </fieldset>
         </div>
-        <div class="policy_tjlc" *ngIf="!!validateForm.value.qualification">
+        <div class="policy_tjlc">
           <fieldset>
-            <legend>资格对象</legend>
-            <p>{{validateForm.value.qualification}}</p>
-          </fieldset>
-        </div>
-        <div class="policy_tjlc" *ngIf="!!validateForm.value.standard">
-          <fieldset>
-            <legend>补助标准</legend>
-            <p>{{validateForm.value.standard}}</p>
-          </fieldset>
-        </div>
-        <div class="policy_tjlc" *ngIf="!!getTownName()">
-          <fieldset>
-            <legend>适用地区</legend>
-            <p>{{getTownName()}}</p>
-          </fieldset>
-        </div>
-        <div class="policy_tjlc" *ngIf="!!validateForm.value.payment">
-          <fieldset>
-            <legend>领取方式</legend>
-            <p>{{validateForm.value.payment}}</p>
-          </fieldset>
-        </div>
-        <div class="policy_tjlc" *ngIf="!!validateForm.value.payProcess">
-          <fieldset>
-            <legend>发放流程</legend>
-            <p>{{validateForm.value.payProcess}}</p>
-          </fieldset>
-        </div>
-        <div class="policy_tjlc" *ngIf="!!validateForm.value.departmentPhone">
-          <fieldset>
-            <legend>主管部门及咨询电话</legend>
-            <p>{{validateForm.value.departmentPhone}}</p>
+            <legend>置顶</legend>
+            <p>{{validateForm.value.top?'是':'否'}}</p>
           </fieldset>
         </div>
       </div>
-      <div style="padding:0 60px;" [innerHTML]="preivewHtml">
+      <div style="padding:0 60px;min-height:200px;" [innerHTML]="preivewHtml">
 
       </div>
     </div>
@@ -71,7 +41,7 @@
     <div>
       <nz-breadcrumb>
         <nz-breadcrumb-item>
-          <a [routerLink]="['/admin/data/policy-data']">新闻管理</a>
+          <a [routerLink]="['/admin/news']">新闻管理</a>
         </nz-breadcrumb-item>
         <nz-breadcrumb-item>
           <span class="span">{{title}}</span>
@@ -81,97 +51,79 @@
   </div>
   <div class="form-box" style="width:1100px">
     <div class="btn-box" style=" text-align: right; margin: 10px auto;">
-      <button nz-button [routerLink]="['/admin/data/policy-data']" style="margin:0 10px" nzType="default">取消</button>
+      <button nz-button [routerLink]="['/admin/news']" style="margin:0 10px" nzType="default">返回</button>
       <button style="margin:0 10px" (click)="preview()" nz-button>预览</button>
-      <button style="margin:0 10px" (click)="submitForm()" nzType="primary" nz-button>保存</button>
+      <button *ngIf="showEdit"  style="margin:0 10px" (click)="submitForm()" nzType="primary" nz-button>保存</button>
+      <button *ngIf="showEdit"  style="margin:0 10px" (click)="submitForm(1)" nzType="primary" nz-button>保存并发布</button>
     </div>
     <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
       <nz-form-item>
-        <!--政策名称-->
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="name" nzRequired>名称</nz-form-label>
+        <!--新闻标题-->
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="title" nzRequired>名称</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
-          <input appTrim nz-input id="name" formControlName="name" placeholder="输入政策名称">
-          <nz-form-explain *ngIf="validateForm.get('name').dirty && validateForm.get('name').errors">
-            <ng-container *ngIf="validateForm.get('name').hasError('required')">
-              请输入政策名称！
+          <input [readonly]="!showEdit" appTrim nz-input id="title" formControlName="title" placeholder="输入新闻标题">
+          <nz-form-explain *ngIf="validateForm.get('title').dirty && validateForm.get('title').errors">
+            <ng-container *ngIf="validateForm.get('title').hasError('required')">
+              请输入新闻标题！
             </ng-container>
-            <ng-container *ngIf="validateForm.get('name').hasError('length')">
-              政策名称请少于60字！
+            <ng-container *ngIf="validateForm.get('title').hasError('length')">
+              新闻标题请少于60字！
             </ng-container>
           </nz-form-explain>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="qualification" nzRequired>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="abstracts" nzRequired>
           <span>
             摘要
           </span>
         </nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
-          <textarea appTrim nz-input placeholder="资格对象" id="qualification" formControlName="qualification"></textarea>
-          <nz-form-explain *ngIf="validateForm.get('qualification').dirty && validateForm.get('qualification').errors">
+          <textarea [readonly]="!showEdit"  appTrim nz-input placeholder="资格对象" id="abstracts" formControlName="abstracts"></textarea>
+          <nz-form-explain *ngIf="validateForm.get('abstracts').dirty && validateForm.get('abstracts').errors">
             请输入新闻摘要
           </nz-form-explain>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="standard" nzRequired>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="face" nzRequired>
           <span>
             封面
           </span>
         </nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
-          <a nz-button [nzLoading]="upLoading" nzType="primary"  (click)='openFile()'>{{upLoading?'上传中...':'选择文件'}}</a>
-          <img src="" style="max-width:200px;" alt="">
+          <a *ngIf = "showEdit"  nz-button [nzLoading]="upLoading" nzType="primary"  (click)='openFile()'>{{upLoading?'上传中...':'选择文件'}}</a>
+          <img [src]="'/v1/file/downloadHead?fileUrl='+validateForm.value.face" style="max-width:200px;max-height:100px;vertical-align: top;" alt="">
           <input (change)='uploadFile($event)' accept="image/png,image/jpeg,image/gif,image/bmp" style="display: none" type="file"  id='file'>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="standard" nzRequired>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="top" nzRequired>
           <span>
             置顶
           </span>
         </nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
-          <nz-radio-group formControlName="standard">
-            <label nz-radio nzValue="A">是</label>
-            <label nz-radio nzValue="B">否</label>
+          <nz-radio-group [nzDisabled]="!showEdit"  formControlName="top">
+            <label nz-radio [nzValue]="1">是</label>
+            <label nz-radio [nzValue]="0">否</label>
           </nz-radio-group>
         </nz-form-control>
       </nz-form-item>
 
       <p>正文部分：</p>
       <nz-form-item>
+        <nz-form-explain *ngIf="validateForm.get('content').dirty && validateForm.get('content').errors">
+          <ng-container *ngIf="validateForm.get('content').hasError('required')">
+            <span style="color:red">详细信息不能为空！</span>
+          </ng-container>
+        </nz-form-explain>
         <nz-form-control style="width:1060px; vertical-align:top;">
-          <nz-form-explain *ngIf="validateForm.get('content').dirty && validateForm.get('content').errors">
-            <ng-container *ngIf="validateForm.get('content').hasError('required')">
-              详细信息不能为空！
-            </ng-container>
-          </nz-form-explain>
-          <app-wang-editor id="content" formControlName="content"></app-wang-editor>
+          <app-wang-editor *ngIf ="showEdit"  id="content" formControlName="content"></app-wang-editor>
+          <div *ngIf ="!showEdit" style="padding:0 60px;border:1px solid #cccccc" [innerHTML]="readOnlyText"></div>
         </nz-form-control>
       </nz-form-item>
 
     </form>
   </div>
-  <nz-modal [(nzVisible)]="selectCategoryShow" nzTitle="选择关联资金类别" (nzOnCancel)="selectCategoryCancel()" (nzOnOk)="selectCategoryOk()">
-    <div class="flex">
-      <div class="tree-box overflowAuto">
-        <ul class="town-list">
-          <li *ngFor="let item of treeList">
-            <div class="click-item">{{item.departmentName}}</div>
-            <ul class="village-list">
-              <li *ngFor="let VOS of item.fundsVOS">
-                <div class="click-item overflow" [title]="VOS.fundsName" [style.background]="VOS.cur?'#7764CA':'#fafafa'"
-                  (click)="selectThis(VOS)">{{VOS.fundsName}}</div>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-      <div class="select-box overflowAuto">
-        <div *ngFor="let item of currentList">{{item.fundsName}}</div>
-      </div>
-    </div>
-  </nz-modal>
 </div>

@@ -44,6 +44,11 @@
   position: relative;
   height: 100%;
   .form-box{
+    height: 100%; 
+    height: -moz-calc(~"100% - 92px");
+    height: -webkit-calc(~"100% - 92px");
+    height: calc(~"100% - 92px");
+    overflow: auto;
     padding-top:2px;
   }
 }

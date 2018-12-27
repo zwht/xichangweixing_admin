@@ -24,6 +24,8 @@ import { OutlinkComponent } from './outlink/outlink.component';
 import { OutlinkAddComponent } from './outlink-add/outlink-add.component';
 import { SelfChangePwdComponent } from './self-change-pwd/self-change-pwd.component';
 import { SelfMessageComponent } from './self-message/self-message.component';
+import { ArmMsgComponent } from './arm-msg/arm-msg.component';
+import { ArmMsgAddComponent } from './arm-msg-add/arm-msg-add.component';
 
 export const routes: Routes = [
     {
@@ -63,6 +65,47 @@ export const routes: Routes = [
                 data: {
                     name: '党建管理',
                     menu: true
+                },
+                canActivate: [PermissionGuardService]
+            },
+            {
+                path: 'party-msg/add',
+                component: PartyMsgAddComponent,
+                data: {
+                    name: '新增党建要闻',
+                },
+                canActivate: [PermissionGuardService]
+            },
+            {
+                path: 'party-msg/edit/:id',
+                component: PartyMsgAddComponent,
+                data: {
+                    name: '编辑党建要闻',
+                },
+                canActivate: [PermissionGuardService]
+            },
+            {
+                path: 'arm-msg',
+                component: ArmMsgComponent,
+                data: {
+                    name: '强军管理',
+                    menu: true
+                },
+                canActivate: [PermissionGuardService]
+            },
+            {
+                path: 'arm-msg/add',
+                component: ArmMsgAddComponent,
+                data: {
+                    name: '新增强军要闻',
+                },
+                canActivate: [PermissionGuardService]
+            },
+            {
+                path: 'arm-msg/edit/:id',
+                component: ArmMsgAddComponent,
+                data: {
+                    name: '编辑强军要闻',
                 },
                 canActivate: [PermissionGuardService]
             },
@@ -197,6 +240,8 @@ export const routes: Routes = [
         ComplainComponent,
         ComplainDetailComponent,
         DownloadListComponent,
+        ArmMsgComponent,
+        ArmMsgAddComponent,
         DownloadListAddComponent,
         OutlinkComponent,
         OutlinkAddComponent,

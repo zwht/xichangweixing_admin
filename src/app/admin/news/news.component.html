@@ -4,7 +4,7 @@
       <div>
         <div class="chaxun">
           <span>标题</span>
-          <input nz-input placeholder="查询标题" >
+          <input nz-input [(ngModel)]="title" placeholder="查询标题" >
         </div>
         <div class="chaxun">
           <span>更新时间</span>
@@ -32,13 +32,13 @@
       </div>
     </div>
     <div class="table-box">
-      <!-- <nz-table #basicTable 
+      <nz-table #basicTable 
         [nzData]="list" [nzFrontPagination]="false"
         [nzPageIndex]="pageNum"
         [nzTotal]="totalCount"
         [nzPageSize]="pageSize"
-        (nzPageIndexChange)="getList($event)"> -->
-        <nz-table #basicTable [nzData]="list" [nzShowPagination]="false">
+        (nzPageIndexChange)="getList($event)">
+        <!-- <nz-table #basicTable [nzData]="list" [nzShowPagination]="false"> -->
         <thead>
           <tr>
             <th>序号</th>
@@ -54,12 +54,18 @@
         <tbody>
           <tr *ngFor="let data of list let i= index">
             <td>{{i}}</td>
+            <td>{{data.title}}</td>
+            <td>{{data.abstracts}}</td>
+            <td>{{data.updateTime}}</td>
+            <td>{{data.updateUser}}</td>
+            <td>{{data.readCount}}</td>
+            <td>{{data.status==1?'已发布':'未发布'}}</td>
             <td>
-              <a [href]="'/#/detail/policy/detail/'+data.id" target="_blank">{{data.name}}</a></td>
-            <td>{{data.updateDateTime}}</td>
-            <td>
-              <a class="op" [routerLink]="'./edit/'+data.id">修改</a>
-              <a class="op" (click)="delete(data)">删除</a>
+              <a class="op" [routerLink]="'./edit/'+data.id">查看</a>
+              <a class="op" *ngIf="data.status==1"  (click)="line(data)">下线</a>
+              <a class="op" *ngIf="data.status==1" (click)="top(data)">置顶</a>
+              <a class="op" *ngIf="data.status==0"  (click)="push(data)">发布</a>
+              <a class="op" *ngIf="data.status==0" (click)="delete(data)">删除</a>
             </td>
           </tr>
         </tbody>

@@ -21,21 +21,10 @@ export class NewsAddComponent implements OnInit {
   roleList = [];
   id = 0;
   upLoading = false;
-  region = {
-    "cityCode": "5134",
-    "cityName": "凉山彝族自治州",
-    "countyCode": "513401",
-    "countyName": "西昌市",
-    "provinceCode": "51",
-    "provinceName": "四川省",
-  }
-  townList = [];
-  villageList = [];
-  nzHeaders = {
-    // Authorization:"Banner eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJmb3JtZXIiLCJVU0VSIjoie1wiZGF0YVwiOntcImlkXCI6MTAwLFwibG9ja2VkXCI6dHJ1ZSxcInVzZXJOYW1lXCI6XCJhZG1pblwifSxcImVycm9yQ29kZVwiOjAsXCJtc2dcIjpcIlwifSIsImV4cCI6MTU0NTcyNjU3NSwiaWF0IjoxNTQ1NzI1OTc1fQ.01-ktpjd0Vn_xRhBicZ4Z1qYN3rbrQaZVfKQhYlf3aM"
-  }
+  showEdit = true;
   preivewShow = false;
   preivewHtml;
+  readOnlyText;
 
   categorysFoundId = [];
   constructor(
@@ -53,52 +42,40 @@ export class NewsAddComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // if(this.router.url.indexOf("edit")>-1){
-    //   this.title = '编辑惠民政策'
-    //   this.id = this.route.snapshot.params['id'];
-    //   this.newsService['getPolicyById']({
-    //     params:{
-    //       policyId: this.id,
-    //     }
-    //   }).subscribe(response => {
-    //     this.loading = false;
-    //     if (response.errorCode === 0) { 
-    //       let detail = response.data;
-    //       this.validateForm.get('name').setValue(detail.name);
-    //       this.validateForm.get('content').setValue(detail.detail);
-    //       this.validateForm.get('publishDateTime').setValue(new Date(detail.publishDateTime));
-    //       this.validateForm.get('qualification').setValue(detail.qualification);
-    //       this.validateForm.get('standard').setValue(detail.standard);
-    //       this.validateForm.get('categoryFundsNames').setValue(detail.categoryFundsNames.join(','));
-    //       this.categorysFoundId = detail.categorysFoundId;
-
-    //       this.validateForm.get('town').setValue(detail.town);
-    //       this.validateForm.get('payment').setValue(detail.payment);
-    //       this.validateForm.get('payProcess').setValue(detail.payProcess);
-    //       this.validateForm.get('departmentPhone').setValue(detail.departmentPhone);
-    //     } else {
-    //       this._message.create('error', response.msg, { nzDuration: 4000 });
-    //     }
-    //   });
-    // }
+    if(this.router.url.indexOf("edit")>-1){
+      this.title = '编辑新闻'
+      this.id = this.route.snapshot.params['id'];
+      this.newsService['getById']({
+        params:{
+          params2: this.id,
+        }
+      }).subscribe(response => {
+        this.loading = false;
+        if (response.errorCode === 0) { 
+          let detail = response.data;
+          if(detail.status == 1){
+            this.showEdit = false;
+            this.readOnlyText = this.sanitizer.bypassSecurityTrustHtml(detail.content);
+            this.title = "查看新闻"
+          }
+          this.validateForm.get('title').setValue(detail.title);
+          this.validateForm.get('content').setValue(detail.content);
+          this.validateForm.get('abstracts').setValue(detail.abstracts);
+          this.validateForm.get('face').setValue(detail.face);
+          this.validateForm.get('top').setValue(Number(detail.top) );
+        } else {
+          this._message.create('error', response.msg, { nzDuration: 4000 });
+        }
+      });
+    }
     this.validateForm = this.fb.group({
-      name: [null, [Validators.required,this.NameLength]],
+      title: [null, [Validators.required,this.NameLength]],
+      abstracts:[null, [Validators.required]],
       content: [null, [Validators.required]],
-      publishDateTime: [null, [Validators.required]],
-      qualification: [null, [Validators.required]],
-      standard: [null, [Validators.required]],
-      categoryFundsNames: [null, [Validators.required]],
-      town: [null, []],
-      payment: [null, []],
-      payProcess: [null, []],
-      departmentPhone: [null, []],
-      photo:[null,[]]
+      face:[null,[]],
+      top:[0,[]],
     });
   }
-  // 选择资金类别
-  treeList = [];
-  selectCategoryShow = false;
-  currentList = [];
   
   NameLength = (control: FormControl): { [s: string]: boolean } => {
     if (!control.value) {
@@ -142,37 +119,9 @@ export class NewsAddComponent implements OnInit {
       this.upLoading = false;
       if(res.errorCode == 0){
         // res.data.fileUrl
+        this.validateForm.get('face').setValue(res.data.fileUrl.replace(/\//,"%2f"));
       }
     })
-  }
-
-  selectThis(v) {
-    if (v.cur) {
-      v.cur = false;
-      this.currentList = this.currentList.filter((o) => {
-        return o.id != v.id
-      })
-    } else {
-      v.cur = true;
-      this.currentList.push(JSON.parse(JSON.stringify(v)));
-    }
-  }
-  selectCategoryOk() {
-    let string = "";
-    this.categorysFoundId = [];
-    for (let o of this.currentList) {
-      this.categorysFoundId.push(o.id);
-      if (string == "") {
-        string = o.fundsName
-      } else {
-        string += "," + o.fundsName
-      }
-    }
-    this.validateForm.get('categoryFundsNames').setValue(string);
-    this.selectCategoryShow = false;
-  }
-  selectCategoryCancel() {
-    this.selectCategoryShow = false;
   }
 
   preview() {
@@ -183,7 +132,7 @@ export class NewsAddComponent implements OnInit {
     this.preivewHtml = this.sanitizer.bypassSecurityTrustHtml('');
     this.preivewShow = false;
   }
-  submitForm(): void {
+  submitForm(k?): void {
     // 验证表单
     for (const i in this.validateForm.controls) {
       if ((this.validateForm as any).controls[i]) {
@@ -194,42 +143,34 @@ export class NewsAddComponent implements OnInit {
 
     if (this.validateForm.valid) {
       this.loading = true;
+      let data = {
+        title: this.validateForm.value.title,
+        abstracts:this.validateForm.value.abstracts,
+        content: this.validateForm.value.content,
+        face:this.validateForm.value.face,
+        status:0,
+        attachments: [],
+        top: Number(this.validateForm.value.top),
+      }
+      if(this.id){
+        data['id'] = this.id;
+      }
+      if(k){
+        data['status'] = 1
+      }
+
       this.newsService.addAndUpdate({
-        data: {
-          id: this.id ? this.id : '',
-          name: this.validateForm.value.name,
-          detail: this.validateForm.value.content,
-          departmentPhone: this.validateForm.value.departmentPhone,
-          payProcess: this.validateForm.value.payProcess,
-          payment: this.validateForm.value.payment,
-          standard: this.validateForm.value.standard,
-          qualification: this.validateForm.value.qualification,
-          publishDateTime: this.validateForm.value.publishDateTime.getTime(),
-          categorysFoundId: this.categorysFoundId,
-          categoryFundsNames: this.validateForm.value.categoryFundsNames.split(','),
-          district: this.region.cityCode,//市区写死
-          country: this.region.countyCode,//区县写死
-          town: this.validateForm.value.town,//乡镇选择
-        }
+        data: data
       })
         .subscribe(response => {
           this.loading = false;
           if (response.errorCode === 0) {
-            this.router.navigate(['/admin/data/policy-data']);
+            this.router.navigate(['/admin/news']);
           } else {
             this._message.create('error', response.msg, { nzDuration: 4000 });
           }
         });
     }
-  }
-  getTownName(){
-    const len = this.townList.length
-    for(let i = 0;i < len; i++){
-      if(this.townList[i].townCode == this.validateForm.value.town){
-        return this.townList[i].townName
-      }
-    }
-    return false
   }
 
 }

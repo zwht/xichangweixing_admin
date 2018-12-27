@@ -25,25 +25,24 @@
     </div>
     <div class="table-head">
       <div class="head-h2">
-        <span>新闻列表</span>
+        <span>要闻列表</span>
       </div>
       <div class="btn-box">
-        <button nz-button nzType="tianjia" routerLink="./add">新增新闻</button>
+        <button nz-button nzType="tianjia" routerLink="./add">新增要闻</button>
       </div>
     </div>
     <div class="table-box">
-      <!-- <nz-table #basicTable 
+      <nz-table #basicTable 
         [nzData]="list" [nzFrontPagination]="false"
         [nzPageIndex]="pageNum"
         [nzTotal]="totalCount"
         [nzPageSize]="pageSize"
-        (nzPageIndexChange)="getList($event)"> -->
-        <nz-table #basicTable [nzData]="list" [nzShowPagination]="false">
+        (nzPageIndexChange)="getList($event)">
+        <!-- <nz-table #basicTable [nzData]="list" [nzShowPagination]="false"> -->
         <thead>
           <tr>
             <th>序号</th>
             <th>标题</th>
-            <th>摘要</th>
             <th>更新时间</th>
             <th>操作人</th>
             <th>阅读量</th>
@@ -54,12 +53,17 @@
         <tbody>
           <tr *ngFor="let data of list let i= index">
             <td>{{i}}</td>
+            <td>{{data.title}}</td>
+            <td>{{data.updateTime}}</td>
+            <td>{{data.updateUser}}</td>
+            <td>{{data.readCount}}</td>
+            <td>{{data.status==1?'已发布':'未发布'}}</td>
             <td>
-              <a [href]="'/#/detail/policy/detail/'+data.id" target="_blank">{{data.name}}</a></td>
-            <td>{{data.updateDateTime}}</td>
-            <td>
-              <a class="op" [routerLink]="'./edit/'+data.id">修改</a>
-              <a class="op" (click)="delete(data)">删除</a>
+              <a class="op" [routerLink]="'./edit/'+data.id">查看</a>
+              <a class="op" *ngIf="data.status==1"  (click)="line(data)">下线</a>
+              <a class="op" *ngIf="data.status==1" (click)="top(data)">置顶</a>
+              <a class="op" *ngIf="data.status==0"  (click)="push(data)">发布</a>
+              <a class="op" *ngIf="data.status==0" (click)="delete(data)">删除</a>
             </td>
           </tr>
         </tbody>

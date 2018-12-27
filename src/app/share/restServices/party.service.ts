@@ -8,11 +8,12 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class NewsService {
+export class PartyService {
+
   constructor(
     private httpClient: HttpClient
   ) { }
-  private url = '/v1/news/:params1/:params2/:params3/:params4/:params5';
+  private url = '/v1/party/:params1/:params2/:params3/:params4/:params5';
 
   // addOrUpdate
   @HttpConfig({
@@ -37,7 +38,7 @@ export class NewsService {
   getAll(data: HttpData): Observable<any> {
     return data.observable;
   }
-
+  
   // getById
   @HttpConfig({
     method: 'get',
@@ -49,33 +50,33 @@ export class NewsService {
   getById(data: HttpData): Observable<any> {
     return data.observable;
   }
-
+  
   // delete
   @HttpConfig({
     method: 'post',
     params: {
       params1: 'delete'
     },
-    contentType: 'application/x-www-form-urlencoded;charset=UTF-8'
     
   })
   delete(data: HttpData): Observable<any> {
     return data.observable;
   }
-  
 
-  // push
+  
+  // line
   @HttpConfig({
     method: 'post',
     params: {
-      params1: 'push'
+      params1: 'line'
     },
     contentType: 'application/x-www-form-urlencoded;charset=UTF-8'
     
   })
-  push(data: HttpData): Observable<any> {
+  line(data: HttpData): Observable<any> {
     return data.observable;
   }
+
   
   // top
   @HttpConfig({
@@ -90,17 +91,16 @@ export class NewsService {
     return data.observable;
   }
 
-  // line
+  // push
   @HttpConfig({
     method: 'post',
     params: {
-      params1: 'line'
+      params1: 'push'
     },
     contentType: 'application/x-www-form-urlencoded;charset=UTF-8'
     
   })
-  line(data: HttpData): Observable<any> {
+  push(data: HttpData): Observable<any> {
     return data.observable;
   }
-
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { SessionService } from 'src/app/share/services/session.service';
-// import { PolicyDataService } from 'src/app/share/restServices/policy-data.service';
+import { NewsService } from 'src/app/share/restServices/news.service';
 @Component({
   selector: 'app-news',
   templateUrl: './news.component.html',
@@ -10,7 +10,7 @@ import { SessionService } from 'src/app/share/services/session.service';
 export class NewsComponent implements OnInit {
 
   constructor(
-    // private policyService: PolicyDataService,
+    private newsService: NewsService,
     private _message: NzMessageService,
     private sessionService: SessionService,
   ) { }
@@ -23,22 +23,20 @@ export class NewsComponent implements OnInit {
     "provinceName": "四川省",
   }
   token = this.sessionService.getItem('token');
-  treeList = [];
 
   dateRange = [];
   list = [];
-  dervison = "全部"
-  departmentName = "全部"
+
+  title = "";
   startTime = null;
   endTime = null;
-  departmentId = null;
-  categoryFundsId = null;
+  
   pageNum = 1
   totalCount = 0;
   pageSize = 10;
+  
   ngOnInit() {
     this.getList()
-    this.getAccountTree();
   }
   onChange(e){
     if(e.length){
@@ -49,75 +47,89 @@ export class NewsComponent implements OnInit {
       this.endTime = null;
     }
   }
-  getThis(obj,item?){
-    if(obj.all){
-      this.dervison = "全部"
-      this.departmentId = null;
-      this.categoryFundsId = null;
-    }
-    else{
-      this.departmentName = obj.fundsName;
-      this.departmentId = item.id;
-      this.categoryFundsId = obj.id;
-    }
-    this.getList();
-  }
-  getAccountTree(){
-    // this.policyService.getTree({
-    //   params:{},
-    //   data:{
-    //   }
-    // }).subscribe(res => {
-    //   if(res.errorCode == 0){
-    //     console.log(res)
-    //     this.treeList = res.data
-    //     for(let item of this.treeList){
-    //       item.childrenShow = false;
-    //     }
-    //   }
-    // })
-  }
 
 
   getList(){
     let params = {
-      endTime:"",
-      startTime:"",
+      // endTime:"",
+      // startTime:"",
       // departmentId:"",
-      categoryFundsId:"",
+      title:"",
+      params3:this.pageNum,
+      params2:this.pageSize,
     };
     if(this.endTime){
-      params.endTime = this.endTime;
+      params["endTime"] = this.endTime;
     }
     if(this.startTime){
-      params.startTime = this.startTime;
+      params["startTime"] = this.startTime;
     }
-    // if(this.departmentId){
-    //   params.departmentId = this.departmentId;
-    // }
-    if(this.categoryFundsId){
-      params.categoryFundsId = this.categoryFundsId;
+    if(this.title){
+      params.title = this.title;
     }
-    // this.policyService['getListByCondition']({
-    //     params
-    // }).subscribe(response =>{
-    //   if (response.errorCode === 0) {
-    //     this.list = response.data;
-    //   }
-    // })
+    this.newsService['getAll']({
+        params
+    }).subscribe(response =>{
+      if (response.errorCode === 0) {
+        this.list = response.data.pageData;
+        this.totalCount = response.data.totalCount;
+      }
+    })
   }
   delete(d){
-    // this.policyService.deleteById({
-    //   params:{
-    //     policyId: d.id
-    //   }
-    // }).subscribe(res => {
-    //   if (res.errorCode === 0) {
-    //     this.getList()
-    //   }else{
-    //     this._message.info(res.msg || res.data || '删除失败')
-    //   }
-    // })
+    this.newsService.delete({
+      params:{
+        ids: d.id
+      }
+    }).subscribe(res => {
+      if (res.errorCode === 0) {
+        this.getList()
+      }else{
+        this._message.info(res.msg || res.data || '删除失败')
+      }
+    })
+  }
+  // 下线
+  line(d){
+    this.newsService.line({
+      params:{
+        id: d.id
+      }
+    }).subscribe(res => {
+      if (res.errorCode === 0) {
+        this.getList()
+      }else{
+        this._message.info(res.msg || res.data || '操作失败')
+      }
+    })
+  }
+  // 发布
+  push(d){
+    this.newsService.push({
+      params:{
+        id: d.id
+      }
+    }).subscribe(res => {
+      if (res.errorCode === 0) {
+        this.getList()
+      }else{
+        this._message.info(res.msg || res.data || '发布失败')
+      }
+    })
+  }
+  // 置顶
+  top(d){
+    this.newsService.top({
+      params:{
+        id: d.id
+      }
+    }).subscribe(res => {
+      if (res.errorCode === 0) {
+        this.getList()
+      }else{
+        this._message.info(res.msg || res.data || '发布失败')
+      }
+    })
   }
 
 }
