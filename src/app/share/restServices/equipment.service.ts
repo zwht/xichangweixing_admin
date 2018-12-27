@@ -20,7 +20,7 @@ export class EquipmentService {
     params: {
       params1: 'delete'
     },
-    roles: [1001]
+    roles: []
   })
   delete(data: HttpData): Observable<any> {
     return data.observable;
@@ -32,7 +32,7 @@ export class EquipmentService {
     params: {
       params1: 'getAllByQuery'
     },
-    roles: [1001]
+    roles: []
   })
   getAllByQuery(data: HttpData): Observable<any> {
     return data.observable;
@@ -44,7 +44,7 @@ export class EquipmentService {
     params: {
       params1: 'getById'
     },
-    roles: [1001]
+    roles: []
   })
   getById(data: HttpData): Observable<any> {
     return data.observable;
@@ -56,7 +56,7 @@ export class EquipmentService {
     params: {
       params1: 'saveOrUpdate'
     },
-    roles: [1001]
+    roles: []
   })
   saveOrUpdate(data: HttpData): Observable<any> {
     return data.observable;

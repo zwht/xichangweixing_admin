@@ -1,16 +1,10 @@
 <div style="width: 60%;margin: 30px auto;">
-  <div class="title">新增设备资产</div>
+  <div class="title">{{title}}</div>
   <div nz-row style="margin-bottom: 70px;">
     <div nz-col nzSpan="4" class="ennn">设备编号:</div>
     <div nz-col nzSpan="20" class="emmm"><input nz-input placeholder="请输入设备编号" [(ngModel)]="code"></div>
     <div nz-col nzSpan="4" class="ennn">设备名称:</div>
     <div nz-col nzSpan="20" class="emmm"><input nz-input placeholder="请输入设备名称" [(ngModel)]="name"></div>
-    <div nz-col nzSpan="4" class="ennn">设备类型:</div>
-    <div nz-col nzSpan="20" class="emmm">
-      <nz-select style="width: 50%;" [(ngModel)]="equipTypeNum" nzAllowClear nzPlaceHolder="Choose" nzPlaceHolder="请选择设备类型">
-        <nz-option [nzValue]="equipType" [nzLabel]="equipTypeName"></nz-option>
-      </nz-select>
-    </div>
     <div nz-col nzSpan="4" class="ennn">规格:</div>
     <div nz-col nzSpan="20" class="emmm"><input nz-input placeholder="请输入规格" [(ngModel)]="format"></div>
     <div nz-col nzSpan="4" class="ennn">包装规格</div>
@@ -34,13 +28,19 @@
     <div nz-col nzSpan="4" class="ennn">供应商:</div>
     <div nz-col nzSpan="20" class="emmm">
       <nz-select style="width: 50%;" [(ngModel)]="supplierNum" nzAllowClear nzPlaceHolder="请选择供应商">
-        <nz-option nzValue="supplierId" nzLabel="supplierName"></nz-option>
+        <nz-option *ngFor="let item of supplier;let i = index" [nzValue]="i" [nzLabel]="item.name"></nz-option>
       </nz-select>
+      {{supplierNum}}
     </div>
     <div nz-col nzSpan="4" class="ennn">产品图片:</div>
     <div nz-col nzSpan="20" class="emmm">
-      <input type="file" id="upload_file1" style="display: none" accept="image/*" />
-      <div><button nz-button nzType="primary" (click)="chooseType()">点击上传图片</button></div>
+      <input (change)="fileChange($event)" [(ngModel)]="images" type="file" id="upload_file1" style="display: none"
+        accept="image/*" />
+      <div>
+        <button nz-button nzType="primary" (click)="chooseType()">点击上传图片</button>
+        <span *ngIf="imgName" style="margin-left: 20px;">已选择:{{imgName}}</span>
+        <img [(src)]="imgzs.src" class="tupian">
+      </div>
     </div>
     <div nz-col nzSpan="4" class="ennn">备注:</div>
     <div nz-col nzSpan="20" class="emmm">
@@ -48,7 +48,7 @@
     </div>
   </div>
   <div class="baocun">
-    <button nz-button nzType="primary">保存</button>
-    <button nz-button nzType="primary">取消</button>
+    <button nz-button nzType="primary" (click)="tianjia()">保存</button>
+    <button nz-button nzType="primary" (click)="goto('infomation/equipment','')">取消</button>
   </div>
 </div>

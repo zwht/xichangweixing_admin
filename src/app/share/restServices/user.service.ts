@@ -27,7 +27,7 @@ export class UserService {
   login(data: HttpData): Observable<any> {
     return data.observable;
   }
-  
+
   // add
   @HttpConfig({
     method: 'post',

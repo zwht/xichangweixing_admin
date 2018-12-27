@@ -21,7 +21,7 @@ export const routes: Routes = [
         canActivate: [PermissionGuardService]
     },
     {
-        path: 'equipment/add',
+        path: 'equipment/add/:id',
         component: AddComponent,
         data: {
             name: '添加设备',
