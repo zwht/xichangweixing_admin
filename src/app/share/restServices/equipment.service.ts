@@ -61,4 +61,16 @@ export class EquipmentService {
   saveOrUpdate(data: HttpData): Observable<any> {
     return data.observable;
   }
+
+    // readExcel
+    @HttpConfig({
+      method: 'post',
+      params: {
+        params1: 'readExcel'
+      },
+      roles: []
+    })
+    readExcel(data: HttpData): Observable<any> {
+      return data.observable;
+    }
 }

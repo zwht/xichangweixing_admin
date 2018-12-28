@@ -36,15 +36,15 @@ export class FileService {
   uploadHead(data: HttpData): Observable<any> {
     return data.observable;
   }
-  // list
+  // downloadHead
   @HttpConfig({
-    method: 'post',
+    method: 'get',
     params: {
-      params1: 'list'
+      params1: 'downloadHead'
     },
     roles: []
   })
-  list(data: HttpData): Observable<any> {
+  downloadHead(data: HttpData): Observable<any> {
     return data.observable;
   }
 

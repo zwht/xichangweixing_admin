@@ -30,7 +30,6 @@
       <nz-select style="width: 50%;" [(ngModel)]="supplierNum" nzAllowClear nzPlaceHolder="请选择供应商">
         <nz-option *ngFor="let item of supplier;let i = index" [nzValue]="i" [nzLabel]="item.name"></nz-option>
       </nz-select>
-      {{supplierNum}}
     </div>
     <div nz-col nzSpan="4" class="ennn">产品图片:</div>
     <div nz-col nzSpan="20" class="emmm">
@@ -39,7 +38,7 @@
       <div>
         <button nz-button nzType="primary" (click)="chooseType()">点击上传图片</button>
         <span *ngIf="imgName" style="margin-left: 20px;">已选择:{{imgName}}</span>
-        <img [(src)]="imgzs.src" class="tupian">
+        <img [src]="imgzs.src" class="tupian">
       </div>
     </div>
     <div nz-col nzSpan="4" class="ennn">备注:</div>

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SupplierTypeService } from '../../../share/restServices/supplier-type.service';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-supplier',
@@ -16,19 +18,18 @@ export class SupplierComponent implements OnInit {
   dataSet = [];
   indeterminate = false;
 
+  supplierType: Array<{ id: string, name: string }> = [];
+  supplierTypeId: string;
+  name: string;
+
   constructor(
     private router: Router,
+    private supplierTypeService: SupplierTypeService,
+    private message: NzMessageService,
   ) { }
 
   ngOnInit() {
-    for (let i = 0; i < 46; i++) {
-      this.dataSet.push({
-        name: `Edward King ${i}`,
-        age: 32,
-        address: `London, Park Lane no. ${i}`,
-        checked: false
-      });
-    }
+    this.getSupplierType();
   }
   currentPageDataChange($event: Array<{ name: string; age: number; address: string; checked: boolean }>): void {
     this.displayData = $event;
@@ -61,4 +62,15 @@ export class SupplierComponent implements OnInit {
     this.router.navigate(['admin/' + add + '/' + id]);
   }
 
+  getSupplierType() {
+    this.supplierTypeService['getAll']({
+    })
+      .subscribe(response => {
+        if (response.errorCode === 0) {
+          this.supplierType = response.data;
+        } else {
+          this.message.create('error', '错误!错误代码' + response.errorCode);
+        }
+      });
+  }
 }

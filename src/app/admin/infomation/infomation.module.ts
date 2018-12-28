@@ -8,6 +8,7 @@ import { ShareModule } from 'src/app/share/share.module';
 import { AddComponent } from './equipment/add/add.component';
 import { SupplierAddComponent } from './supplier/supplier-add/supplier-add.component';
 import { BigsAddComponent } from './bids/bigs-add/bigs-add.component';
+import { ImportequipmentComponent } from './equipment/importequipment/importequipment.component';
 
 export const routes: Routes = [
     {
@@ -25,6 +26,14 @@ export const routes: Routes = [
         component: AddComponent,
         data: {
             name: '添加设备',
+            roles: [1001],
+        },
+    },
+    {
+        path: 'equipment/import',
+        component: ImportequipmentComponent,
+        data: {
+            name: '导入设备',
             roles: [1001],
         },
     },
@@ -71,6 +80,7 @@ export const routes: Routes = [
         ShareModule,
         RouterModule.forChild(routes)
     ],
-    declarations: [EquipmentComponent, SupplierComponent, SupplierAddComponent, AddComponent, BidsComponent, BigsAddComponent]
+    declarations: [EquipmentComponent, SupplierComponent, SupplierAddComponent,
+        ImportequipmentComponent, AddComponent, BidsComponent, BigsAddComponent]
 })
 export class InfomationModule { }

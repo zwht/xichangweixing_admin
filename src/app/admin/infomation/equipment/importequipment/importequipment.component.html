@@ -1,0 +1,10 @@
+<div class="title">导入设备</div>
+<div style="margin: 20px auto;width: 80%">
+  <div style="overflow:auto">
+    <div style="margin-bottom: 16px; float: right;">
+      <input (change)="fileChange($event)" [(ngModel)]="excle" type="file" id="upload_file1" style="display: none"/>
+      <button style="margin:0 10px" nz-button (click)="chooseType()">选择文件</button>
+      <button style="margin:0 10px" nz-button (click)="down()">下载模板</button>
+    </div>
+  </div>
+</div>

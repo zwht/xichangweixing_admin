@@ -1,11 +1,10 @@
 <div class="tou">
   <span>类型:</span>
-  <nz-select style="width: 15%;margin-right: 15px;" [(ngModel)]="selectedValue" nzAllowClear nzPlaceHolder="Choose">
-    <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-    <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+  <nz-select style="width: 15%;margin-right: 15px;" [(ngModel)]="supplierTypeId" nzAllowClear nzPlaceHolder="请选择类型">
+    <nz-option *ngFor="let item of supplierType;" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
   </nz-select>
   <span>供应商名称:</span>
-  <input style="width: 15%;margin-right: 15px;" nz-input placeholder="Basic usage" [(ngModel)]="value">
+  <input style="width: 15%;margin-right: 15px;" nz-input placeholder="请输入供应商名称" [(ngModel)]="name">
   <span>所在地区:</span>
   <nz-select style="width: 8%;margin-right: 15px;" [(ngModel)]="selectedValue" nzAllowClear nzPlaceHolder="Choose">
     <nz-option nzValue="jack" nzLabel="Jack"></nz-option>

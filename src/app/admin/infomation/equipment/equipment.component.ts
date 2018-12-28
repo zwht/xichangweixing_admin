@@ -113,7 +113,4 @@ export class EquipmentComponent implements OnInit {
     this.dataSet.forEach(value => value.checked = false);
     this.refreshStatus();
   }
-  a() {
-    console.log(this.displayData);
-  }
 }

@@ -84,29 +84,8 @@ export class AddComponent implements OnInit {
       });
   }
 
-  filedown(e) {
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append(file.name, file);
-    this.fileService['uploadHead']({
-      data: formData
-    })
-      .subscribe(response => {
-        if (response.errorCode === 0) {
-          this.message.create('Success', '添加成功');
-          this.imgName = file.name;
-          this.fileUrl = response.data.fileUrl;
-          const that = this;
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onload = function () {
-            file.src = this.result;
-            that.imgzs = file;
-          };
-        } else {
-          this.message.create('error', '错误!错误代码' + response.errorCode);
-        }
-      });
+  filedown(a) {
+    this.imgzs.src = '/v1/file/downloadHead?fileUrl=' + a.replace(/\//, '%2f');
   }
 
   getByID() {
@@ -131,6 +110,9 @@ export class AddComponent implements OnInit {
             }
           }
           this.remark = response.data.remark;
+          if (response.data.images !== '') {
+            this.filedown(response.data.images);
+          }
         } else {
           this.message.create('error', '错误!错误代码' + response.errorCode);
         }
@@ -161,6 +143,12 @@ export class AddComponent implements OnInit {
     if (this.jiancha() === 1) {
       return;
     }
+    let idddd;
+    if (this.id === 'add') {
+      idddd = '';
+    } else {
+      idddd = this.id;
+    }
     this.equipmentService['saveOrUpdate']({
       data: {
         equipType: 1,
@@ -176,12 +164,17 @@ export class AddComponent implements OnInit {
         supplierId: this.supplier[this.supplierNum].id,
         supplierName: this.supplier[this.supplierNum].name,
         images: this.fileUrl,
-        remark: this.remark
+        remark: this.remark,
+        id: idddd
       }
     })
       .subscribe(response => {
         if (response.errorCode === 0) {
-          this.message.create('Success', '添加成功');
+          if (this.id === 'add') {
+            this.message.create('Success', '添加成功');
+          } else {
+            this.message.create('Success', '修改成功');
+          }
           this.goto('infomation/equipment', '');
         } else {
           this.message.create('error', '错误!错误代码' + response.errorCode);
@@ -224,10 +217,6 @@ export class AddComponent implements OnInit {
     }
     if (this.supplierNum === null) {
       this.message.create('error', '请选择供应商');
-      return 1;
-    }
-    if (this.fileUrl === '') {
-      this.message.create('error', '请选择图片');
       return 1;
     }
     if (this.remark === '') {
