@@ -48,7 +48,7 @@ export const routes: Routes = [
         canActivate: [PermissionGuardService]
     },
     {
-        path: 'supplier/add',
+        path: 'supplier/add/:id',
         component: SupplierAddComponent,
         data: {
             name: '添加供应商',

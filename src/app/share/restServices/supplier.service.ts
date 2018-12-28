@@ -26,4 +26,27 @@ export class SupplierService {
     return data.observable;
   }
 
+  // saveOrUpdate
+  @HttpConfig({
+    method: 'post',
+    params: {
+      params1: 'saveOrUpdate'
+    },
+    roles: []
+  })
+  saveOrUpdate(data: HttpData): Observable<any> {
+    return data.observable;
+  }
+
+    // getById
+    @HttpConfig({
+      method: 'get',
+      params: {
+        params1: 'getById'
+      },
+      roles: []
+    })
+    getById(data: HttpData): Observable<any> {
+      return data.observable;
+    }
 }

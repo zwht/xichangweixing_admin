@@ -21,7 +21,7 @@ export class EquipmentComponent implements OnInit {
   pageSize = 10; // 页面中每页数量
   totalCount = 0; // 总数据
   status = ''; // 状态
-  supplierId = ''; // 供应商
+  supplierName = ''; // 供应商
 
   ids = []; // 删除id
 
@@ -42,7 +42,7 @@ export class EquipmentComponent implements OnInit {
         pageSize: this.pageSize,
         name: this.name,
         status: this.status,
-        supplierId: this.supplierId,
+        supplierName: this.supplierName,
       }
     })
       .subscribe(response => {

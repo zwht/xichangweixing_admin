@@ -1,39 +1,39 @@
 <div class="tou">
   <span>类型:</span>
   <nz-select style="width: 15%;margin-right: 15px;" [(ngModel)]="supplierTypeId" nzAllowClear nzPlaceHolder="请选择类型">
+    <nz-option nzValue="" nzLabel="全部"></nz-option>
     <nz-option *ngFor="let item of supplierType;" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
   </nz-select>
   <span>供应商名称:</span>
   <input style="width: 15%;margin-right: 15px;" nz-input placeholder="请输入供应商名称" [(ngModel)]="name">
   <span>所在地区:</span>
-  <nz-select style="width: 8%;margin-right: 15px;" [(ngModel)]="selectedValue" nzAllowClear nzPlaceHolder="Choose">
-    <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-    <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+  <nz-select style="width: 8%;margin-right: 15px;" [(ngModel)]="provinceNum" nzAllowClear nzPlaceHolder="请选择省份"
+    (ngModelChange)="getAdminDivision(2,provinceNum)">
+    <nz-option *ngFor="let item of province" [nzValue]="item.provinceCode" [nzLabel]="item.provinceName"></nz-option>
   </nz-select>
-  <nz-select style="width: 8%;margin-right: 15px;" [(ngModel)]="selectedValue" nzAllowClear nzPlaceHolder="Choose">
-      <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-      <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
-    </nz-select>
+  <nz-select style="width: 8%;margin-right: 15px;" [(ngModel)]="cityNum" nzAllowClear nzPlaceHolder="请选择城市">
+    <nz-option *ngFor="let item of city" [nzValue]="item.cityCode" [nzLabel]="item.cityName"></nz-option>
+  </nz-select>
   <span>状态:</span>
-  <nz-select style="width: 15%;margin-right: 15px;" [(ngModel)]="selectedValue" nzAllowClear nzPlaceHolder="Choose">
-    <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-    <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+  <nz-select style="width: 15%;margin-right: 15px;" [(ngModel)]="status" nzAllowClear nzPlaceHolder="请选择状态">
+    <nz-option nzValue="" nzLabel="全部"></nz-option>
+    <nz-option nzValue="0" nzLabel="停用"></nz-option>
+    <nz-option nzValue="1" nzLabel="正常"></nz-option>
   </nz-select>
-  <button nz-button nzType="primary" style="float: right;">查询</button>
+  <button nz-button nzType="primary" style="float: right;" (click)="getList()">查询</button>
 </div>
 
 <div style="margin: 20px auto;width: 80%">
   <div style="overflow:auto">
     <div style="margin-bottom: 16px; float: right;">
-      <span style="margin-right: 8px;" *ngIf="checkedNumber">您已选择{{checkedNumber}}项</span>
-      <button style="margin:0 10px" nz-button [disabled]="disabledButton" [nzType]="'primary'" [nzLoading]="operating"
-        (click)="operateData()">批量删除</button>
-      <button style="margin:0 10px" nz-button (click)="goto('infomation/supplier/add','')">新增供应商</button>
-      <button style="margin:0 10px" nz-button>导入供应商</button>
+      <span style="margin-right: 8px;">您已选择{{checkedNumber}}项</span>
+      <button style="margin:0 10px" nz-button [nzType]="'primary'" [disabled]="disabledButton" (click)="operateData()">批量删除</button>
+      <button style="margin:0 10px" nz-button (click)="goto('infomation/supplier/add','add')">新增设备</button>
+      <button style="margin:0 10px" nz-button (click)="goto('infomation/equipment/import','')">导入设备</button>
     </div>
   </div>
-  <nz-table #rowSelectionTable [nzData]="dataSet" (nzCurrentPageDataChange)="currentPageDataChange($event)"
-    (nzPageIndexChange)="refreshStatus()" (nzPageSizeChange)="refreshStatus()">
+  <nz-table #rowSelectionTable [nzData]="dataSet" [nzTotal]="totalCount" [nzFrontPagination]="false" [nzPageSize]="pageSize"
+    [(nzPageIndex)]="pageNumber" (nzPageIndexChange)="fileChange()" (nzCurrentPageDataChange)="currentPageDataChange($event)">
     <thead>
       <tr>
         <th style="text-align: center" nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate"
@@ -49,14 +49,15 @@
     <tbody>
       <tr *ngFor="let data of rowSelectionTable.data">
         <td style="text-align: center" nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="refreshStatus()"></td>
+        <td style="text-align: center">{{data.code}}</td>
         <td style="text-align: center">{{data.name}}</td>
-        <td style="text-align: center">{{data.age}}</td>
-        <td style="text-align: center">{{data.address}}</td>
-        <td style="text-align: center">{{data.address}}</td>
-        <td style="text-align: center">{{data.address}}</td>
+        <td style="text-align: center">{{data.typeName}}</td>
+        <td style="text-align: center">{{data.region}}</td>
+        <td style="text-align: center" *ngIf="data.status == 0">停用</td>
+        <td style="text-align: center" *ngIf="data.status == 1">正常</td>
         <td style="text-align: center">
-          <button style="margin:0 2px" nz-button nzType="default">编辑</button>
-          <button style="margin:0 2px" nz-button nzType="default">删除</button>
+          <button style="margin:0 2px" nz-button nzType="default" (click)="goto('infomation/supplier/add',data.id)">编辑</button>
+          <button style="margin:0 2px" nz-button nzType="default" (click)="operateData(data.id)">删除</button>
         </td>
       </tr>
     </tbody>
