@@ -30,7 +30,6 @@ export class SupplierComponent implements OnInit {
   pageNumber = 1; // 当前页数
   pageSize = 10; // 页面中每页数量
   totalCount = 0; // 总数据
-  supplierId = ''; // 供应商
 
   ids = []; // 删除id
 
@@ -53,6 +52,10 @@ export class SupplierComponent implements OnInit {
   }
 
   getList() {
+    let add = this.cityNum;
+    if (add == null) {
+      add = '';
+    }
     this.supplierService['getAllByQuery']({
       params: {
         pageNumber: this.pageNumber,
@@ -60,6 +63,7 @@ export class SupplierComponent implements OnInit {
         name: this.name,
         status: this.status,
         type: this.supplierTypeId,
+        region: add
       }
     })
       .subscribe(response => {
@@ -93,7 +97,7 @@ export class SupplierComponent implements OnInit {
     this.adminDivisionService['list']({
       params: {
         params2: 1,
-        params3: 10
+        params3: 9999
       },
       data: {
         provinceCode: id,
@@ -116,30 +120,30 @@ export class SupplierComponent implements OnInit {
   }
 
   operateData(id?): void { // 批量删除
-    // let ids = '';
-    // if (id) {
-    //   ids = id;
-    // } else {
-    //   for (let index = 0; index < this.displayData.length; index++) {
-    //     if (this.displayData[index].checked) {
-    //       this.ids.push(this.displayData[index].id);
-    //       ids = this.ids.join(',');
-    //     }
-    //   }
-    // }
-    // this.equipmentService['delete']({
-    //   params: {
-    //     ids: ids
-    //   }
-    // })
-    //   .subscribe(response => {
-    //     if (response.errorCode === 0) {
-    //       this.message.create('success', '删除成功');
-    //       this.fileChange();
-    //     } else {
-    //       this.message.create('error', '错误!错误代码' + response.errorCode);
-    //     }
-    //   });
+    let ids = '';
+    if (id) {
+      ids = id;
+    } else {
+      for (let index = 0; index < this.displayData.length; index++) {
+        if (this.displayData[index].checked) {
+          this.ids.push(this.displayData[index].id);
+          ids = this.ids.join(',');
+        }
+      }
+    }
+    this.supplierService['delete']({
+      params: {
+        ids: ids
+      }
+    })
+      .subscribe(response => {
+        if (response.errorCode === 0) {
+          this.message.create('success', '删除成功');
+          this.getList();
+        } else {
+          this.message.create('error', '错误!错误代码' + response.errorCode);
+        }
+      });
   }
   currentPageDataChange(e): void {
     this.displayData = e;

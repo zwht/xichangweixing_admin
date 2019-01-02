@@ -66,7 +66,7 @@ export const routes: Routes = [
         canActivate: [PermissionGuardService]
     },
     {
-        path: 'bids/add',
+        path: 'bids/add/:id',
         component: BigsAddComponent,
         data: {
             name: '添加招投标机构',

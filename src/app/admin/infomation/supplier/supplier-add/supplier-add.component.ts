@@ -31,7 +31,6 @@ export class SupplierAddComponent implements OnInit {
   contactsUseIdnum = '';
   phone = '';
   remark = '';
-  logo = '';
 
   imgzs = { src: '../../../../../assets/images/moren/moren.jpg' }; // 图片展示
   imgName = null; // 图片名字
@@ -88,6 +87,7 @@ export class SupplierAddComponent implements OnInit {
   }
 
   filedown(a) {
+    this.fileUrl = a;
     this.imgzs.src = '/v1/file/downloadHead?fileUrl=' + a.replace(/\//, '%2f');
   }
 
@@ -205,8 +205,8 @@ export class SupplierAddComponent implements OnInit {
         if (response.errorCode === 0) {
           this.name = response.data.name;
           this.supplierTypeId = response.data.type;
-          this.region = '3608';
-          this.buyouya(this.region);
+          this.region = response.data.region;
+          this.buyouya(this.region.split(',')[0]);
           this.address = response.data.address;
           this.socialCreditCode = response.data.socialCreditCode;
           this.registDate = response.data.registDate;
@@ -234,7 +234,9 @@ export class SupplierAddComponent implements OnInit {
       idddd = '';
     } else {
       idddd = this.id;
-      this.region = this.cityNum;
+      const cityName = this.city.filter(x => x.cityCode === this.cityNum)[0].cityName;
+      const provinceName = this.province.filter(x => x.provinceCode === this.provinceNum)[0].provinceName;
+      this.region = this.cityNum + ',' + provinceName + cityName;
     }
     this.supplierService['saveOrUpdate']({
       data: {
@@ -250,7 +252,7 @@ export class SupplierAddComponent implements OnInit {
         contactsUserName: this.contactsUserName,
         contactsUseIdnum: this.contactsUseIdnum,
         phone: this.phone,
-        logo: this.logo,
+        logo: this.fileUrl,
         remark: this.remark,
         id: idddd
       }
@@ -262,7 +264,7 @@ export class SupplierAddComponent implements OnInit {
           } else {
             this.message.create('Success', '修改成功');
           }
-          this.goto('infomation/equipment', '');
+          this.goto('infomation/supplier', '');
         } else {
           this.message.create('error', '错误!错误代码' + response.errorCode);
         }
@@ -290,7 +292,7 @@ export class SupplierAddComponent implements OnInit {
       this.message.create('error', '请输入统一社会信用代码');
       return 1;
     }
-    if (this.socialCreditCode === '') {
+    if (this.registDate === '') {
       this.message.create('error', '请选择注册日期');
       return 1;
     }

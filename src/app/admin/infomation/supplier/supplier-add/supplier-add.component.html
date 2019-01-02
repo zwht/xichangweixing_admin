@@ -18,7 +18,6 @@
       <nz-select style="width: 24%;" [(ngModel)]="cityNum" nzAllowClear nzPlaceHolder="请选择城市">
         <nz-option *ngFor="let item of city" [nzValue]="item.cityCode" [nzLabel]="item.cityName"></nz-option>
       </nz-select>
-      {{cityNum}}
     </div>
     <div nz-col nzSpan="4" class="ennn">详细地址:</div>
     <div nz-col nzSpan="20" class="emmm"><input nz-input placeholder="请输入详细地址" [(ngModel)]="address"></div>

@@ -85,6 +85,7 @@ export class AddComponent implements OnInit {
   }
 
   filedown(a) {
+    this.fileUrl = a;
     this.imgzs.src = '/v1/file/downloadHead?fileUrl=' + a.replace(/\//, '%2f');
   }
 

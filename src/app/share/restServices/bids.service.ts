@@ -8,11 +8,11 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class SupplierService {
+export class BidsService {
   constructor(
     private httpClient: HttpClient
   ) { }
-  private url = '/v1/supplier/:params1/:params2/:params3/:params4/:params5';
+  private url = '/v1/tenderOrgation/:params1/:params2/:params3/:params4/:params5';
 
   // getAllByQuery
   @HttpConfig({
@@ -26,15 +26,15 @@ export class SupplierService {
     return data.observable;
   }
 
-  // saveOrUpdate
+  // delete
   @HttpConfig({
     method: 'post',
     params: {
-      params1: 'saveOrUpdate'
+      params1: 'delete'
     },
     roles: []
   })
-  saveOrUpdate(data: HttpData): Observable<any> {
+  delete(data: HttpData): Observable<any> {
     return data.observable;
   }
 
@@ -50,15 +50,16 @@ export class SupplierService {
     return data.observable;
   }
 
-  // delete
+  // saveOrUpdate
   @HttpConfig({
     method: 'post',
     params: {
-      params1: 'delete'
+      params1: 'saveOrUpdate'
     },
     roles: []
   })
-  delete(data: HttpData): Observable<any> {
+  saveOrUpdate(data: HttpData): Observable<any> {
     return data.observable;
   }
+
 }

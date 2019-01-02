@@ -15,7 +15,7 @@
     <nz-option *ngFor="let item of city" [nzValue]="item.cityCode" [nzLabel]="item.cityName"></nz-option>
   </nz-select>
   <span>状态:</span>
-  <nz-select style="width: 15%;margin-right: 15px;" [(ngModel)]="status" nzAllowClear nzPlaceHolder="请选择状态">
+  <nz-select style="width: 15%;margin-right: 15px;" [(ngModel)]="status" nzPlaceHolder="请选择状态">
     <nz-option nzValue="" nzLabel="全部"></nz-option>
     <nz-option nzValue="0" nzLabel="停用"></nz-option>
     <nz-option nzValue="1" nzLabel="正常"></nz-option>
@@ -52,7 +52,7 @@
         <td style="text-align: center">{{data.code}}</td>
         <td style="text-align: center">{{data.name}}</td>
         <td style="text-align: center">{{data.typeName}}</td>
-        <td style="text-align: center">{{data.region}}</td>
+        <td style="text-align: center">{{data.region.split(',')[1]}}</td>
         <td style="text-align: center" *ngIf="data.status == 0">停用</td>
         <td style="text-align: center" *ngIf="data.status == 1">正常</td>
         <td style="text-align: center">
