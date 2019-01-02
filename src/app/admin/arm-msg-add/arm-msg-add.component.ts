@@ -165,7 +165,7 @@ export class ArmMsgAddComponent implements OnInit {
         .subscribe(response => {
           this.loading = false;
           if (response.errorCode === 0) {
-            this.router.navigate(['/admin/news']);
+            this.router.navigate(['/admin/arm-msg']);
           } else {
             this._message.create('error', response.msg, { nzDuration: 4000 });
           }

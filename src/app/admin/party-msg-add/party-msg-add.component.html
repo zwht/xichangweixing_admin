@@ -37,6 +37,7 @@
       <button nz-button [routerLink]="['/admin/party-msg']" style="margin:0 10px" nzType="default">取消</button>
       <button style="margin:0 10px" (click)="preview()" nz-button>预览</button>
       <button style="margin:0 10px" (click)="submitForm()" nzType="primary" nz-button>保存</button>
+      <button style="margin:0 10px" (click)="submitForm(1)" nzType="primary" nz-button>保存并发布</button>
     </div>
     <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
       <nz-form-item>

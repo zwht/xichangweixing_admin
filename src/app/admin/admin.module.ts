@@ -152,6 +152,22 @@ export const routes: Routes = [
                 canActivate: [PermissionGuardService]
             },
             {
+                path: 'work-msg/add',
+                component: WorkMsgAddComponent,
+                data: {
+                    name: '新增工作动态',
+                },
+                canActivate: [PermissionGuardService]
+            },
+            {
+                path: 'work-msg/edit/:id',
+                component: WorkMsgAddComponent,
+                data: {
+                    name: '编辑工作动态',
+                },
+                canActivate: [PermissionGuardService]
+            },
+            {
                 path: 'market-msg',
                 component: MarketMsgComponent,
                 data: {
@@ -161,11 +177,43 @@ export const routes: Routes = [
                 canActivate: [PermissionGuardService]
             },
             {
+                path: 'market-msg/add',
+                component: MarketMsgAddComponent,
+                data: {
+                    name: '新增市场信息',
+                },
+                canActivate: [PermissionGuardService]
+            },
+            {
+                path: 'market-msg/edit/:id',
+                component: MarketMsgAddComponent,
+                data: {
+                    name: '编辑市场信息',
+                },
+                canActivate: [PermissionGuardService]
+            },
+            {
                 path: 'manage-rule',
                 component: ManageRuleComponent,
                 data: {
                     name: '管理规定管理',
                     menu: true
+                },
+                canActivate: [PermissionGuardService]
+            },
+            {
+                path: 'manage-rule/add',
+                component: ManageRuleAddComponent,
+                data: {
+                    name: '新增管理规定',
+                },
+                canActivate: [PermissionGuardService]
+            },
+            {
+                path: 'manage-rule/edit/:id',
+                component: ManageRuleAddComponent,
+                data: {
+                    name: '编辑管理规定',
                 },
                 canActivate: [PermissionGuardService]
             },

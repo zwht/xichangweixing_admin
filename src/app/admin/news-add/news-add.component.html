@@ -79,7 +79,7 @@
           </span>
         </nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
-          <textarea [readonly]="!showEdit"  appTrim nz-input placeholder="资格对象" id="abstracts" formControlName="abstracts"></textarea>
+          <textarea [readonly]="!showEdit"  appTrim nz-input placeholder="摘要" id="abstracts" formControlName="abstracts"></textarea>
           <nz-form-explain *ngIf="validateForm.get('abstracts').dirty && validateForm.get('abstracts').errors">
             请输入新闻摘要
           </nz-form-explain>

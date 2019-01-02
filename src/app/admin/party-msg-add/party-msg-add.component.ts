@@ -58,14 +58,14 @@ export class PartyMsgAddComponent implements OnInit {
       this.id = this.route.snapshot.params['id'];
       this.partyService['getById']({
         params:{
-          id: this.id,
+          params2: this.id,
         }
       }).subscribe(response => {
         this.loading = false;
         if (response.errorCode === 0) { 
           let detail = response.data;
           this.validateForm.get('title').setValue(detail.title);
-          this.validateForm.get('content').setValue(detail.detail);
+          this.validateForm.get('content').setValue(detail.content);
           this.validateForm.get('top').setValue(detail.top);
         } else {
           this._message.create('error', response.msg, { nzDuration: 4000 });
