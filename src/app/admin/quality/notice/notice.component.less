@@ -1,0 +1,50 @@
+@import "../../common/style/list";
+.box{
+    height: 100%;
+    display: flex;
+    .left{
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        .head{
+            height: 50px;
+            background-color: rgba(110,110,202,0.1);
+            color: #333333;
+            line-height: 50px;
+            text-indent: 40px;
+            font-size: 18px;
+        }
+        .town-list{
+            padding: 0 20px;
+            height: 100%;
+            .village-list{
+                background-color: #fafafa;
+                .click-item{
+                    height: 32px;
+                    line-height: 32px;
+                    text-indent: 35px;
+                    border-color:#eee;
+                }
+            }
+            .click-item{
+                cursor: pointer;
+                height: 40px;
+                line-height: 40px;
+                text-indent: 25px;
+                border-bottom:1px solid #dfdfdf;
+            }
+        }
+    }
+    .list-box{
+        flex:1;
+    }
+}
+.btn-box{
+    >a,button{
+        margin:0 10px;
+    }
+}
+.op{
+    color: #CF2323;
+    margin: 0 6px;
+}

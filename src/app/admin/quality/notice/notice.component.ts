@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
-import { SessionService } from 'src/app/share/services/session.service';
-import { ArmService } from 'src/app/share/restServices/arm.service';
+import { QualityNoticeService } from 'src/app/share/restServices/quality-notice.service';
 
 @Component({
   selector: 'app-notice',
@@ -11,7 +10,7 @@ import { ArmService } from 'src/app/share/restServices/arm.service';
 export class NoticeComponent implements OnInit {
 
   constructor(
-    private armService: ArmService,
+    private qualityNoticeService: QualityNoticeService,
     private _message: NzMessageService,
   ) { }
   
@@ -42,12 +41,9 @@ export class NoticeComponent implements OnInit {
 
   getList(){
     let params = {
-      // endTime:"",
-      // startTime:"",
-      // departmentId:"",
       title:"",
-      params3:this.pageNum,
-      params2:this.pageSize,
+      pageNumber:this.pageNum,
+      pageSize:this.pageSize,
     };
     if(this.endTime){
       params["endTime"] = this.endTime;
@@ -58,7 +54,7 @@ export class NoticeComponent implements OnInit {
     if(this.title){
       params.title = this.title;
     }
-    this.armService.getAll({
+    this.qualityNoticeService.getAllByQuery({
         params
     }).subscribe(response =>{
       if (response.errorCode === 0) {
@@ -68,7 +64,7 @@ export class NoticeComponent implements OnInit {
     })
   }
   delete(d){
-    this.armService.delete({
+    this.qualityNoticeService.delete({
       params:{
         ids: d.id
       }
@@ -82,7 +78,7 @@ export class NoticeComponent implements OnInit {
   }
   // 下线
   line(d){
-    this.armService.line({
+    this.qualityNoticeService.line({
       params:{
         id: d.id
       }
@@ -96,7 +92,7 @@ export class NoticeComponent implements OnInit {
   }
   // 发布
   push(d){
-    this.armService.push({
+    this.qualityNoticeService.push({
       params:{
         id: d.id
       }
@@ -110,7 +106,7 @@ export class NoticeComponent implements OnInit {
   }
   // 置顶
   top(d){
-    this.armService.top({
+    this.qualityNoticeService.top({
       params:{
         id: d.id
       }
