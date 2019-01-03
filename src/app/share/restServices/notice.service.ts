@@ -12,7 +12,7 @@ export class NoticeService {
   constructor(
     private httpClient: HttpClient
   ) { }
-  private url = '/v1/arms/:params1/:params2/:params3/:params4/:params5';
+  private url = '/v1/notice/:params1/:params2/:params3/:params4/:params5';
 
   // addOrUpdate
   @HttpConfig({
@@ -30,7 +30,7 @@ export class NoticeService {
   @HttpConfig({
     method: 'get',
     params: {
-      params1: 'getArms'
+      params1: 'getAllByQuery'
     },
     
   })

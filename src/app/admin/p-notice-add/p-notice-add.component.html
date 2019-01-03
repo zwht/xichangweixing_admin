@@ -1,0 +1,88 @@
+<div class="add-box" [style.overflow]="preivewShow?'hidden':'auto'">
+    <div class="preview overflow-auto;" *ngIf="preivewShow">
+      <div class="close">
+        <button (click)="previewClose()" nz-button>关闭</button>
+      </div>
+      <div class="preview-content">
+        <div class="fileHead">
+          <div class="fileTitle">{{validateForm.value.title}}</div>
+          <div class="policy_fbt"></div>
+          <div class="policy_tjlc">
+            <fieldset>
+              <legend>置顶</legend>
+              <p>{{validateForm.value.top?'是':'否'}}</p>
+            </fieldset>
+          </div>
+        </div>
+        <div style="padding:0 60px;min-height:200px;" [innerHTML]="preivewHtml">
+  
+        </div>
+      </div>
+  
+    </div>
+    <div class="heard">
+      <div>
+        <nz-breadcrumb>
+          <nz-breadcrumb-item>
+            <a [routerLink]="['/admin/notice']">通知公告</a>
+          </nz-breadcrumb-item>
+          <nz-breadcrumb-item>
+            <span class="span">{{title}}</span>
+          </nz-breadcrumb-item>
+        </nz-breadcrumb>
+      </div>
+    </div>
+    <div class="form-box" style="width:1100px">
+      <div class="btn-box" style=" text-align: right; margin: 10px auto;">
+        <button nz-button [routerLink]="['/admin/notice']" style="margin:0 10px" nzType="default">返回</button>
+        <button style="margin:0 10px" (click)="preview()" nz-button>预览</button>
+        <button *ngIf="showEdit"  style="margin:0 10px" (click)="submitForm()" nzType="primary" nz-button>保存</button>
+        <button *ngIf="showEdit"  style="margin:0 10px" (click)="submitForm(1)" nzType="primary" nz-button>保存并发布</button>
+      </div>
+      <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+        <nz-form-item>
+          <!--通知公告标题-->
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="title" nzRequired>名称</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input [readonly]="!showEdit" appTrim nz-input id="title" formControlName="title" placeholder="输入通知公告标题">
+            <nz-form-explain *ngIf="validateForm.get('title').dirty && validateForm.get('title').errors">
+              <ng-container *ngIf="validateForm.get('title').hasError('required')">
+                请输入通知公告标题！
+              </ng-container>
+              <ng-container *ngIf="validateForm.get('title').hasError('length')">
+                通知公告标题请少于60字！
+              </ng-container>
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+  
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="top" nzRequired>
+            <span>
+              置顶
+            </span>
+          </nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-radio-group [nzDisabled]="!showEdit"  formControlName="top">
+              <label nz-radio [nzValue]="1">是</label>
+              <label nz-radio [nzValue]="0">否</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+  
+        <p>正文部分：</p>
+        <nz-form-item>
+          <nz-form-explain *ngIf="validateForm.get('content').dirty && validateForm.get('content').errors">
+            <ng-container *ngIf="validateForm.get('content').hasError('required')">
+              <span style="color:red">详细信息不能为空！</span>
+            </ng-container>
+          </nz-form-explain>
+          <nz-form-control style="width:1060px; vertical-align:top;">
+            <app-wang-editor *ngIf ="showEdit"  id="content" formControlName="content"></app-wang-editor>
+            <div *ngIf ="!showEdit" style="padding:0 60px;border:1px solid #cccccc" [innerHTML]="readOnlyText"></div>
+          </nz-form-control>
+        </nz-form-item>
+  
+      </form>
+    </div>
+  </div>

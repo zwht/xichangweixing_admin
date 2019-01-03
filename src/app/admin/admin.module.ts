@@ -26,6 +26,8 @@ import { SelfChangePwdComponent } from './self-change-pwd/self-change-pwd.compon
 import { SelfMessageComponent } from './self-message/self-message.component';
 import { ArmMsgComponent } from './arm-msg/arm-msg.component';
 import { ArmMsgAddComponent } from './arm-msg-add/arm-msg-add.component';
+import { PNoticeComponent } from './p-notice/p-notice.component';
+import { PNoticeAddComponent } from './p-notice-add/p-notice-add.component';
 
 export const routes: Routes = [
     {
@@ -109,6 +111,33 @@ export const routes: Routes = [
                 },
                 canActivate: [PermissionGuardService]
             },
+
+            {
+                path: 'notice',
+                component: PNoticeComponent,
+                data: {
+                    name: '通知公告',
+                    menu: true
+                },
+                canActivate: [PermissionGuardService]
+            },
+            {
+                path: 'notice/add',
+                component: PNoticeAddComponent,
+                data: {
+                    name: '新增通知公告',
+                },
+                canActivate: [PermissionGuardService]
+            },
+            {
+                path: 'notice/edit/:id',
+                component: PNoticeAddComponent,
+                data: {
+                    name: '编辑通知公告',
+                },
+                canActivate: [PermissionGuardService]
+            },
+
             {
                 path: 'infomation',
                 loadChildren: './infomation/infomation.module#InfomationModule',
@@ -287,6 +316,8 @@ export const routes: Routes = [
         ManageRuleAddComponent,
         ComplainComponent,
         ComplainDetailComponent,
+        PNoticeComponent,
+        PNoticeAddComponent,
         DownloadListComponent,
         ArmMsgComponent,
         ArmMsgAddComponent,
