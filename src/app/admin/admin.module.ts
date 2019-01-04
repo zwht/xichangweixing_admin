@@ -256,6 +256,14 @@ export const routes: Routes = [
                 canActivate: [PermissionGuardService]
             },
             {
+                path: 'complain/detail/:id',
+                component: ComplainDetailComponent,
+                data: {
+                    name: '投诉举报详情',
+                },
+                canActivate: [PermissionGuardService]
+            },
+            {
                 path: 'download-list',
                 component: DownloadListComponent,
                 data: {
@@ -265,11 +273,43 @@ export const routes: Routes = [
                 canActivate: [PermissionGuardService]
             },
             {
+                path: 'download-list/add',
+                component: DownloadListAddComponent,
+                data: {
+                    name: '新增下载资料',
+                },
+                canActivate: [PermissionGuardService]
+            },
+            {
+                path: 'download-list/edit/:id',
+                component: DownloadListAddComponent,
+                data: {
+                    name: '编辑下载资料',
+                },
+                canActivate: [PermissionGuardService]
+            },
+            {
                 path: 'outlink',
                 component: OutlinkComponent,
                 data: {
                     name: '相关外链管理',
-                    menu: true
+                    menu:true,
+                },
+                canActivate: [PermissionGuardService]
+            },
+            {
+                path: 'outlink/add',
+                component: OutlinkAddComponent,
+                data: {
+                    name: '新增外部链接',
+                },
+                canActivate: [PermissionGuardService]
+            },
+            {
+                path: 'outlink/edit/:id',
+                component: OutlinkAddComponent,
+                data: {
+                    name: '编辑外部链接',
                 },
                 canActivate: [PermissionGuardService]
             },

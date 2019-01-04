@@ -1,3 +1,77 @@
-<p>
-  outlink-add works!
-</p>
+<div class="add-box" [style.overflow]="preivewShow?'hidden':'auto'">
+  <div class="preview overflow-auto;" *ngIf="preivewShow">
+    <div class="close">
+      <button (click)="previewClose()" nz-button>关闭</button>
+    </div>
+    <div class="preview-content">
+    </div>
+
+  </div>
+  <div class="heard">
+    <div>
+      <nz-breadcrumb>
+        <nz-breadcrumb-item>
+          <a [routerLink]="['/admin/outlink']">相关外链管理</a>
+        </nz-breadcrumb-item>
+        <nz-breadcrumb-item>
+          <span class="span">{{title}}</span>
+        </nz-breadcrumb-item>
+      </nz-breadcrumb>
+    </div>
+  </div>
+  <div class="form-box" style="width:1100px">
+    <div class="btn-box" style=" text-align: right; margin: 10px auto;">
+      <button nz-button [routerLink]="['/admin/outlink']" style="margin:0 10px" nzType="default">返回</button>
+      <button *ngIf="showEdit"  style="margin:0 10px" (click)="submitForm()" nzType="primary" nz-button>保存</button>
+      <button *ngIf="showEdit"  style="margin:0 10px" (click)="submitForm(1)" nzType="primary" nz-button>保存并发布</button>
+    </div>
+    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+      <nz-form-item>
+        <!--新闻标题-->
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="name" nzRequired>名称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input [readonly]="!showEdit" appTrim nz-input id="name" formControlName="name" placeholder="输入新闻标题">
+          <nz-form-explain *ngIf="validateForm.get('name').dirty && validateForm.get('name').errors">
+            <ng-container *ngIf="validateForm.get('name').hasError('required')">
+              请输入新闻标题！
+            </ng-container>
+            <ng-container *ngIf="validateForm.get('name').hasError('length')">
+              新闻标题请少于60字！
+            </ng-container>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <!--新闻标题-->
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="link" nzRequired>地址</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input [readonly]="!showEdit" appTrim nz-input id="link" formControlName="link" placeholder="输入新闻标题">
+          <nz-form-explain *ngIf="validateForm.get('link').dirty && validateForm.get('link').errors">
+            <ng-container *ngIf="validateForm.get('link').hasError('required')">
+              请输入新闻标题！
+            </ng-container>
+            <ng-container *ngIf="validateForm.get('link').hasError('length')">
+              新闻标题请少于60字！
+            </ng-container>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="top" nzRequired>
+          <span>
+            置顶
+          </span>
+        </nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-radio-group [nzDisabled]="!showEdit"  formControlName="top">
+            <label nz-radio [nzValue]="1">是</label>
+            <label nz-radio [nzValue]="0">否</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item>
+
+
+    </form>
+  </div>
+</div>
