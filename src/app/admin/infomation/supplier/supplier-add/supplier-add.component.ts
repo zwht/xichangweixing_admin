@@ -226,18 +226,18 @@ export class SupplierAddComponent implements OnInit {
   }
 
   tianjia() {
-    if (this.jiancha() === 1) {
-      return;
-    }
+    // if (this.jiancha() === 1) {
+    //   return;
+    // }
     let idddd;
     if (this.id === 'add') {
       idddd = '';
     } else {
       idddd = this.id;
-      const cityName = this.city.filter(x => x.cityCode === this.cityNum)[0].cityName;
-      const provinceName = this.province.filter(x => x.provinceCode === this.provinceNum)[0].provinceName;
-      this.region = this.cityNum + ',' + provinceName + cityName;
     }
+    const cityName = this.city.filter(x => x.cityCode === this.cityNum)[0].cityName;
+    const provinceName = this.province.filter(x => x.provinceCode === this.provinceNum)[0].provinceName;
+    this.region = this.cityNum + ',' + provinceName + cityName;
     this.supplierService['saveOrUpdate']({
       data: {
         name: this.name,

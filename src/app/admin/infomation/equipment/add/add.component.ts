@@ -26,6 +26,8 @@ export class AddComponent implements OnInit {
     id: '', // 供应商id
     name: '' // 供应商名字
   }];
+  model = ''; // 型号
+  leadingPerson = ''; // 采购负责人
   images = ''; // 图片
   remark = ''; // 备注
   imgName = null; // 图片名字
@@ -105,6 +107,8 @@ export class AddComponent implements OnInit {
           this.standard = response.data.standard;
           this.manufactureDate = response.data.manufactureDate;
           this.validity = response.data.validity;
+          this.leadingPerson = response.data.leadingPerson;
+          this.model = response.data.model;
           for (let index = 0; index < this.supplier.length; index++) {
             if (this.supplier[index].id === response.data.supplierId) {
               this.supplierNum = index;
@@ -166,6 +170,8 @@ export class AddComponent implements OnInit {
         supplierName: this.supplier[this.supplierNum].name,
         images: this.fileUrl,
         remark: this.remark,
+        model: this.model,
+        leadingPerson: this.leadingPerson,
         id: idddd
       }
     })
@@ -188,6 +194,10 @@ export class AddComponent implements OnInit {
       this.message.create('error', '请输入设备编号');
       return 1;
     }
+    if (this.model === '') {
+      this.message.create('error', '请输入设备型号');
+      return 1;
+    }
     if (this.name === '') {
       this.message.create('error', '请输入设备名称');
       return 1;
@@ -206,6 +216,10 @@ export class AddComponent implements OnInit {
     }
     if (this.standard === '') {
       this.message.create('error', '请输入标准或批号');
+      return 1;
+    }
+    if (this.leadingPerson === '') {
+      this.message.create('error', '采购负责人');
       return 1;
     }
     if (this.manufactureDate === '') {
