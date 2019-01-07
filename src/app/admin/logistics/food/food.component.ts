@@ -9,7 +9,7 @@ import { LogisticsService } from 'src/app/share/restServices/logistics.service';
   styleUrls: ['./food.component.less']
 })
 export class FoodComponent implements OnInit {
-  data: [];
+  data = [];
   dateRange = [];
   name;
   endTime;
