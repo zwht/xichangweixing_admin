@@ -1,3 +1,77 @@
-<p>
-  download-list-add works!
-</p>
+<div class="add-box" [style.overflow]="preivewShow?'hidden':'auto'">
+  <div class="preview overflow-auto;" *ngIf="preivewShow">
+    <div class="close">
+      <button (click)="previewClose()" nz-button>关闭</button>
+    </div>
+    <div class="preview-content">
+    </div>
+
+  </div>
+  <div class="heard">
+    <div>
+      <nz-breadcrumb>
+        <nz-breadcrumb-item>
+          <a [routerLink]="['/admin/download-list']">资料下载管理</a>
+        </nz-breadcrumb-item>
+        <nz-breadcrumb-item>
+          <span class="span">{{title}}</span>
+        </nz-breadcrumb-item>
+      </nz-breadcrumb>
+    </div>
+  </div>
+  <div class="form-box" style="width:1100px">
+    <div class="btn-box" style=" text-align: right; margin: 10px auto;">
+      <button nz-button [routerLink]="['/admin/download-list']" style="margin:0 10px" nzType="default">返回</button>
+      <button *ngIf="showEdit"  style="margin:0 10px" (click)="submitForm()" nzType="primary" nz-button>保存</button>
+      <button *ngIf="showEdit"  style="margin:0 10px" (click)="submitForm(1)" nzType="primary" nz-button>保存并发布</button>
+    </div>
+    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="subject" nzRequired>
+          <span>
+            学科
+          </span>
+        </nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-select style="width: 120px;" formControlName="subject" nzPlaceHolder="选择学科">
+            <nz-option *ngFor="let item of subjectList"  [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="validateForm.get('subject').dirty && validateForm.get('subject').errors">
+            <ng-container *ngIf="validateForm.get('subject').hasError('required')">
+              请选择学科！
+            </ng-container>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="top" nzRequired>
+          <span>
+            置顶
+          </span>
+        </nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-radio-group [nzDisabled]="!showEdit"  formControlName="top">
+            <label nz-radio [nzValue]="1">是</label>
+            <label nz-radio [nzValue]="0">否</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="" nzRequired>
+          <span>
+            内容
+          </span>
+        </nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <a *ngIf = "showEdit"  nz-button [nzLoading]="upLoading" nzType="primary"  (click)='openFile()'>{{upLoading?'上传中...':'选择文件'}}</a>
+          <p>{{fileName}}</p>
+          <input (change)='uploadFile($event)' style="display: none" type="file"  id='file'>
+        </nz-form-control>
+      </nz-form-item>
+
+    </form>
+  </div>
+</div>
