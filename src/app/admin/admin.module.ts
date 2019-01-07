@@ -293,7 +293,7 @@ export const routes: Routes = [
                 component: OutlinkComponent,
                 data: {
                     name: '相关外链管理',
-                    menu:true,
+                    menu: true,
                 },
                 canActivate: [PermissionGuardService]
             },
