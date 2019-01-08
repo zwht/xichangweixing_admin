@@ -3,6 +3,7 @@ import { AdminDivisionService } from '../../../../share/restServices/admin-divis
 import { BidsService } from '../../../../share/restServices/bids.service';
 import { NzMessageService } from 'ng-zorro-antd';
 import { Router, ActivatedRoute } from '@angular/router';
+import { FileService } from '../../../../share/restServices/file.service';
 
 @Component({
   selector: 'app-bigs-add',
@@ -33,17 +34,48 @@ export class BigsAddComponent implements OnInit {
   remark = ''; // 备注
   region = '';
 
+  imgzs = { src: '../../../../../assets/images/moren/moren.jpg' }; // 图片展示
+  imgName = null; // 图片名字
+  fileUrl = ''; // 图片
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private bidsService: BidsService,
     private adminDivisionService: AdminDivisionService,
+    private fileService: FileService,
     private message: NzMessageService,
   ) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
     this.whetherAdd();
+  }
+
+
+  fileChange(e) {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append(file.name, file);
+    this.fileService['uploadHead']({
+      data: formData
+    })
+      .subscribe(response => {
+        if (response.errorCode === 0) {
+          this.message.create('Success', '添加成功');
+          this.imgName = file.name;
+          this.fileUrl = response.data.fileUrl;
+          const that = this;
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = function () {
+            file.src = this.result;
+            that.imgzs = file;
+          };
+        } else {
+          this.message.create('error', '错误!错误代码' + response.errorCode);
+        }
+      });
   }
 
   whetherAdd() {
@@ -54,6 +86,11 @@ export class BigsAddComponent implements OnInit {
       this.title = '修改投标机构';
       this.getByID();
     }
+  }
+
+  filedown(a) {
+    this.fileUrl = a;
+    this.imgzs.src = '/v1/file/downloadHead?fileUrl=' + a.replace(/\//, '%2f');
   }
 
   getByID() {
@@ -78,6 +115,9 @@ export class BigsAddComponent implements OnInit {
           this.phone = response.data.phone;
           this.grade = response.data.grade; // 评级
           this.remark = response.data.remark; // 备注
+          if (response.data.logo !== '') {
+            this.filedown(response.data.logo);
+          }
         } else {
           this.message.create('error', '错误!错误代码' + response.errorCode);
         }
@@ -185,10 +225,10 @@ export class BigsAddComponent implements OnInit {
       idddd = '';
     } else {
       idddd = this.id;
-      const cityName = this.city.filter(x => x.cityCode === this.cityNum)[0].cityName;
-      const provinceName = this.province.filter(x => x.provinceCode === this.provinceNum)[0].provinceName;
-      this.region = this.cityNum + ',' + provinceName + cityName;
     }
+    const cityName = this.city.filter(x => x.cityCode === this.cityNum)[0].cityName;
+    const provinceName = this.province.filter(x => x.provinceCode === this.provinceNum)[0].provinceName;
+    this.region = this.cityNum + ',' + provinceName + cityName;
     this.bidsService['saveOrUpdate']({
       data: {
         code: this.code,
@@ -204,7 +244,8 @@ export class BigsAddComponent implements OnInit {
         phone: this.phone,
         grade: this.grade,
         remark: this.remark,
-        id: idddd
+        id: idddd,
+        logo: this.fileUrl,
       }
     })
       .subscribe(response => {
