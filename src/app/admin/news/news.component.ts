@@ -34,7 +34,6 @@ export class NewsComponent implements OnInit {
   pageNum = 1
   totalCount = 0;
   pageSize = 10;
-  
   ngOnInit() {
     this.getList()
   }
@@ -47,8 +46,32 @@ export class NewsComponent implements OnInit {
       this.endTime = null;
     }
   }
-
-
+  allCk = false;
+  allChecked(v){
+    for(let item of this.list){
+      item.checked = v;
+    }
+  }
+  batchDelete(){
+    let d = [];
+    for(let item of this.list){
+      if(item.checked){
+        d.push(item.id);
+      }
+    }
+    
+    this.newsService.delete({
+      params:{
+        ids: d
+      }
+    }).subscribe(res => {
+      if (res.errorCode === 0) {
+        this.getList()
+      }else{
+        this._message.info(res.msg || res.data || '删除失败')
+      }
+    })
+  }
   getList(){
     let params = {
       // endTime:"",
@@ -72,6 +95,10 @@ export class NewsComponent implements OnInit {
     }).subscribe(response =>{
       if (response.errorCode === 0) {
         this.list = response.data.pageData;
+        for(let item of this.list){
+          item.checked = false;
+        }
+        this.allCk = false;
         this.totalCount = response.data.totalCount;
       }
     })

@@ -28,6 +28,7 @@
         <span>工作动态列表</span>
       </div>
       <div class="btn-box">
+        <button nz-button nzType="danger" (click)="batchDelete()" >批量删除</button>
         <button nz-button nzType="tianjia" routerLink="./add">新增工作动态</button>
       </div>
     </div>
@@ -41,6 +42,7 @@
         <!-- <nz-table #basicTable [nzData]="list" [nzShowPagination]="false"> -->
         <thead>
           <tr>
+            <th nzShowCheckbox [(nzChecked)]="allCk"  (nzCheckedChange)="allChecked($event)"></th>
             <th>序号</th>
             <th>标题</th>
             <th>摘要</th>
@@ -53,6 +55,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let data of list let i= index">
+            <td nzShowCheckbox [(nzChecked)]="data.checked" ></td>
             <td>{{i}}</td>
             <td>{{data.title}}</td>
             <td>{{data.abstracts}}</td>

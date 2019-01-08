@@ -26,6 +26,7 @@ export class ManageRuleComponent implements OnInit {
   pageNum = 1
   totalCount = 0;
   pageSize = 10;
+  allCk = false;
   
   ngOnInit() {
     this.getList()
@@ -40,6 +41,31 @@ export class ManageRuleComponent implements OnInit {
     }
   }
 
+  allChecked(v){
+    for(let item of this.list){
+      item.checked = v;
+    }
+  }
+  batchDelete(){
+    let d = [];
+    for(let item of this.list){
+      if(item.checked){
+        d.push(item.id);
+      }
+    }
+    
+    this.manageService.delete({
+      params:{
+        ids: d
+      }
+    }).subscribe(res => {
+      if (res.errorCode === 0) {
+        this.getList()
+      }else{
+        this._message.info(res.msg || res.data || '删除失败')
+      }
+    })
+  }
 
   getList(){
     let params = {
@@ -64,6 +90,10 @@ export class ManageRuleComponent implements OnInit {
     }).subscribe(response =>{
       if (response.errorCode === 0) {
         this.list = response.data.pageData;
+        for(let item of this.list){
+          item.checked = false;
+        }
+        this.allCk = false;
         this.totalCount = response.data.totalCount;
       }
     })
