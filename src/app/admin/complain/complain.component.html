@@ -25,11 +25,11 @@
     </div>
     <div class="table-head">
       <div class="head-h2">
-        <span>要闻列表</span>
+        <span>投诉列表</span>
       </div>
-      <div class="btn-box">
+      <!-- <div class="btn-box">
         <button nz-button nzType="tianjia" routerLink="./add">新增强军要闻</button>
-      </div>
+      </div> -->
     </div>
     <div class="table-box">
       <nz-table #basicTable 
@@ -59,11 +59,7 @@
             <td>{{data.readCount}}</td>
             <td>{{data.status==1?'已发布':'未发布'}}</td>
             <td>
-              <a class="op" [routerLink]="'./edit/'+data.id">查看</a>
-              <a class="op" *ngIf="data.status==1"  (click)="line(data)">下线</a>
-              <a class="op" *ngIf="data.status==1" (click)="top(data)">置顶</a>
-              <a class="op" *ngIf="data.status==0"  (click)="push(data)">发布</a>
-              <a class="op" *ngIf="data.status==0" (click)="delete(data)">删除</a>
+              <a class="op" [routerLink]="'./detail/'+data.id">查看</a>
             </td>
           </tr>
         </tbody>
