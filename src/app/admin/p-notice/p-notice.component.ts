@@ -22,6 +22,7 @@ export class PNoticeComponent implements OnInit {
   title = "";
   startTime = null;
   endTime = null;
+  status = null;
   
   pageNum = 1
   totalCount = 0;
@@ -32,8 +33,8 @@ export class PNoticeComponent implements OnInit {
   }
   onChange(e){
     if(e.length){
-      this.startTime = e[0].getTime()
-      this.endTime = e[1].getTime()
+      this.startTime = e[0].getFullYear()+"-"+("00"+( e[0].getMonth()+1)).substr(-2)+"-"+("00"+ e[0].getDate()).substr(-2);
+      this.endTime = e[1].getFullYear()+"-"+("00"+( e[1].getMonth()+1)).substr(-2)+"-"+("00"+ e[1].getDate()).substr(-2);
     }else{
       this.startTime = null;
       this.endTime = null;
@@ -76,6 +77,9 @@ export class PNoticeComponent implements OnInit {
       pageNumber:this.pageNum,
       pageSize:this.pageSize,
     };
+    if(this.status||this.status === 0){
+      params["status"] = this.status;
+    }
     if(this.endTime){
       params["endTime"] = this.endTime;
     }

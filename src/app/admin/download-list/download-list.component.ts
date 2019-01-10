@@ -41,6 +41,32 @@ export class DownloadListComponent implements OnInit {
   }
 
 
+  allCk = false;
+  allChecked(v){
+    for(let item of this.list){
+      item.checked = v;
+    }
+  }
+  batchDelete(){
+    // let d = [];
+    // for(let item of this.list){
+    //   if(item.checked){
+    //     d.push(item.id);
+    //   }
+    // }
+    
+    // this.downloadService.delete({
+    //   params:{
+    //     ids: d
+    //   }
+    // }).subscribe(res => {
+    //   if (res.errorCode === 0) {
+    //     this.getList()
+    //   }else{
+    //     this._message.info(res.msg || res.data || '删除失败')
+    //   }
+    // })
+  }
   getList(){
     let params = {
       // endTime:"",

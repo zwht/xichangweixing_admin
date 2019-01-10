@@ -7,15 +7,20 @@
           <input nz-input [(ngModel)]="title" placeholder="查询标题" >
         </div>
         <div class="chaxun">
+          <span>行业</span>
+          <nz-select style="width: 120px;" [(ngModel)]="industry" nzAllowClear nzPlaceHolder="状态">
+            <nz-option *ngFor="let item of industryList"  [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+          </nz-select>
+        </div>
+        <div class="chaxun">
           <span>更新时间</span>
-          <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="onChange($event)" nzShowTime></nz-range-picker>
+          <nz-range-picker [nzFormat]="'yyyy/MM/dd'" [(ngModel)]="dateRange" (ngModelChange)="onChange($event)" nzShowTime></nz-range-picker>
         </div>
         <div class="chaxun">
           <span>状态</span>
-          <nz-select style="width: 120px;"  nzAllowClear nzPlaceHolder="状态">
-            <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-            <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
-            <nz-option nzValue="disabled" nzLabel="Disabled" nzDisabled></nz-option>
+          <nz-select style="width: 120px;" [(ngModel)]="status" nzAllowClear nzPlaceHolder="状态">
+            <nz-option [nzValue]="1" nzLabel="已发布"></nz-option>
+            <nz-option [nzValue]="0" nzLabel="未发布"></nz-option>
           </nz-select>
         </div>
         <div class="chaxun">

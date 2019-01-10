@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { QualityEventService } from 'src/app/share/restServices/quality-event.service';
+import { SupplierService } from 'src/app/share/restServices/supplier.service';
 
 @Component({
   selector: 'app-solution',
@@ -10,16 +11,20 @@ import { QualityEventService } from 'src/app/share/restServices/quality-event.se
 export class SolutionComponent implements OnInit {
 
   constructor(
+    private supplierService: SupplierService,
     private qualityEventService: QualityEventService,
     private _message: NzMessageService,
   ) { }
   
   dateRange = [];
   list = [];
+  supplierList = [];
 
   title = "";
   startTime = null;
   endTime = null;
+  status = null;
+  supplierId = null;
   
   pageNum = 1
   totalCount = 0;
@@ -27,13 +32,22 @@ export class SolutionComponent implements OnInit {
   
   ngOnInit() {
     this.getList()
+    this.getIndustry();
+  }
+  getIndustry(){
+    this.supplierService.getAllByQuery({
+      params:{
+        pageNumber:1,
+        pageSize:1000,
+      }
+    }).subscribe(res=>{
+      this.supplierList = res.data.pageData
+    })
   }
   onChange(e){
-    if(e.length){
-      this.startTime = e[0].getTime()
-      this.endTime = e[1].getTime()
+    if(e){
+      this.endTime = e.getFullYear()+"-"+("00"+( e.getMonth()+1)).substr(-2)+"-"+("00"+ e.getDate()).substr(-2);
     }else{
-      this.startTime = null;
       this.endTime = null;
     }
   }
@@ -67,10 +81,16 @@ export class SolutionComponent implements OnInit {
 
   getList(){
     let params = {
-      title:"",
+      materials:"",
       pageNumber:this.pageNum,
       pageSize:this.pageSize,
     };
+    if(this.status||this.status === 0){
+      params["status"] = this.status;
+    }
+    if(this.supplierId){
+      params["supplierId"] = this.supplierId;
+    }
     if(this.endTime){
       params["endTime"] = this.endTime;
     }
@@ -78,7 +98,7 @@ export class SolutionComponent implements OnInit {
       params["startTime"] = this.startTime;
     }
     if(this.title){
-      params.title = this.title;
+      params.materials = this.title;
     }
     this.qualityEventService.getAllByQuery({
         params
