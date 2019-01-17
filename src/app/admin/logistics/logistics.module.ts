@@ -19,7 +19,7 @@ export const routes: Routes = [
       canActivate: [PermissionGuardService]
   },
   {
-      path: 'supplier',
+      path: 'car',
       component: CarComponent,
       data: {
           name: '车辆接送',

@@ -9,11 +9,14 @@ import { LogisticsService } from 'src/app/share/restServices/logistics.service';
   styleUrls: ['./food.component.less']
 })
 export class FoodComponent implements OnInit {
-  data = [];
+
   dateRange = [];
-  name;
-  endTime;
-  startTime;
+  list = [];
+
+  title = "";
+  startTime = null;
+  endTime = null;
+  
   pageNum = 1
   totalCount = 0;
   pageSize = 10;
@@ -21,36 +24,55 @@ export class FoodComponent implements OnInit {
   constructor(
     private logisticsService: LogisticsService,
     private _message: NzMessageService,
-    private sessionService: SessionService,) { }
+    private sessionService: SessionService,
+     ) { }
 
-  ngOnInit() {
-    this.getList();
+    ngOnInit() {
+      this.getList();
+    }
+    onChange(e){
+      if(e.length){
+        this.startTime = e[0].getTime()
+        this.endTime = e[1].getTime()
+      }else{
+        this.startTime = null;
+        this.endTime = null;
+      }
+    }
+  click(d) {
+    let data = JSON.parse(JSON.stringify(d))
+    data.status = 1;
+    this.logisticsService.orderingMealsSaveOrUpdate({
+      data
+    }).subscribe(response => {
+      if (response.errorCode === 0) {
+        this.getList();
+      }
+    })
   }
-
-
-  getList(){
+  getList() {
     let params = {
       // endTime:"",
       // startTime:"",
       // departmentId:"",
-      name:"",
-      pageNumber:this.pageNum,
-      pageSize:this.pageSize,
+      name: "",
+      pageNumber: this.pageNum,
+      pageSize: this.pageSize,
     };
-    if(this.endTime){
+    if (this.endTime) {
       params["vehicleEndTime"] = this.endTime;
     }
-    if(this.startTime){
+    if (this.startTime) {
       params["vehicleStartTime"] = this.startTime;
     }
-    if(this.name){
-      params.name = this.name;
+    if (this.title) {
+      params.name = this.title;
     }
     this.logisticsService.orderingMeals({
-        params
-    }).subscribe(response =>{
+      params
+    }).subscribe(response => {
       if (response.errorCode === 0) {
-        this.data = response.data.pageData;
+        this.list = response.data.pageData;
         this.totalCount = response.data.totalCount;
       }
     })

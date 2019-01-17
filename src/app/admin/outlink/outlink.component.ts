@@ -24,6 +24,7 @@ export class OutlinkComponent implements OnInit {
   startTime = null;
   endTime = null;
   
+  status = null;
   pageNum = 1
   totalCount = 0;
   pageSize = 10;
@@ -33,8 +34,8 @@ export class OutlinkComponent implements OnInit {
   }
   onChange(e){
     if(e.length){
-      this.startTime = e[0].getTime()
-      this.endTime = e[1].getTime()
+      this.startTime = e[0].getFullYear()+"-"+("00"+( e[0].getMonth()+1)).substr(-2)+"-"+("00"+ e[0].getDate()).substr(-2);
+      this.endTime = e[1].getFullYear()+"-"+("00"+( e[1].getMonth()+1)).substr(-2)+"-"+("00"+ e[1].getDate()).substr(-2);
     }else{
       this.startTime = null;
       this.endTime = null;
@@ -73,10 +74,13 @@ export class OutlinkComponent implements OnInit {
       // endTime:"",
       // startTime:"",
       // departmentId:"",
-      title:"",
+      name:"",
       pageNumber:this.pageNum,
       pageSize:this.pageSize,
     };
+    if(this.status||this.status === 0){
+      params["status"] = this.status;
+    }
     if(this.endTime){
       params["endTime"] = this.endTime;
     }
@@ -84,7 +88,7 @@ export class OutlinkComponent implements OnInit {
       params["startTime"] = this.startTime;
     }
     if(this.title){
-      params.title = this.title;
+      params.name = this.title;
     }
     this.outlinkService.getAll({
         params
@@ -116,7 +120,7 @@ export class OutlinkComponent implements OnInit {
   line(d){
     this.outlinkService.line({
       params:{
-        id: d.id
+        ids: d.id
       }
     }).subscribe(res => {
       if (res.errorCode === 0) {
@@ -130,7 +134,7 @@ export class OutlinkComponent implements OnInit {
   push(d){
     this.outlinkService.push({
       params:{
-        id: d.id
+        ids: d.id
       }
     }).subscribe(res => {
       if (res.errorCode === 0) {
@@ -144,7 +148,7 @@ export class OutlinkComponent implements OnInit {
   top(d){
     this.outlinkService.top({
       params:{
-        id: d.id
+        ids: d.id
       }
     }).subscribe(res => {
       if (res.errorCode === 0) {
