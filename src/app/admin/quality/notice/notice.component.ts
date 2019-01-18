@@ -66,7 +66,7 @@ export class NoticeComponent implements OnInit {
     })
   }
 
-  getList(){
+  getList(n?){
     let params = {
       title:"",
       pageNumber:this.pageNum,
