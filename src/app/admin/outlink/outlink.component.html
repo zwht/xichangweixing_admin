@@ -8,14 +8,13 @@
         </div>
         <div class="chaxun">
           <span>更新时间</span>
-          <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="onChange($event)" nzShowTime></nz-range-picker>
+          <nz-range-picker [nzFormat]="'yyyy/MM/dd'" [(ngModel)]="dateRange" (ngModelChange)="onChange($event)" nzShowTime></nz-range-picker>
         </div>
         <div class="chaxun">
           <span>状态</span>
-          <nz-select style="width: 120px;"  nzAllowClear nzPlaceHolder="状态">
-            <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-            <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
-            <nz-option nzValue="disabled" nzLabel="Disabled" nzDisabled></nz-option>
+          <nz-select style="width: 120px;" [(ngModel)]="status" nzAllowClear nzPlaceHolder="状态">
+            <nz-option [nzValue]="1" nzLabel="已发布"></nz-option>
+            <nz-option [nzValue]="0" nzLabel="未发布"></nz-option>
           </nz-select>
         </div>
         <div class="chaxun">
@@ -28,6 +27,7 @@
         <span>外链列表</span>
       </div>
       <div class="btn-box">
+        <button nz-button nzType="danger" (click)="batchDelete()" >批量删除</button>
         <button nz-button nzType="tianjia" routerLink="./add">新增外部链接</button>
       </div>
     </div>
@@ -41,6 +41,7 @@
         <!-- <nz-table #basicTable [nzData]="list" [nzShowPagination]="false"> -->
         <thead>
           <tr>
+            <th nzShowCheckbox [(nzChecked)]="allCk"  (nzCheckedChange)="allChecked($event)"></th>
             <th>序号</th>
             <th>标题</th>
             <th>地址</th>
@@ -52,18 +53,18 @@
         </thead>
         <tbody>
           <tr *ngFor="let data of list let i= index">
+            <td nzShowCheckbox [(nzChecked)]="data.checked" ></td>
             <td>{{i}}</td>
             <td>{{data.name}}</td>
             <td>{{data.link}}</td>
             <td>{{data.updateTime}}</td>
             <td>{{data.updateUser}}</td>
-            <td>{{data.status==1?'已发布':'未发布'}}</td>
+            <td>{{data.status}}</td>
             <td>
-              <a class="op" [routerLink]="'./edit/'+data.id">查看</a>
-              <a class="op" *ngIf="data.status==1"  (click)="line(data)">下线</a>
-              <a class="op" *ngIf="data.status==1" (click)="top(data)">置顶</a>
-              <a class="op" *ngIf="data.status==0"  (click)="push(data)">发布</a>
-              <a class="op" *ngIf="data.status==0" (click)="delete(data)">删除</a>
+              <a class="op" *ngIf="data.status=='已发布'"  (click)="line(data)">下线</a>
+              <a class="op" *ngIf="data.status=='已发布'" (click)="top(data)">置顶</a>
+              <a class="op" *ngIf="data.status=='未发布'"  (click)="push(data)">发布</a>
+              <a class="op" *ngIf="data.status=='未发布'" (click)="delete(data)">删除</a>
             </td>
           </tr>
         </tbody>

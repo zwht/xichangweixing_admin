@@ -9,15 +9,17 @@ import { LogisticsService } from 'src/app/share/restServices/logistics.service';
   styleUrls: ['./car.component.less']
 })
 export class CarComponent implements OnInit {
-  data = [];
+
   dateRange = [];
-  name;
-  endTime;
-  startTime;
+  list = [];
+
+  title = "";
+  startTime = null;
+  endTime = null;
+  
   pageNum = 1
   totalCount = 0;
   pageSize = 10;
-
   constructor(
     private logisticsService: LogisticsService,
     private _message: NzMessageService,
@@ -26,14 +28,33 @@ export class CarComponent implements OnInit {
   ngOnInit() {
     this.getList();
   }
+  onChange(e){
+    if(e.length){
+      this.startTime = e[0].getTime()
+      this.endTime = e[1].getTime()
+    }else{
+      this.startTime = null;
+      this.endTime = null;
+    }
+  }
 
-
+  click(d){
+    let data = JSON.parse(JSON.stringify(d))
+    data.status = 1;
+    this.logisticsService.vehiclePickSaveOrUpdate({
+      data
+    }).subscribe(response =>{
+      if (response.errorCode === 0) {
+        this.getList();
+      }
+    })
+  }
   getList(){
     let params = {
       // endTime:"",
       // startTime:"",
       // departmentId:"",
-      name:"",
+      title:"",
       pageNumber:this.pageNum,
       pageSize:this.pageSize,
     };
@@ -43,14 +64,14 @@ export class CarComponent implements OnInit {
     if(this.startTime){
       params["vehicleStartTime"] = this.startTime;
     }
-    if(this.name){
-      params.name = this.name;
+    if(this.title){
+      params.title = this.title;
     }
     this.logisticsService.vehiclePick({
         params
     }).subscribe(response =>{
       if (response.errorCode === 0) {
-        this.data = response.data.pageData;
+        this.list = response.data.pageData;
         this.totalCount = response.data.totalCount;
       }
     })

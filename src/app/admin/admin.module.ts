@@ -113,7 +113,7 @@ export const routes: Routes = [
             },
 
             {
-                path: 'notice',
+                path: 'pnotice',
                 component: PNoticeComponent,
                 data: {
                     name: '通知公告',
@@ -122,7 +122,7 @@ export const routes: Routes = [
                 canActivate: [PermissionGuardService]
             },
             {
-                path: 'notice/add',
+                path: 'pnotice/add',
                 component: PNoticeAddComponent,
                 data: {
                     name: '新增通知公告',
@@ -130,7 +130,7 @@ export const routes: Routes = [
                 canActivate: [PermissionGuardService]
             },
             {
-                path: 'notice/edit/:id',
+                path: 'pnotice/edit/:id',
                 component: PNoticeAddComponent,
                 data: {
                     name: '编辑通知公告',

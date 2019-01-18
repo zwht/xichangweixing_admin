@@ -162,7 +162,7 @@ export class PNoticeAddComponent implements OnInit {
         .subscribe(response => {
           this.loading = false;
           if (response.errorCode === 0) {
-            this.router.navigate(['/admin/notice']);
+            this.router.navigate(['/admin/pnotice']);
           } else {
             this._message.create('error', response.msg, { nzDuration: 4000 });
           }

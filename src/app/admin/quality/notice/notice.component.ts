@@ -20,6 +20,7 @@ export class NoticeComponent implements OnInit {
   title = "";
   startTime = null;
   endTime = null;
+  status = null;
   
   pageNum = 1
   totalCount = 0;
@@ -30,14 +31,40 @@ export class NoticeComponent implements OnInit {
   }
   onChange(e){
     if(e.length){
-      this.startTime = e[0].getTime()
-      this.endTime = e[1].getTime()
-    }else{
+      this.startTime = e[0].getFullYear()+"-"+("00"+( e[0].getMonth()+1)).substr(-2)+"-"+("00"+ e[0].getDate()).substr(-2);
+      this.endTime = e[1].getFullYear()+"-"+("00"+( e[1].getMonth()+1)).substr(-2)+"-"+("00"+ e[1].getDate()).substr(-2);
+     }else{
       this.startTime = null;
       this.endTime = null;
     }
   }
 
+  allCk = false;
+  allChecked(v){
+    for(let item of this.list){
+      item.checked = v;
+    }
+  }
+  batchDelete(){
+    let d = [];
+    for(let item of this.list){
+      if(item.checked){
+        d.push(item.id);
+      }
+    }
+    
+    this.qualityNoticeService.delete({
+      params:{
+        ids: d
+      }
+    }).subscribe(res => {
+      if (res.errorCode === 0) {
+        this.getList()
+      }else{
+        this._message.info(res.msg || res.data || '删除失败')
+      }
+    })
+  }
 
   getList(){
     let params = {
@@ -45,6 +72,9 @@ export class NoticeComponent implements OnInit {
       pageNumber:this.pageNum,
       pageSize:this.pageSize,
     };
+    if(this.status||this.status === 0){
+      params["status"] = this.status;
+    }
     if(this.endTime){
       params["endTime"] = this.endTime;
     }
@@ -59,6 +89,10 @@ export class NoticeComponent implements OnInit {
     }).subscribe(response =>{
       if (response.errorCode === 0) {
         this.list = response.data.pageData;
+        for(let item of this.list){
+          item.checked = false;
+        }
+        this.allCk = false;
         this.totalCount = response.data.totalCount;
       }
     })

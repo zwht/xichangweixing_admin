@@ -25,7 +25,17 @@ export class LogisticsService {
   roomReservation(data: HttpData): Observable<any> {
     return data.observable;
   }
-
+// roomReservation/saveOrUpdate
+  @HttpConfig({
+    method: 'post',
+    params: {
+      params1: 'roomReservation',
+      params2: 'saveOrUpdate'
+    },
+  })
+  roomReservationSaveOrUpdate(data: HttpData): Observable<any> {
+    return data.observable;
+  }
   // orderingMeals
   @HttpConfig({
     method: 'get',
@@ -37,7 +47,17 @@ export class LogisticsService {
   orderingMeals(data: HttpData): Observable<any> {
     return data.observable;
   }
-
+  // orderingMeals/saveOrUpdate
+  @HttpConfig({
+    method: 'post',
+    params: {
+      params1: 'orderingMeals',
+      params2: 'saveOrUpdate'
+    },
+  })
+  orderingMealsSaveOrUpdate(data: HttpData): Observable<any> {
+    return data.observable;
+  }
   // vehiclePick
   @HttpConfig({
     method: 'get',
@@ -49,4 +69,17 @@ export class LogisticsService {
   vehiclePick(data: HttpData): Observable<any> {
     return data.observable;
   }
+  // vehiclePickSaveOrUpdate
+  @HttpConfig({
+    method: 'post',
+    params: {
+      params1: 'vehiclePick',
+      params2: 'saveOrUpdate'
+    },
+  })
+  vehiclePickSaveOrUpdate(data: HttpData): Observable<any> {
+    return data.observable;
+  }
+
+  
 }

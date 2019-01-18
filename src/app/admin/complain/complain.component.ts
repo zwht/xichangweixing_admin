@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { SessionService } from 'src/app/share/services/session.service';
-import { ArmService } from 'src/app/share/restServices/arm.service';
+import { ComplainService } from 'src/app/share/restServices/complain.service';
 
 @Component({
   selector: 'app-complain',
@@ -11,7 +11,7 @@ import { ArmService } from 'src/app/share/restServices/arm.service';
 export class ComplainComponent implements OnInit {
 
   constructor(
-    private armService: ArmService,
+    private complainService: ComplainService,
     private _message: NzMessageService,
     private sessionService: SessionService,
   ) { }
@@ -59,7 +59,7 @@ export class ComplainComponent implements OnInit {
     if(this.title){
       params.title = this.title;
     }
-    this.armService.getAll({
+    this.complainService.getAll({
         params
     }).subscribe(response =>{
       if (response.errorCode === 0) {
@@ -69,21 +69,21 @@ export class ComplainComponent implements OnInit {
     })
   }
   delete(d){
-    this.armService.delete({
-      params:{
-        ids: d.id
-      }
-    }).subscribe(res => {
-      if (res.errorCode === 0) {
-        this.getList()
-      }else{
-        this._message.info(res.msg || res.data || '删除失败')
-      }
-    })
+    // this.complainService.delete({
+    //   params:{
+    //     ids: d.id
+    //   }
+    // }).subscribe(res => {
+    //   if (res.errorCode === 0) {
+    //     this.getList()
+    //   }else{
+    //     this._message.info(res.msg || res.data || '删除失败')
+    //   }
+    // })
   }
   // 下线
   line(d){
-    this.armService.line({
+    this.complainService.line({
       params:{
         id: d.id
       }
@@ -97,7 +97,7 @@ export class ComplainComponent implements OnInit {
   }
   // 发布
   push(d){
-    this.armService.push({
+    this.complainService.push({
       params:{
         id: d.id
       }
@@ -111,7 +111,7 @@ export class ComplainComponent implements OnInit {
   }
   // 置顶
   top(d){
-    this.armService.top({
+    this.complainService.top({
       params:{
         id: d.id
       }
