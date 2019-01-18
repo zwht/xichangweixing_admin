@@ -22,6 +22,7 @@ export class EquipmentComponent implements OnInit {
   totalCount = 0; // 总数据
   status = ''; // 状态
   supplierName = ''; // 供应商
+  leadingPerson = ''; // 采购负责人
 
   ids = []; // 删除id
 
@@ -43,6 +44,7 @@ export class EquipmentComponent implements OnInit {
         name: this.name,
         status: this.status,
         supplierName: this.supplierName,
+        leadingPerson: this.leadingPerson
       }
     })
       .subscribe(response => {

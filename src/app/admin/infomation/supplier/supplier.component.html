@@ -33,7 +33,7 @@
     </div>
   </div>
   <nz-table #rowSelectionTable [nzData]="dataSet" [nzTotal]="totalCount" [nzFrontPagination]="false" [nzPageSize]="pageSize"
-    [(nzPageIndex)]="pageNumber" (nzPageIndexChange)="fileChange()" (nzCurrentPageDataChange)="currentPageDataChange($event)">
+    [(nzPageIndex)]="pageNumber" (nzPageIndexChange)="getList()" (nzCurrentPageDataChange)="currentPageDataChange($event)">
     <thead>
       <tr>
         <th style="text-align: center" nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate"

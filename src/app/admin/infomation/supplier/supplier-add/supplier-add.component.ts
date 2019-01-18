@@ -32,6 +32,7 @@ export class SupplierAddComponent implements OnInit {
   phone = '';
   remark = '';
 
+  images = '';
   imgzs = { src: '../../../../../assets/images/moren/moren.jpg' }; // 图片展示
   imgName = null; // 图片名字
   fileUrl = ''; // 图片

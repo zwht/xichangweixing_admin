@@ -17,6 +17,7 @@ export class BigsAddComponent implements OnInit {
   code = ''; // 机构编号
   name = ''; // 机构名称
 
+  images = '';
   provinceNum: string = null;
   cityNum: string = null;
   province: Array<{ provinceCode: string, provinceName: string }> = [];
