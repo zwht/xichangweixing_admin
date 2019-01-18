@@ -22,6 +22,7 @@ export class ComplainComponent implements OnInit {
   title = "";
   startTime = null;
   endTime = null;
+  status = null;
   
   pageNum = 1
   totalCount = 0;
@@ -32,8 +33,8 @@ export class ComplainComponent implements OnInit {
   }
   onChange(e){
     if(e.length){
-      this.startTime = e[0].getTime()
-      this.endTime = e[1].getTime()
+      this.startTime = e[0].getFullYear()+"-"+("00"+( e[0].getMonth()+1)).substr(-2)+"-"+("00"+ e[0].getDate()).substr(-2);
+      this.endTime = e[1].getFullYear()+"-"+("00"+( e[1].getMonth()+1)).substr(-2)+"-"+("00"+ e[1].getDate()).substr(-2);
     }else{
       this.startTime = null;
       this.endTime = null;
@@ -50,11 +51,12 @@ export class ComplainComponent implements OnInit {
       params3:this.pageNum,
       params2:this.pageSize,
     };
+
     if(this.endTime){
-      params["endTime"] = this.endTime;
+      params["updateEndTime"] = this.endTime;
     }
     if(this.startTime){
-      params["startTime"] = this.startTime;
+      params["updateStartTime"] = this.startTime;
     }
     if(this.title){
       params.title = this.title;

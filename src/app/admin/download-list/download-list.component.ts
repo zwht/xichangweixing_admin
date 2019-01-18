@@ -77,11 +77,14 @@ export class DownloadListComponent implements OnInit {
       params3:this.pageNum,
       params2:this.pageSize,
     };
+    if(this.status||this.status === 0){
+      params["status"] = this.status;
+    }
     if(this.endTime){
-      params["endTime"] = this.endTime;
+      params["updateEndTime"] = this.endTime;
     }
     if(this.startTime){
-      params["startTime"] = this.startTime;
+      params["updateStartTime"] = this.startTime;
     }
     if(this.title){
       params.title = this.title;
