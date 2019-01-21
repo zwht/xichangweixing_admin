@@ -26,6 +26,18 @@ export class ComplainService {
     return data.observable;
   }
 
+  // /reports/handl
+  @HttpConfig({
+    method: 'post',
+    params: {
+      params1: 'handl'
+    },
+    
+  })
+  handl(data: HttpData): Observable<any> {
+    return data.observable;
+  }
+
   // list
   @HttpConfig({
     method: 'get',

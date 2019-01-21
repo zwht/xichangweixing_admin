@@ -78,15 +78,15 @@ export class ComplainDetailComponent implements OnInit {
     }
     let data = JSON.parse(JSON.stringify(this.detail))
     data.status = 1;
-    
-    // this.complainService.push({
-    //   data: {
-    //     id:this.id
-    //   }
-    // })
-    this.complainService.addAndUpdate({
-      data: data
+    this.complainService.handl({
+      data: {
+        id:this.id,
+        suggestion:this.dealText,
+      }
     })
+    // this.complainService.handl({
+    //   data: data
+    // })
     .subscribe(response => {
       this.loading = false;
       if (response.errorCode === 0) {

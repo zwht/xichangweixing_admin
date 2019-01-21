@@ -39,27 +39,27 @@ export class IndexComponent implements OnInit {
     if (num) {
       this.pageNum = num;
     }
-    // this.userService.list({
-    //   params: {
-    //     params2: this.pageNum,
-    //     params3: this.pageSize
-    //   },
-    //   data: {
-    //     loginName: this.loginName,
-    //     name: this.name,
-    //     phone: this.juese,
-    //     email: this.zhungtai
-    //   }
-    // })
-    //   .subscribe(response => {
-    //     if (response.code === 200) {
-    //       response.data.pageData.forEach(aaa => {
-    //         aaa.roles = aaa.roles.split(',');
-    //       });
-    //       this.list = response.data.pageData;
-    //       this.totalCount = response.data.totalCount;
-    //     }
-    //   });
+    this.userService.getAllUser({
+      params: {
+        params2: this.pageNum,
+        params3: this.pageSize
+      },
+      data: {
+        loginName: this.loginName,
+        name: this.name,
+        phone: this.juese,
+        email: this.zhungtai
+      }
+    })
+      .subscribe(response => {
+        if (response.code === 200) {
+          response.data.pageData.forEach(aaa => {
+            aaa.roles = aaa.roles.split(',');
+          });
+          this.list = response.data.pageData;
+          this.totalCount = response.data.totalCount;
+        }
+      });
   }
   cancel() { }
 
