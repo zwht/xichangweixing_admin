@@ -27,7 +27,6 @@ export class AddComponent implements OnInit {
     private groupService: GroupService,
     private codeDataService: CodeDataService,
     private _message: NzMessageService,
-    private regExpService: RegExpService,
     private fb: FormBuilder,
     private userService: UserService,
     private router: Router,
@@ -46,33 +45,17 @@ export class AddComponent implements OnInit {
     }
 
     this.validateForm = this.fb.group({
-      parentId: [null, [Validators.required]],
-      email: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required]],
-      checkPassword: [null, [Validators.required, this.confirmationValidator]],
       name: [null, [Validators.required]],
-      phone: [null, [Validators.required]],
       loginName: [null, [Validators.required]],
-      img: [null, [Validators.required]],
-      lcode: [null, [Validators.required, function (control: FormControl) {
-        let isPass = false;
-        if (control.value) {
-          control.value.forEach(item => {
-            if (item.checked) {
-              isPass = true;
-            }
-          });
-        }
-        return isPass ? null : { lcode: { info: '类型不能为空' } };
-      }]]
+      phone: [null, [Validators.required]],
+      password: [null, [Validators.required]],
+      remark: [null, []],      
     });
-    this.getList();
   }
   submitForm(): void {
     for (const i in this.validateForm.controls) {
       if ((this.validateForm as any).controls[i]) {
         this.validateForm.controls[i].markAsDirty();
-        this.validateForm.controls[i].updateValueAndValidity();
       }
     }
     if (this.validateForm.valid) {
@@ -89,38 +72,24 @@ export class AddComponent implements OnInit {
         data: {
           loginName: this.validateForm.value.loginName,
           name: this.validateForm.value.name,
-          password: btoa(encodeURIComponent(this.validateForm.value.password)),
+          // password: btoa(encodeURIComponent(this.validateForm.value.password)),
+          password: this.validateForm.value.password,
           phone: this.validateForm.value.phone,
-          email: this.validateForm.value.email,
-          roles: this.setRoles(roles),
-          img: this.validateForm.value.img,
-          parentId: this.validateForm.value.parentId
+          remark: this.validateForm.value.remark,
         }
       })
         .subscribe(response => {
           this.loading = false;
           if (response.code === 200) {
-            this.checkOptionsOne.forEach(bbb => {
-              bbb.checked = false;
-            });
+            // this.checkOptionsOne.forEach(bbb => {
+            //   bbb.checked = false;
+            // });
+            this._message.create('success', '创建成功', { nzDuration: 4000 });
             this.router.navigate(['/admin/user']);
           } else {
             this._message.create('error', response.msg, { nzDuration: 4000 });
           }
         });
-    }
-  }
-
-  updateConfirmValidator(): void {
-    /** wait for refresh value */
-    Promise.resolve().then(() => this.validateForm.controls.checkPassword.updateValueAndValidity());
-  }
-
-  confirmationValidator = (control: FormControl): { [s: string]: boolean } => {
-    if (!control.value) {
-      return { required: true };
-    } else if (control.value !== this.validateForm.controls.password.value) {
-      return { confirm: true, error: true };
     }
   }
 

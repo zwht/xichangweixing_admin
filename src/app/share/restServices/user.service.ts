@@ -35,9 +35,21 @@ export class UserService {
       params1: 'user',
       params2: 'addUser'
     },
-    roles: [1001]
   })
   add(data: HttpData): Observable<any> {
+    return data.observable;
+  }
+
+  // updateUser
+  @HttpConfig({
+    method: 'post',
+    params: {
+      params1: 'user',
+      params2: 'updateUser'
+    },
+    roles: []
+  })
+  updateUser(data: HttpData): Observable<any> {
     return data.observable;
   }
 
@@ -79,7 +91,18 @@ export class UserService {
   disableUser(data: HttpData): Observable<any> {
     return data.observable;
   }
-
+// able
+  @HttpConfig({
+    method: 'post',
+    params: {
+      params1: 'user',
+      params2: 'able'
+    },
+    roles: []
+  })
+  able(data: HttpData): Observable<any> {
+    return data.observable;
+  }
   // updatePassword
   @HttpConfig({
     method: 'post',
@@ -93,17 +116,5 @@ export class UserService {
     return data.observable;
   }
 
-  // updateUser
-  @HttpConfig({
-    method: 'post',
-    params: {
-      params1: 'user',
-      params2: 'updateUser'
-    },
-    roles: []
-  })
-  updateUser(data: HttpData): Observable<any> {
-    return data.observable;
-  }
 
 }

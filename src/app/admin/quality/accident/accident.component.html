@@ -14,7 +14,7 @@
         </div>
         <div class="chaxun">
           <span>事件级别</span>
-          <nz-select style="width: 120px;" [(ngModel)]="eventLevel" nzAllowClear nzPlaceHolder="状态">
+          <nz-select style="width: 120px;" [(ngModel)]="eventLevel" nzAllowClear nzPlaceHolder="事件级别">
             <nz-option [nzValue]="1" nzLabel="质量问题"></nz-option>
             <nz-option [nzValue]="2" nzLabel="质量事件"></nz-option>
             <nz-option [nzValue]="3" nzLabel="质量事故"></nz-option>
@@ -51,7 +51,7 @@
         [nzPageIndex]="pageNum"
         [nzTotal]="totalCount"
         [nzPageSize]="pageSize"
-        (nzPageIndexChange)="getList($event)">
+        (nzPageIndexChange)="getList()">
         <!-- <nz-table #basicTable [nzData]="list" [nzShowPagination]="false"> -->
         <thead>
           <tr>

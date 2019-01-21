@@ -21,16 +21,16 @@ export const routes: Routes = [
         },
         canActivate: [PermissionGuardService]
     },
-    {
-        path: 'qx',
-        component: QxComponent,
-        data: {
-            name: '权限管理',
-            roles: [1001],
-            menu: true
-        },
-        canActivate: [PermissionGuardService]
-    },
+    // {
+    //     path: 'qx',
+    //     component: QxComponent,
+    //     data: {
+    //         name: '权限管理',
+    //         roles: [1001],
+    //         menu: true
+    //     },
+    //     canActivate: [PermissionGuardService]
+    // },
     {
         path: 'add',
         component: AddComponent,
@@ -45,15 +45,6 @@ export const routes: Routes = [
         component: UpdateComponent,
         data: {
             name: '编辑用户',
-            roles: [1001]
-        },
-        canActivate: [PermissionGuardService]
-    },
-    {
-        path: 'relation/:id',
-        component: VpnComponent,
-        data: {
-            name: 'vpn绑定',
             roles: [1001]
         },
         canActivate: [PermissionGuardService]
