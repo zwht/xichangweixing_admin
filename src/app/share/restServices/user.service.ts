@@ -35,7 +35,6 @@ export class UserService {
       params1: 'user',
       params2: 'addUser'
     },
-    roles: [1001]
   })
   add(data: HttpData): Observable<any> {
     return data.observable;

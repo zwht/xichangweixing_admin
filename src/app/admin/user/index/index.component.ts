@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../share/restServices/user.service';
 import { CodeDataService } from '../../../share/services/code-data.service';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-index',
@@ -10,7 +11,7 @@ import { CodeDataService } from '../../../share/services/code-data.service';
 export class IndexComponent implements OnInit {
 
   loginName = null;
-  name = null;
+  name = '';
   juese = null;
   zhungtai = null;
   pageSize = 10;
@@ -41,14 +42,12 @@ export class IndexComponent implements OnInit {
     }
     this.userService.getAllUser({
       params: {
-        params2: this.pageNum,
-        params3: this.pageSize
-      },
-      data: {
-        loginName: this.loginName,
+        pageNumber: this.pageNum,
+        pageSize: this.pageSize,
         name: this.name,
-        phone: this.juese,
-        email: this.zhungtai
+        // name: this.name,
+        // phone: this.juese,
+        // email: this.zhungtai
       }
     })
       .subscribe(response => {

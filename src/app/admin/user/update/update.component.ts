@@ -50,12 +50,10 @@ export class UpdateComponent implements OnInit {
     }
 
     this.validateForm = this.fb.group({
-      email: [null, [Validators.email]],
       name: [null, [Validators.required]],
       phone: [null, [Validators.required]],
       loginName: [null, [Validators.required]],
-      lcode: [null, [Validators.required]],
-      img: [null, [Validators.required]],
+      remark: [null, []],      
     });
   }
 
@@ -76,61 +74,41 @@ export class UpdateComponent implements OnInit {
       }).map(item => {
         return item.code;
       });
-      // this.userService.update({
-      //   data: {
-      //     id: this.id,
-      //     loginName: this.validateForm.value.loginName,
-      //     name: this.validateForm.value.name,
-      //     phone: this.validateForm.value.phone,
-      //     email: this.validateForm.value.email,
-      //     roles: this.fanyi(roles),
-      //     img: this.validateForm.value.img
-      //   }
-      // })
-      //   .subscribe(response => {
-      //     this.loading = false;
-      //     if (response.code === 200) {
-      //       this.router.navigate(['/admin/user']);
-      //     } else {
-      //       this._message.create('error', response.msg, { nzDuration: 4000 });
-      //     }
-      //   });
+      this.userService.updateUser({
+        data: {
+          id: this.id,
+          loginName: this.validateForm.value.loginName,
+          name: this.validateForm.value.name,
+          phone: this.validateForm.value.phone,
+          remark: this.validateForm.value.remark,
+        }
+      })
+        .subscribe(response => {
+          this.loading = false;
+          if (response.code === 200) {
+            this.router.navigate(['/admin/user']);
+            this._message.create('success', '创建成功', { nzDuration: 4000 });
+          } else {
+            this._message.create('error', response.msg, { nzDuration: 4000 });
+          }
+        });
     }
   }
   getById(id) {
     this.userService.getById({
       params: {
-        params2: id
+        params3: id
       },
       data: {}
     })
       .subscribe(response => {
-        if (response.code === 200) {
-          if (response.data.roles !== '') {
-            const aaa = response.data.roles.split(',');
-            this.checkOptionsOne.forEach(item => {
-              aaa.forEach(obj => {
-                if (item.code === obj) { item.checked = true; }
-              });
-            });
-          }
+        if (response.errorCode == 0) {
+         
           this.validateForm = this.fb.group({
-            email: [response.data.email, [Validators.email]],
             name: [response.data.name, [Validators.required]],
             phone: [response.data.phone, [Validators.required]],
             loginName: [response.data.loginName, [Validators.required]],
-            lcode: [this.checkOptionsOne, [Validators.required, function (control: FormControl) {
-              let isPass = false;
-              if (control.value) {
-                control.value.forEach(item => {
-                  if (item.checked) {
-                    isPass = true;
-                  }
-                });
-              }
-              return isPass ? null : { lcode: { info: '类型不能为空' } };
-            }]],
-            img: [response.data.img, [Validators.required]],
+            remark: [response.data.remark, []],      
           });
         }
       });
