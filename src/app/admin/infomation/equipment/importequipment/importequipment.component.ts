@@ -10,6 +10,27 @@ import { NzMessageService } from 'ng-zorro-antd';
 })
 export class ImportequipmentComponent implements OnInit {
   excle = '';
+  dataHead = [];
+  dataMessage = [];
+  dataSet: Array<{
+    code: String;
+    equipTypeName: String;
+    format: String;
+    leadingPerson: String;
+    manufactureDate: String;
+    measurement: String;
+    model: String;
+    name: String;
+    packageFormat: String;
+    remark: String;
+    standard: String;
+    supplierName: String;
+    validity: String;
+  }>;
+  isLoadingOne = false;
+  redisKey = '';
+  OJBK = true;
+
 
   constructor(
     private sessionService: SessionService,
@@ -21,6 +42,8 @@ export class ImportequipmentComponent implements OnInit {
   }
 
   fileChange(e) {
+    this.OJBK = true;
+    this.isLoadingOne = true;
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append(file.name, file);
@@ -29,7 +52,30 @@ export class ImportequipmentComponent implements OnInit {
     })
       .subscribe(response => {
         if (response.errorCode === 0) {
-          debugger
+          if (response.data.messages.length === 0) {
+            this.dataHead = response.data.head;
+            this.dataSet = response.data.data;
+            this.redisKey = response.data.redisKey;
+            this.OJBK = false;
+          } else {
+            this.dataMessage = response.data.messages;
+          }
+        } else {
+          this.message.create('error', '错误!错误代码' + response.errorCode);
+        }
+        this.isLoadingOne = false;
+      });
+  }
+
+  shangchuan() {
+    this.equipmentService['importData']({
+      data: {
+        redisKey: this.redisKey,
+      }
+    })
+      .subscribe(response => {
+        if (response.errorCode === 0) {
+          this.message.create('success', '成功');
         } else {
           this.message.create('error', '错误!错误代码' + response.errorCode);
         }

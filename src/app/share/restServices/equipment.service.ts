@@ -62,15 +62,27 @@ export class EquipmentService {
     return data.observable;
   }
 
-    // readExcel
-    @HttpConfig({
-      method: 'post',
-      params: {
-        params1: 'readExcel'
-      },
-      roles: []
-    })
-    readExcel(data: HttpData): Observable<any> {
-      return data.observable;
-    }
+  // readExcel
+  @HttpConfig({
+    method: 'post',
+    params: {
+      params1: 'readExcel'
+    },
+    roles: []
+  })
+  readExcel(data: HttpData): Observable<any> {
+    return data.observable;
+  }
+
+  // importData
+  @HttpConfig({
+    method: 'post',
+    params: {
+      params1: 'importData'
+    },
+    roles: []
+  })
+  importData(data: HttpData): Observable<any> {
+    return data.observable;
+  }
 }
