@@ -28,8 +28,8 @@
     <div style="margin-bottom: 16px; float: right;">
       <span style="margin-right: 8px;">您已选择{{checkedNumber}}项</span>
       <button style="margin:0 10px" nz-button [nzType]="'primary'" [disabled]="disabledButton" (click)="operateData()">批量删除</button>
-      <button style="margin:0 10px" nz-button (click)="goto('infomation/supplier/add','add')">新增设备</button>
-      <button style="margin:0 10px" nz-button (click)="goto('infomation/equipment/import','')">导入设备</button>
+      <button style="margin:0 10px" nz-button (click)="goto('infomation/supplier/add','add')">新增供应商</button>
+      <button style="margin:0 10px" nz-button (click)="goto('infomation/equipment/import','')">导入供应商</button>
     </div>
   </div>
   <nz-table #rowSelectionTable [nzData]="dataSet" [nzTotal]="totalCount" [nzFrontPagination]="false" [nzPageSize]="pageSize"

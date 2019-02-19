@@ -28,7 +28,7 @@
     <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
       <nz-form-item>
         <!--新闻标题-->
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="name" nzRequired>名称</nz-form-label>
+        <nz-form-label  style="width:60px; float: left;" nzFor="name" nzRequired>名称</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
           <input [readonly]="!showEdit" appTrim nz-input id="name" formControlName="name" placeholder="输入新闻标题">
           <nz-form-explain *ngIf="validateForm.get('name').dirty && validateForm.get('name').errors">
@@ -43,7 +43,7 @@
       </nz-form-item>
       <nz-form-item>
         <!--新闻标题-->
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="link" nzRequired>地址</nz-form-label>
+        <nz-form-label  style="width:60px; float: left;" nzFor="link" nzRequired>地址</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
           <input [readonly]="!showEdit" appTrim nz-input id="link" formControlName="link" placeholder="输入新闻标题">
           <nz-form-explain *ngIf="validateForm.get('link').dirty && validateForm.get('link').errors">
@@ -58,7 +58,7 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="top" nzRequired>
+        <nz-form-label  style="width:60px; float: left;" nzFor="top" nzRequired>
           <span>
             置顶
           </span>

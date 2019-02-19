@@ -79,16 +79,16 @@ export class UserService {
     return data.observable;
   }
 
-  // disableUser
+  // disable
   @HttpConfig({
     method: 'post',
     params: {
       params1: 'user',
-      params2: 'disableUser'
+      params2: 'disable',
     },
     roles: []
   })
-  disableUser(data: HttpData): Observable<any> {
+  disable(data: HttpData): Observable<any> {
     return data.observable;
   }
 // able

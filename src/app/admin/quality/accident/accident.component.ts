@@ -20,7 +20,7 @@ export class AccidentComponent implements OnInit {
   list = [];
   supplierList = [];
 
-  title = "";
+  name = "";
   endTime = null;
   status = null;
   eventLevel = null;
@@ -81,7 +81,7 @@ export class AccidentComponent implements OnInit {
 
   getList(){
     let params = {
-      title:"",
+      name:"",
       pageNumber:this.pageNum,
       pageSize:this.pageSize,
     };
@@ -98,8 +98,8 @@ export class AccidentComponent implements OnInit {
     if(this.endTime){
       params["occurrenceTime"] = this.endTime;
     }
-    if(this.title){
-      params.title = this.title;
+    if(this.name){
+      params.name = this.name;
     }
     this.qualityEventService.getAllByQuery({
         params

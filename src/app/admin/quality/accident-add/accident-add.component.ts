@@ -63,7 +63,7 @@ export class AccidentAddComponent implements OnInit {
             this.readOnlyText = this.sanitizer.bypassSecurityTrustHtml(detail.content);
             this.title = "查看事件"
           }
-          this.validateForm.get('title').setValue(detail.title);
+          this.validateForm.get('name').setValue(detail.name);
 
           this.validateForm.get('remark').setValue(detail.remark);
           this.validateForm.get('supplierId').setValue(detail.supplierId);
@@ -79,7 +79,7 @@ export class AccidentAddComponent implements OnInit {
       });
     }
     this.validateForm = this.fb.group({
-      title: [null, [Validators.required,this.NameLength]],
+      name: [null, [Validators.required,this.NameLength]],
       remark:[null, [Validators.required]],
       eventLevel:[null, [Validators.required]],
       materials:[null, [Validators.required]],
@@ -170,7 +170,7 @@ export class AccidentAddComponent implements OnInit {
     if (this.validateForm.valid) {
       this.loading = true;
       let data = {
-        title: this.validateForm.value.title,
+        name: this.validateForm.value.name,
         supplierId: this.validateForm.value.supplierId,
         remark:this.validateForm.value.remark,
         eventLevel: this.validateForm.value.eventLevel,

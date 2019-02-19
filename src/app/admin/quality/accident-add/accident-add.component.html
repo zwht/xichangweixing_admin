@@ -46,14 +46,14 @@
     <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
       <nz-form-item>
         <!--通知标题-->
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="title" nzRequired>名称</nz-form-label>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="name" nzRequired>名称</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
-          <input [readonly]="!showEdit" appTrim nz-input id="title" formControlName="title" placeholder="输入通知标题">
-          <nz-form-explain *ngIf="validateForm.get('title').dirty && validateForm.get('title').errors">
-            <ng-container *ngIf="validateForm.get('title').hasError('required')">
+          <input [readonly]="!showEdit" appTrim nz-input id="name" formControlName="name" placeholder="输入通知标题">
+          <nz-form-explain *ngIf="validateForm.get('name').dirty && validateForm.get('name').errors">
+            <ng-container *ngIf="validateForm.get('name').hasError('required')">
               请输入通知标题！
             </ng-container>
-            <ng-container *ngIf="validateForm.get('title').hasError('length')">
+            <ng-container *ngIf="validateForm.get('name').hasError('length')">
               通知标题请少于60字！
             </ng-container>
           </nz-form-explain>

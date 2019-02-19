@@ -34,7 +34,7 @@
       </div>
       <div class="btn-box">
         <button nz-button nzType="danger" (click)="batchDelete()" >批量删除</button>
-        <button nz-button nzType="tianjia" routerLink="./add">新增质量事件</button>
+        <button nz-button nzType="tianjia" routerLink="./add">新增质量问题</button>
       </div>
     </div>
     <div class="table-box">
@@ -52,7 +52,6 @@
             <th>标题</th>
             <th>更新时间</th>
             <th>操作人</th>
-            <th>阅读量</th>
             <th>状态</th>
             <th>操作</th>
           </tr>
@@ -64,7 +63,6 @@
             <td>{{data.title}}</td>
             <td>{{data.updateTime}}</td>
             <td>{{data.updateUser}}</td>
-            <td>{{data.readCount}}</td>
             <td>{{data.status==1?'已发布':'未发布'}}</td>
             <td>
               <a class="op" [routerLink]="'./edit/'+data.id">查看</a>

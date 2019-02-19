@@ -12,7 +12,7 @@ export class IndexComponent implements OnInit {
 
   loginName = null;
   name = '';
-  juese = null;
+  phone = null;
   zhungtai = null;
   pageSize = 10;
   pageNum = 1;
@@ -45,16 +45,12 @@ export class IndexComponent implements OnInit {
         pageNumber: this.pageNum,
         pageSize: this.pageSize,
         name: this.name,
-        // name: this.name,
-        // phone: this.juese,
+        phone: this.phone,
         // email: this.zhungtai
       }
     })
       .subscribe(response => {
-        if (response.code === 200) {
-          response.data.pageData.forEach(aaa => {
-            aaa.roles = aaa.roles.split(',');
-          });
+        if (response.errorCode === 1) {
           this.list = response.data.pageData;
           this.totalCount = response.data.totalCount;
         }
@@ -62,18 +58,33 @@ export class IndexComponent implements OnInit {
   }
   cancel() { }
 
-  deldeldel(id) {
-    // this.userService.del({
-    //   params: {
-    //     params2: id
-    //   },
-    //   data: {}
-    // })
-    //   .subscribe(response => {
-    //     if (response.code === 200) {
-    //       this.getList();
-    //     }
-    //   });
+  deldeldel(id, key) {
+    if (key) {
+      this.userService.able({
+        params: {
+          id
+        },
+        data: {}
+      })
+        .subscribe(response => {
+          if (response.errorCode === 0) {
+            this.getList();
+          }
+        });
+    } else {
+      this.userService.disable({
+        params: {
+          id
+        },
+        data: {}
+      })
+        .subscribe(response => {
+          if (response.errorCode === 0) {
+            this.getList();
+          }
+        });
+    }
+
   }
 
   StateOK(id) {

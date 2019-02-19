@@ -47,7 +47,7 @@
     <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
       <nz-form-item>
         <!--管理规定标题-->
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="title" nzRequired>名称</nz-form-label>
+        <nz-form-label  style="width:60px; float: left;" nzFor="title" nzRequired>名称</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
           <input [readonly]="!showEdit" appTrim nz-input id="title" formControlName="title" placeholder="输入管理规定标题">
           <nz-form-explain *ngIf="validateForm.get('title').dirty && validateForm.get('title').errors">
@@ -63,7 +63,7 @@
 
 
       <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="top" nzRequired>
+        <nz-form-label  style="width:60px; float: left;" nzFor="top" nzRequired>
           <span>
             置顶
           </span>

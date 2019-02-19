@@ -59,7 +59,7 @@
     <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
       <nz-form-item>
         <!--工作动态标题-->
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="title" nzRequired>名称</nz-form-label>
+        <nz-form-label style="width:60px; float: left;"  nzFor="title" nzRequired>名称</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
           <input [readonly]="!showEdit" appTrim nz-input id="title" formControlName="title" placeholder="输入工作动态标题">
           <nz-form-explain *ngIf="validateForm.get('title').dirty && validateForm.get('title').errors">
@@ -74,7 +74,7 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="abstracts" nzRequired>
+        <nz-form-label style="width:60px; float: left;"  nzFor="abstracts" nzRequired>
           <span>
             摘要
           </span>
@@ -86,8 +86,8 @@
           </nz-form-explain>
         </nz-form-control>
       </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="face" nzRequired>
+      <nz-form-item style="width:500px; float: left;">
+        <nz-form-label style="width:60px; float: left;"  nzFor="face" nzRequired>
           <span>
             封面
           </span>
@@ -99,8 +99,8 @@
         </nz-form-control>
       </nz-form-item>
 
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="top" nzRequired>
+      <nz-form-item style="width:300px; float: left;">
+        <nz-form-label style="width:60px; float: left;"  nzFor="top" nzRequired>
           <span>
             置顶
           </span>
@@ -112,8 +112,7 @@
           </nz-radio-group>
         </nz-form-control>
       </nz-form-item>
-
-      <p>正文部分：</p>
+      <p style="clear: both;">正文部分：</p>
       <nz-form-item>
         <nz-form-explain *ngIf="validateForm.get('content').dirty && validateForm.get('content').errors">
           <ng-container *ngIf="validateForm.get('content').hasError('required')">
@@ -125,7 +124,6 @@
           <div *ngIf ="!showEdit" style="padding:0 60px;border:1px solid #cccccc" [innerHTML]="readOnlyText"></div>
         </nz-form-control>
       </nz-form-item>
-
     </form>
   </div>
 </div>

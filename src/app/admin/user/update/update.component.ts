@@ -53,7 +53,7 @@ export class UpdateComponent implements OnInit {
       name: [null, [Validators.required]],
       phone: [null, [Validators.required]],
       loginName: [null, [Validators.required]],
-      remark: [null, []],      
+      remark: [null, []],
     });
   }
 
@@ -85,9 +85,9 @@ export class UpdateComponent implements OnInit {
       })
         .subscribe(response => {
           this.loading = false;
-          if (response.code === 200) {
+          if (response.errorCode === 0) {
             this.router.navigate(['/admin/user']);
-            this._message.create('success', '创建成功', { nzDuration: 4000 });
+            this._message.create('success', '更新成功', { nzDuration: 4000 });
           } else {
             this._message.create('error', response.msg, { nzDuration: 4000 });
           }
@@ -103,12 +103,12 @@ export class UpdateComponent implements OnInit {
     })
       .subscribe(response => {
         if (response.errorCode == 0) {
-         
+
           this.validateForm = this.fb.group({
             name: [response.data.name, [Validators.required]],
             phone: [response.data.phone, [Validators.required]],
             loginName: [response.data.loginName, [Validators.required]],
-            remark: [response.data.remark, []],      
+            remark: [response.data.remark, []],
           });
         }
       });

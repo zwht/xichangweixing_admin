@@ -49,7 +49,7 @@ export class AddComponent implements OnInit {
       loginName: [null, [Validators.required]],
       phone: [null, [Validators.required]],
       password: [null, [Validators.required]],
-      remark: [null, []],      
+      remark: [null, []],
     });
   }
   submitForm(): void {
@@ -80,14 +80,14 @@ export class AddComponent implements OnInit {
       })
         .subscribe(response => {
           this.loading = false;
-          if (response.code === 200) {
+          if (response.errorCode === 0) {
             // this.checkOptionsOne.forEach(bbb => {
             //   bbb.checked = false;
             // });
             this._message.create('success', '创建成功', { nzDuration: 4000 });
             this.router.navigate(['/admin/user']);
           } else {
-            this._message.create('error', response.msg, { nzDuration: 4000 });
+            this._message.create('error', response.data, { nzDuration: 4000 });
           }
         });
     }
