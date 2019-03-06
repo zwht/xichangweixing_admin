@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../../../../share/services/session.service';
 import { EquipmentService } from '../../../../share/restServices/equipment.service';
 import { NzMessageService } from 'ng-zorro-antd';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-importequipment',
@@ -12,6 +13,7 @@ export class ImportequipmentComponent implements OnInit {
   excle = '';
   dataHead = [];
   dataMessage = [];
+  fuckK = true;
   dataSet: Array<{
     code: String;
     equipTypeName: String;
@@ -36,6 +38,7 @@ export class ImportequipmentComponent implements OnInit {
     private sessionService: SessionService,
     private message: NzMessageService,
     private equipmentService: EquipmentService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -47,10 +50,12 @@ export class ImportequipmentComponent implements OnInit {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append(file.name, file);
+    this.fuckK = false;
     this.equipmentService['readExcel']({
       data: formData
     })
       .subscribe(response => {
+        this.fuckK = true;
         if (response.errorCode === 0) {
           if (response.data.messages.length === 0) {
             this.dataHead = response.data.head;
@@ -76,8 +81,13 @@ export class ImportequipmentComponent implements OnInit {
       .subscribe(response => {
         if (response.errorCode === 0) {
           this.message.create('success', '成功');
+          this.router.navigate(['admin/infomation/equipment']);
         } else {
-          this.message.create('error', '错误!错误代码' + response.errorCode);
+          const srt = response.data.reduce((pr, item) => {
+            pr += item;
+            return pr;
+          }, '');
+          this.message.create('error', srt);
         }
       });
   }

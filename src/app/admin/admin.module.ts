@@ -39,7 +39,7 @@ export const routes: Routes = [
                 component: NewsComponent,
                 data: {
                     name: '新闻管理',
-                    menu: true
+                    menu: false
                 },
                 canActivate: [PermissionGuardService]
             },

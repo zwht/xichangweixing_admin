@@ -61,10 +61,9 @@
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="materials" nzRequired>涉及物料</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
-          <input [readonly]="!showEdit" appTrim nz-input id="materials" formControlName="materials" placeholder="输入通知标题">
+          <input [readonly]="!showEdit" appTrim nz-input id="materials" formControlName="materials" placeholder="请输入涉及物料">
           <nz-form-explain *ngIf="validateForm.get('materials').dirty && validateForm.get('materials').errors">
             <ng-container *ngIf="validateForm.get('materials').hasError('required')">
-              请输入涉及物料！
             </ng-container>
           </nz-form-explain>
         </nz-form-control>

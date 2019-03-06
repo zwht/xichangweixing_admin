@@ -32,7 +32,7 @@
       <button style="margin:0 10px" nz-button (click)="goto('infomation/equipment/import','')">导入供应商</button>
     </div>
   </div>
-  <nz-table #rowSelectionTable [nzData]="dataSet" [nzTotal]="totalCount" [nzFrontPagination]="false" [nzPageSize]="pageSize"
+  <nz-table #rowSelectionTable [nzData]="dataSet" [nzTotal]="totalCount" [nzFrontPagination]="false" [(nzPageSize)]="pageSize"
     [(nzPageIndex)]="pageNumber" (nzPageIndexChange)="getList()" (nzCurrentPageDataChange)="currentPageDataChange($event)">
     <thead>
       <tr>

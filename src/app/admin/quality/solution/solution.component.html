@@ -40,16 +40,16 @@
     <div class="table-box">
       <nz-table #basicTable 
         [nzData]="list" [nzFrontPagination]="false"
-        [nzPageIndex]="pageNum"
+        [(nzPageIndex)]="pageNum"
         [nzTotal]="totalCount"
-        [nzPageSize]="pageSize"
+        [(nzPageSize)]="pageSize"
         (nzPageIndexChange)="getList()">
         <!-- <nz-table #basicTable [nzData]="list" [nzShowPagination]="false"> -->
         <thead>
           <tr>
             <th nzShowCheckbox [(nzChecked)]="allCk"  (nzCheckedChange)="allChecked($event)"></th>
             <th>序号</th>
-            <th>标题</th>
+            <th>涉及物料</th>
             <th>更新时间</th>
             <th>操作人</th>
             <th>状态</th>
@@ -60,7 +60,7 @@
           <tr *ngFor="let data of list let i= index">
             <td nzShowCheckbox [(nzChecked)]="data.checked" ></td>
             <td>{{i}}</td>
-            <td>{{data.title}}</td>
+            <td>{{data.materials}}</td>
             <td>{{data.updateTime}}</td>
             <td>{{data.updateUser}}</td>
             <td>{{data.status==1?'已发布':'未发布'}}</td>

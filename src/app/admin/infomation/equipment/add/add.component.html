@@ -1,43 +1,43 @@
-<div style="width: 60%;margin: 30px auto;">
+<div style="width: 800px;margin: 30px auto;">
   <div class="title">{{title}}</div>
   <div nz-row style="margin-bottom: 70px;">
-    <div nz-col nzSpan="4" class="ennn">设备编号:</div>
-    <div nz-col nzSpan="20" class="emmm"><input nz-input placeholder="请输入设备编号" [(ngModel)]="code"></div>
-    <div nz-col nzSpan="4" class="ennn">设备型号:</div>
-    <div nz-col nzSpan="20" class="emmm"><input nz-input placeholder="请输入设备型号" [(ngModel)]="model"></div>
-    <div nz-col nzSpan="4" class="ennn">设备名称:</div>
-    <div nz-col nzSpan="20" class="emmm"><input nz-input placeholder="请输入设备名称" [(ngModel)]="name"></div>
-    <div nz-col nzSpan="4" class="ennn">规格:</div>
-    <div nz-col nzSpan="20" class="emmm"><input nz-input placeholder="请输入规格" [(ngModel)]="format"></div>
-    <div nz-col nzSpan="4" class="ennn">包装规格</div>
-    <div nz-col nzSpan="20" class="emmm">
+    <div nz-col nzSpan="6" class="ennn">设备编号:</div>
+    <div nz-col nzSpan="18" class="emmm"><input nz-input placeholder="请输入设备编号" [(ngModel)]="code"></div>
+    <div nz-col nzSpan="6" class="ennn">设备型号:</div>
+    <div nz-col nzSpan="18" class="emmm"><input nz-input placeholder="请输入设备型号" [(ngModel)]="model"></div>
+    <div nz-col nzSpan="6" class="ennn">设备名称:</div>
+    <div nz-col nzSpan="18" class="emmm"><input nz-input placeholder="请输入设备名称" [(ngModel)]="name"></div>
+    <div nz-col nzSpan="6" class="ennn">规格:</div>
+    <div nz-col nzSpan="18" class="emmm"><input nz-input placeholder="请输入规格" [(ngModel)]="format"></div>
+    <div nz-col nzSpan="6" class="ennn">包装规格</div>
+    <div nz-col nzSpan="18" class="emmm">
       <input nz-input placeholder="请输入包装规格" [(ngModel)]="packageFormat">
     </div>
-    <div nz-col nzSpan="4" class="ennn">计量单位</div>
-    <div nz-col nzSpan="20" class="emmm">
+    <div nz-col nzSpan="6" class="ennn">计量单位</div>
+    <div nz-col nzSpan="18" class="emmm">
       <input nz-input placeholder="请输入计量单位" [(ngModel)]="measurement">
     </div>
-    <div nz-col nzSpan="4" class="ennn">标准或批号:</div>
-    <div nz-col nzSpan="20" class="emmm"><input nz-input placeholder="请输入标准或批号" [(ngModel)]="standard"></div>
-    <div nz-col nzSpan="4" class="ennn">采购负责人:</div>
-    <div nz-col nzSpan="20" class="emmm"><input nz-input placeholder="请输入采购负责人" [(ngModel)]="leadingPerson"></div>
-    <div nz-col nzSpan="4" class="ennn">生产日期:</div>
-    <div nz-col nzSpan="20" class="emmm">
+    <div nz-col nzSpan="6" class="ennn">标准或批号:</div>
+    <div nz-col nzSpan="18" class="emmm"><input nz-input placeholder="请输入标准或批号" [(ngModel)]="standard"></div>
+    <div nz-col nzSpan="6" class="ennn">采购负责人:</div>
+    <div nz-col nzSpan="18" class="emmm"><input nz-input placeholder="请输入采购负责人" [(ngModel)]="leadingPerson"></div>
+    <div nz-col nzSpan="6" class="ennn">生产日期:</div>
+    <div nz-col nzSpan="18" class="emmm">
       <nz-date-picker [(ngModel)]="manufactureDate"></nz-date-picker>
     </div>
-    <div nz-col nzSpan="4" class="ennn">有效期:</div>
-    <div nz-col nzSpan="20" class="emmm">
+    <div nz-col nzSpan="6" class="ennn">有效期:</div>
+    <div nz-col nzSpan="18" class="emmm">
       <nz-date-picker [(ngModel)]="validity"></nz-date-picker>
     </div>
-    <div nz-col nzSpan="4" class="ennn">供应商:</div>
-    <div nz-col nzSpan="20" class="emmm">
+    <div nz-col nzSpan="6" class="ennn">供应商:</div>
+    <div nz-col nzSpan="18" class="emmm">
       <nz-select style="width: 50%;" [(ngModel)]="supplierNum" nzAllowClear nzPlaceHolder="请选择供应商">
         <nz-option *ngFor="let item of supplier;let i = index" [nzValue]="i" [nzLabel]="item.name"></nz-option>
       </nz-select>
     </div>
-    <div nz-col nzSpan="4" class="ennn">产品图片:</div>
-    <div nz-col nzSpan="20" class="emmm">
-      <input (change)="fileChange($event)" [(ngModel)]="images" type="file" id="upload_file1" style="display: none"
+    <div nz-col nzSpan="6" class="ennn">产品图片:</div>
+    <div nz-col nzSpan="18" class="emmm">
+      <input *ngIf="fileHose" (change)="fileChange($event)" [(ngModel)]="images" type="file" id="upload_file1" style="display: none"
         accept="image/*" />
       <div>
         <button nz-button nzType="primary" (click)="chooseType()">点击上传图片</button>
@@ -45,8 +45,8 @@
         <img [src]="imgzs.src" class="tupian">
       </div>
     </div>
-    <div nz-col nzSpan="4" class="ennn">备注:</div>
-    <div nz-col nzSpan="20" class="emmm">
+    <div nz-col nzSpan="6" class="ennn">备注:</div>
+    <div nz-col nzSpan="18" class="emmm">
       <textarea rows="4" nz-input [(ngModel)]="remark" nzPlaceHolder="请输入备注"></textarea>
     </div>
   </div>

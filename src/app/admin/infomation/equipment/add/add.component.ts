@@ -22,6 +22,7 @@ export class AddComponent implements OnInit {
   manufactureDate = null; // 生产日期
   validity = null; // 有效期
   supplierNum: number; // 供应商值
+  fileHose = true;
   supplier = [{
     id: '', // 供应商id
     name: '' // 供应商名字
@@ -65,10 +66,12 @@ export class AddComponent implements OnInit {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append(file.name, file);
+    this.fileHose = false;
     this.fileService['uploadHead']({
       data: formData
     })
       .subscribe(response => {
+        this.fileHose = true;
         if (response.errorCode === 0) {
           this.message.create('Success', '添加成功');
           this.imgName = file.name;

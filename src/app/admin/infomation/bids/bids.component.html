@@ -36,7 +36,7 @@
       <button style="margin:0 10px" nz-button (click)="goto('infomation/bids/import','')">导入投标机构</button>
     </div>
   </div>
-  <nz-table #rowSelectionTable [nzData]="dataSet" [nzTotal]="totalCount" [nzFrontPagination]="false" [nzPageSize]="pageSize"
+  <nz-table #rowSelectionTable [nzData]="dataSet" [nzTotal]="totalCount" [nzFrontPagination]="false" [(nzPageSize)]="pageSize"
     [(nzPageIndex)]="pageNumber" (nzPageIndexChange)="getList()" (nzCurrentPageDataChange)="currentPageDataChange($event)">
     <thead>
       <tr>

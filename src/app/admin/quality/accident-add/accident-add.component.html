@@ -46,7 +46,7 @@
     <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
       <nz-form-item>
         <!--通知标题-->
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="name" nzRequired>名称</nz-form-label>
+        <nz-form-label     [nzSm]="6" [nzXs]="24" nzFor="name" nzRequired>名称</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
           <input [readonly]="!showEdit" appTrim nz-input id="name" formControlName="name" placeholder="输入通知标题">
           <nz-form-explain *ngIf="validateForm.get('name').dirty && validateForm.get('name').errors">
@@ -61,7 +61,7 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="eventLevel" nzRequired>
+        <nz-form-label    [nzSm]="6" [nzXs]="24" nzFor="eventLevel" nzRequired>
           <span>
             事件级别
           </span>

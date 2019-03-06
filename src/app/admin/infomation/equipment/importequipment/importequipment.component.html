@@ -1,8 +1,8 @@
 <div class="title">导入设备</div>
-<div style="margin: 20px auto;width: 80%">
+<div class="fuckBB" >
   <div style="overflow:auto">
     <div style="margin-bottom: 16px; float: right;">
-      <input (change)="fileChange($event)" [(ngModel)]="excle" type="file" id="upload_file1" style="display: none"/>
+      <input *ngIf="fuckK" (change)="fileChange($event)" [(ngModel)]="excle" type="file" id="upload_file1" style="display: none"/>
       <button style="margin:0 10px" nz-button (click)="chooseType()" [nzLoading]="isLoadingOne">选择文件</button>
       <button style="margin:0 10px" nz-button (click)="down()">下载模板</button>
       <button style="margin:0 10px" nz-button [disabled]='OJBK' (click)="shangchuan()" >确定导入</button>

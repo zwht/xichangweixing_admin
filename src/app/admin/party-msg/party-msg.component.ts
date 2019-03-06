@@ -20,7 +20,7 @@ export class PartyMsgComponent implements OnInit {
 
   dateRange = [];
   list = [];
-  
+
   startTime = null;
   endTime = null;
   title = "";
@@ -33,68 +33,67 @@ export class PartyMsgComponent implements OnInit {
   ngOnInit() {
     this.getList()
   }
-  onChange(e){
-    if(e.length){
-      this.startTime = e[0].getFullYear()+"-"+("00"+( e[0].getMonth()+1)).substr(-2)+"-"+("00"+ e[0].getDate()).substr(-2);
-      this.endTime = e[1].getFullYear()+"-"+("00"+( e[1].getMonth()+1)).substr(-2)+"-"+("00"+ e[1].getDate()).substr(-2);
-    }else{
+  onChange(e) {
+    if (e.length) {
+      this.startTime = e[0].getFullYear() + "-" + ("00" + (e[0].getMonth() + 1)).substr(-2) + "-" + ("00" + e[0].getDate()).substr(-2);
+      this.endTime = e[1].getFullYear() + "-" + ("00" + (e[1].getMonth() + 1)).substr(-2) + "-" + ("00" + e[1].getDate()).substr(-2);
+    } else {
       this.startTime = null;
       this.endTime = null;
     }
   }
-  
 
   allCk = false;
-  allChecked(v){
-    for(let item of this.list){
+  allChecked(v) {
+    for (let item of this.list) {
       item.checked = v;
     }
   }
-  batchDelete(){
+  batchDelete() {
     let d = [];
-    for(let item of this.list){
-      if(item.checked){
+    for (let item of this.list) {
+      if (item.checked) {
         d.push(item.id);
       }
     }
-    
+
     this.partyService.delete({
-      params:{
+      params: {
         ids: d
       }
     }).subscribe(res => {
       if (res.errorCode === 0) {
         this.getList()
-      }else{
+      } else {
         this._message.info(res.msg || res.data || '删除失败')
       }
     })
   }
 
-  getList(){
+  getList() {
     let params = {
-      title:"",
-      params3:this.pageNum,
-      params2:this.pageSize,
+      title: "",
+      params3: this.pageNum,
+      params2: this.pageSize,
     };
-    if(this.status||this.status === 0){
+    if (this.status || this.status === 0) {
       params["status"] = this.status;
     }
-    if(this.endTime){
+    if (this.endTime) {
       params["endTime"] = this.endTime;
     }
-    if(this.startTime){
+    if (this.startTime) {
       params["startTime"] = this.startTime;
     }
-    if(this.title){
+    if (this.title) {
       params.title = this.title;
     }
     this.partyService.getAll({
-        params
-    }).subscribe(response =>{
+      params
+    }).subscribe(response => {
       if (response.errorCode === 0) {
         this.list = response.data.pageData;
-        for(let item of this.list){
+        for (let item of this.list) {
           item.checked = false;
         }
         this.allCk = false;
@@ -102,57 +101,57 @@ export class PartyMsgComponent implements OnInit {
       }
     })
   }
-  delete(d){
+  delete(d) {
     this.partyService.delete({
-      params:{
+      params: {
         ids: d.id
       }
     }).subscribe(res => {
       if (res.errorCode === 0) {
         this.getList()
-      }else{
+      } else {
         this._message.info(res.msg || res.data || '删除失败')
       }
     })
   }
   // 下线
-  line(d){
+  line(d) {
     this.partyService.line({
-      params:{
+      params: {
         id: d.id
       }
     }).subscribe(res => {
       if (res.errorCode === 0) {
         this.getList()
-      }else{
+      } else {
         this._message.info(res.msg || res.data || '操作失败')
       }
     })
   }
   // 发布
-  push(d){
+  push(d) {
     this.partyService.push({
-      params:{
+      params: {
         id: d.id
       }
     }).subscribe(res => {
       if (res.errorCode === 0) {
         this.getList()
-      }else{
+      } else {
         this._message.info(res.msg || res.data || '发布失败')
       }
     })
   }
   // 置顶
-  top(d){
+  top(d) {
     this.partyService.top({
-      params:{
+      params: {
         id: d.id
       }
     }).subscribe(res => {
       if (res.errorCode === 0) {
         this.getList()
-      }else{
+      } else {
         this._message.info(res.msg || res.data || '发布失败')
       }
     })

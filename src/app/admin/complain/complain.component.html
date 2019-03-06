@@ -26,9 +26,9 @@
     <div class="table-box">
       <nz-table #basicTable 
         [nzData]="list" [nzFrontPagination]="false"
-        [nzPageIndex]="pageNum"
+        [(nzPageIndex)]="pageNum"
         [nzTotal]="totalCount"
-        [nzPageSize]="pageSize"
+        [(nzPageSize)]="pageSize"
         (nzPageIndexChange)="getList()">
         <!-- <nz-table #basicTable [nzData]="list" [nzShowPagination]="false"> -->
         <thead>
