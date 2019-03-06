@@ -19,22 +19,7 @@
         <span nz-col nzSpan="4">电话:</span>
         <span nz-col nzSpan="20">{{phone}}</span>
       </div>
-      <div nz-row>
-        <span nz-col nzSpan="4">电子邮件:</span>
-        <span nz-col nzSpan="20">{{email}}</span>
-      </div>
-      <div nz-row>
-        <span nz-col nzSpan="4">用户类型</span>
-        <span *ngFor="let item of roles let i=index" nz-col nzSpan="20">
-          {{codeObj[item]}}
-          <span *ngIf="i<roles.length-1">,</span>
-        </span>
-      </div>
-      <div nz-row>
-        <span nz-col nzSpan="4">是否启用:</span>
-        <span nz-col nzSpan="20" *ngIf="state">已启用</span>
-        <span nz-col nzSpan="20" *ngIf="!state">未启用</span>
-      </div>
+    
       <div class="div11">
         <button nz-button nzType="primary" [routerLink]="['./uppaswd']">修改密码</button>
       </div>

@@ -86,7 +86,7 @@ export class LoginComponent implements OnInit {
                         this.panduan2();
                         this.sessionService.setItem('token', response.data.token, '2h');
                         this.sessionService.setItem('userName', response.data.userInfoVO.userName, '2h');
-                        this.sessionService.setItem('id', response.data.userInfoVO.uid, '2h');
+                        this.sessionService.setItem('id', response.data.userInfoVO.id, '2h');
                         // this.sessionService.setItem('hardImg', response.data.img, '2h');
                         // this.sessionService.setItem('roles', response.data.roles, '2h');
                         // this.router.navigateByUrl('/admin');

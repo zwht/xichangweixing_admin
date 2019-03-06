@@ -1,3 +1,22 @@
-<p>
-  self-change-pwd works!
-</p>
+<div class="user-add-cpp">
+  <div class="Breadcrumb">
+
+  </div>
+  <div class="shangkuang">
+    <span>修改密码</span>
+  </div>
+  <div class="waikuang">
+    <div class="user-add">
+      <div nz-row>
+        <span nz-col nzSpan="4">输入新密码:</span>
+        <span nz-col nzSpan="20">
+          <input nz-input type="text" [(ngModel)]="password">
+        </span>
+      </div>
+      <div class="div11">
+        <button (click)="save()" nz-button nzType="primary">保存</button>
+      </div>
+
+    </div>
+  </div>
+</div>

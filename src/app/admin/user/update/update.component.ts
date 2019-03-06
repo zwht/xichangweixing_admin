@@ -53,7 +53,7 @@ export class UpdateComponent implements OnInit {
       name: [null, [Validators.required]],
       phone: [null, [Validators.required]],
       loginName: [null, [Validators.required]],
-      remark: [null, []],
+      // remark: [null, []],
     });
   }
 

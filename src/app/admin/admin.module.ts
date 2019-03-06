@@ -333,6 +333,15 @@ export const routes: Routes = [
                 },
                 canActivate: [PermissionGuardService]
             },
+            {
+                path: 'self/uppaswd',
+                component: SelfChangePwdComponent,
+                data: {
+                    name: '修改密码',
+                    menu: false
+                },
+                canActivate: [PermissionGuardService]
+            },
         ]
     }
 ];

@@ -49,12 +49,12 @@ export class SelfComponent implements OnInit {
   getById(id) {
     this.userService.getById({
       params: {
-        params2: id
+        params3: id
       },
       data: {}
     })
       .subscribe(response => {
-        if (response.code === 200) {
+        if (response.errorCode === 0) {
           this.email = response.data.email;
           this.loginName = response.data.loginName;
           this.name = response.data.name;
