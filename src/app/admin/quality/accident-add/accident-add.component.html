@@ -1,30 +1,4 @@
 <div class="add-box" [style.overflow]="preivewShow?'hidden':'auto'">
-  <div class="preview overflow-auto;" *ngIf="preivewShow">
-    <div class="close">
-      <button (click)="previewClose()" nz-button>关闭</button>
-    </div>
-    <div class="preview-content">
-      <div class="fileHead">
-        <div class="fileTitle">{{validateForm.value.title}}</div>
-        <div class="policy_fbt"></div>
-        <!-- <div class="policy_ly">
-              <span>通知标题：川助函〔2018〕15号</span>&nbsp;&nbsp;&nbsp;
-              <span>单位：四川省</span>&nbsp;&nbsp;&nbsp;
-              <span>日期：2018-03-19</span>			
-          </div> -->
-        <div class="policy_tjlc">
-          <fieldset>
-            <legend>置顶</legend>
-            <p>{{validateForm.value.top?'是':'否'}}</p>
-          </fieldset>
-        </div>
-      </div>
-      <div style="padding:0 60px;min-height:200px;" [innerHTML]="preivewHtml">
-
-      </div>
-    </div>
-
-  </div>
   <div class="heard">
     <div>
       <nz-breadcrumb>
@@ -67,10 +41,10 @@
           </span>
         </nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
-          <nz-select style="width: 120px;" formControlName="eventLevel" nzPlaceHolder="事件级别">
-            <nz-option [nzValue]="1" nzLabel="质量问题"></nz-option>
-            <nz-option [nzValue]="2" nzLabel="质量事件"></nz-option>
-            <nz-option [nzValue]="3" nzLabel="质量事故"></nz-option>
+          <nz-select style="width: 120px;" formControlName="eventLevel" nzPlaceHolder="事件类型">
+            <nz-option [nzValue]="'1'" nzLabel="质量问题"></nz-option>
+            <nz-option [nzValue]="'2'" nzLabel="质量事件"></nz-option>
+            <nz-option [nzValue]="'3'" nzLabel="质量事故"></nz-option>
           </nz-select>
           <nz-form-explain *ngIf="validateForm.get('eventLevel').dirty && validateForm.get('eventLevel').errors">
             <ng-container *ngIf="validateForm.get('eventLevel').hasError('required')">
@@ -145,8 +119,8 @@
         </nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
           <nz-radio-group [nzDisabled]="!showEdit" formControlName="top">
-            <label nz-radio [nzValue]="1">是</label>
-            <label nz-radio [nzValue]="0">否</label>
+            <label nz-radio [nzValue]="'1'">是</label>
+            <label nz-radio [nzValue]="'0'">否</label>
           </nz-radio-group>
         </nz-form-control>
       </nz-form-item>

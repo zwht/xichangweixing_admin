@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl,Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NzMessageService } from 'ng-zorro-antd';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -18,7 +18,7 @@ export class SolutionAddComponent implements OnInit {
   loading = false;
   checkOptionsOne = [];
   parentIdList = [];
-  title = "新增时间";
+  title = '新增时间';
   roleList = [];
   id = 0;
   upLoading = false;
@@ -44,90 +44,88 @@ export class SolutionAddComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.router.url.indexOf("edit")>-1){
+    if (this.router.url.indexOf('edit') > -1) {
       this.title = '编辑事件'
       this.id = this.route.snapshot.params['id'];
       this.qualityDealService['getById']({
-        params:{
+        params: {
           params2: this.id,
         }
       }).subscribe(response => {
         this.loading = false;
-        if (response.errorCode === 0) { 
-          let detail = response.data;
-          if(detail.status == 1){
-            this.showEdit = false;
+        if (response.errorCode === 0) {
+          const detail = response.data;
+          this.showEdit = false;
+          if (detail.status === 1) {
             this.readOnlyText = this.sanitizer.bypassSecurityTrustHtml(detail.content);
-            this.title = "查看事件"
+            this.title = '查看事件';
           }
-
           this.validateForm.get('remark').setValue(detail.remark);
           this.validateForm.get('supplierId').setValue(detail.supplierId);
-          this.validateForm.get('eventLevel').setValue(detail.eventLevel);
           this.validateForm.get('materials').setValue(detail.materials);
-          this.validateForm.get('occurrenceTime').setValue(detail.occurrenceTime);
-
+          this.validateForm.get('dealStartTime').setValue(detail.dealStartTime);
+          this.validateForm.get('dealEndTime').setValue(detail.dealEndTime);
         } else {
           this._message.create('error', response.msg, { nzDuration: 4000 });
         }
       });
     }
     this.validateForm = this.fb.group({
-      remark:[null, [Validators.required]],
-      materials:[null, [Validators.required]],
-      dealEndTime:[null, [Validators.required]],
-      dealStartTime:[null, [Validators.required]],
-      supplierId:[null, [Validators.required]],
+      remark: [null, [Validators.required]],
+      materials: [null, [Validators.required]],
+      dealEndTime: [null, [Validators.required]],
+      dealStartTime: [null, [Validators.required]],
+      supplierId: [null, [Validators.required]],
     });
     this.getIndustry();
   }
-  getIndustry(){
+  getIndustry() {
     this.supplierService.getAllByQuery({
-      params:{
-        pageNumber:1,
-        pageSize:1000,
+      params: {
+        pageNumber: 1,
+        pageSize: 1000,
       }
-    }).subscribe(res=>{
+    }).subscribe(res => {
       this.supplierList = res.data.pageData
     })
   }
-  dealEndTime = "";
-  dateChange(e:Date){
-    this.dealEndTime = e.getFullYear()+"-"+("00"+(e.getMonth()+1)).substr(-2)+"-"+("00"+e.getDate()).substr(-2);
+  dealEndTime = '';
+  dateChange(e: Date) {
+    this.dealEndTime = e.getFullYear() + '-' + ('00' + (e.getMonth() + 1)).substr(-2) + '-' + ('00' + e.getDate()).substr(-2);
   }
-  dealStartTime = "";
-  dateChange2(e:Date){
-    this.dealStartTime = e.getFullYear()+"-"+("00"+(e.getMonth()+1)).substr(-2)+"-"+("00"+e.getDate()).substr(-2);
+  dealStartTime = '';
+  dateChange2(e: Date) {
+    this.dealStartTime = e.getFullYear() + '-' + ('00' + (e.getMonth() + 1)).substr(-2) + '-' + ('00' + e.getDate()).substr(-2);
   }
   NameLength = (control: FormControl): { [s: string]: boolean } => {
     if (!control.value) {
       return { required: true };
-    } else if (control.value.length>60) {
+    } else if (control.value.length > 60) {
       return { length: true, error: true };
       // control.value
     }
   }
 
-  openFile(){
-    if(this.upLoading){
-      return this._message.create('info','文件上传中，请稍后')
+  openFile() {
+    if (this.upLoading) {
+      return this._message.create('info', '文件上传中，请稍后')
     }
     document.getElementById('file').click()
   }
-  uploadFile(element){
-    if(!element.target.files.length){
+  uploadFile(element) {
+    if (!element.target.files.length) {
       return
-    }   
-    let file = element.target.files[0];       
-    let param = new FormData(); 
+    }
+    let file = element.target.files[0];
+    let param = new FormData();
     console.log(param)
-    param.append('file',file,file.name);
+    param.append('file', file, file.name);
     //param.append('chunk','0'); 
     // if(param.get('file')['size'] > 2 * 1024 * 1024){
     //   return  this._message.create('info', '回复文件不能大于2M', { nzDuration: 4000 });
     // }
     let a = param.get('file')['type']
-    if(a != 'image/png' && a != 'image/jpeg' && a != 'image/gif' && a != 'image/bmp'){
+    if (a != 'image/png' && a != 'image/jpeg' && a != 'image/gif' && a != 'image/bmp') {
       element.target.value = ''
       return this._message.create('info', '请上传图片', { nzDuration: 4000 });
     }
@@ -139,9 +137,9 @@ export class SolutionAddComponent implements OnInit {
       console.log(res)
       element.target.value = '';
       this.upLoading = false;
-      if(res.errorCode == 0){
+      if (res.errorCode == 0) {
         // res.data.fileUrl
-        this.validateForm.get('face').setValue(res.data.fileUrl.replace(/\//,"%2f"));
+        this.validateForm.get('face').setValue(res.data.fileUrl.replace(/\//, '%2f'));
       }
     })
   }
@@ -166,19 +164,19 @@ export class SolutionAddComponent implements OnInit {
     if (this.validateForm.valid) {
       this.loading = true;
       let data = {
-        remark:this.validateForm.value.remark,
+        remark: this.validateForm.value.remark,
         supplierId: this.validateForm.value.supplierId,
         materials: this.validateForm.value.materials,
         dealEndTime: this.dealEndTime,
         dealStartTime: this.dealStartTime,
         content: this.validateForm.value.content,
         // top: Number(this.validateForm.value.top),
-        status:0,
+        status: 0,
       }
-      if(this.id){
+      if (this.id) {
         data['id'] = this.id;
       }
-      if(k){
+      if (k) {
         data['status'] = 1
       }
 
