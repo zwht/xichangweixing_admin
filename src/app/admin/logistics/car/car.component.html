@@ -3,20 +3,12 @@
     <div class="search clear" style="padding:20px;">
       <div>
         <div class="chaxun">
-          <span>标题</span>
-          <input nz-input [(ngModel)]="title" placeholder="查询标题" >
+          <span>用车单位/人员姓名</span>
+          <input style="width:200px;" nz-input [(ngModel)]="title" placeholder="查询用车单位/人员姓名" >
         </div>
         <div class="chaxun">
-          <span>更新时间</span>
-          <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="onChange($event)" nzShowTime></nz-range-picker>
-        </div>
-        <div class="chaxun">
-          <span>状态</span>
-          <nz-select style="width: 120px;"  nzAllowClear nzPlaceHolder="状态">
-            <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-            <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
-            <nz-option nzValue="disabled" nzLabel="Disabled" nzDisabled></nz-option>
-          </nz-select>
+          <span>时间</span>
+          <nz-range-picker [(ngModel)]="dateRange" nzShowTime></nz-range-picker>
         </div>
         <div class="chaxun">
           <button nz-button nzType="chaxun" (click)="getList()">查询</button>
@@ -42,7 +34,7 @@
         <thead>
           <tr>
             <th>序号</th>
-            <th>乘客姓名</th>
+            <th>用车单位/人员姓名</th>
             <th>申请事由</th>
             <th>用车时间</th>
             <th>接送站地点</th>
@@ -52,6 +44,7 @@
             <th>申请车型</th>
             <th>行驶区域</th>
             <th>联系电话</th>
+            <th>状态</th>
             <th>操作</th>
           </tr>
         </thead>
@@ -69,8 +62,12 @@
             <td>{{data.vehicleArea}}</td>
             <td>{{data.phone}}</td>
             <td>
-              <a *ngIf="data.status==0"  class="op" (click)="click(data)" >未处理</a>
-              <span *ngIf="data.status==1" style="color:#a0a0a0" >已处理</span>
+              <nz-tag [nzColor]="'magenta'" *ngIf="data.status==0">未处理</nz-tag>
+              <nz-tag [nzColor]="'green'" *ngIf="data.status==1">已处理</nz-tag>
+            </td>
+            <td>
+              <a nz-button [routerLink]="'./detail/'+data.id">
+                {{data.status==0?'处理':'查看'}}</a>
             </td>
           </tr>
         </tbody>

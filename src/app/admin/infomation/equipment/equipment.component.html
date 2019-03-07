@@ -32,7 +32,8 @@
         <th style="text-align: center">编号</th>
         <th style="text-align: center">设备名称</th>
         <th style="text-align: center">供应商</th>
-        <th style="text-align: center">状态</th>
+        <th style="text-align: center">采购负责人</th>
+        <!-- <th style="text-align: center">状态</th> -->
         <th style="text-align: center">操作</th>
       </tr>
     </thead>
@@ -42,7 +43,8 @@
         <td style="text-align: center">{{data.code}}</td>
         <td style="text-align: center">{{data.name}}</td>
         <td style="text-align: center">{{data.supplierName}}</td>
-        <td style="text-align: center">{{data.status}}</td>
+        <td style="text-align: center">{{data.leadingPerson}}</td>
+        <!-- <td style="text-align: center">{{data.status}}</td> -->
         <td style="text-align: center">
           <button style="margin:0 2px" nz-button nzType="default" (click)="goto('infomation/equipment/add',data.id)">编辑</button>
           <button style="margin:0 2px" nz-button nzType="default" (click)="operateData(data.id)">删除</button>

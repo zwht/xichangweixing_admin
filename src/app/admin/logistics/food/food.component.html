@@ -4,19 +4,11 @@
       <div>
         <div class="chaxun">
           <span>用餐人姓名</span>
-          <input nz-input [(ngModel)]="title" placeholder="查询标题" >
+          <input nz-input [(ngModel)]="title" placeholder="查询用餐人姓名" >
         </div>
         <div class="chaxun">
-          <span>更新时间</span>
-          <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="onChange($event)" nzShowTime></nz-range-picker>
-        </div>
-        <div class="chaxun">
-          <span>状态</span>
-          <nz-select style="width: 120px;"  nzAllowClear nzPlaceHolder="状态">
-            <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-            <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
-            <nz-option nzValue="disabled" nzLabel="Disabled" nzDisabled></nz-option>
-          </nz-select>
+          <span>时间</span>
+          <nz-range-picker [(ngModel)]="dateRange" nzShowTime></nz-range-picker>
         </div>
         <div class="chaxun">
           <button nz-button nzType="chaxun" (click)="getList()">查询</button>
@@ -48,7 +40,7 @@
               <th>工作单位</th>
               <th>用餐人数</th>
               <th>用餐时间</th>
-              <th>备注</th>
+              <th>状态</th>
               <th>操作</th>
             </tr>
           </thead>
@@ -61,10 +53,13 @@
               <td>{{data.workers}}</td>
               <td>{{data.eatsCount}}</td>
               <td>{{data.eatTime}}</td>
-              <td>{{data.remark}}</td>
               <td>
-                <a *ngIf="data.status==0" class="op" (click)="click(data)">未处理</a>
-                <span *ngIf="data.status==1" style="color:#a0a0a0">已处理</span>
+                <nz-tag [nzColor]="'magenta'" *ngIf="data.status==0">未处理</nz-tag>
+                <nz-tag [nzColor]="'green'" *ngIf="data.status==1">已处理</nz-tag>
+              </td>
+              <td>
+                <a nz-button [routerLink]="'./detail/'+data.id">
+                  {{data.status==0?'处理':'查看'}}</a>
               </td>
             </tr>
           </tbody>

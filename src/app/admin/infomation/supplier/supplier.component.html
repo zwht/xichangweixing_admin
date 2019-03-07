@@ -38,23 +38,25 @@
       <tr>
         <th style="text-align: center" nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate"
           (nzCheckedChange)="checkAll($event)"></th>
-        <th style="text-align: center">编号</th>
         <th style="text-align: center">供应商名称</th>
         <th style="text-align: center">类型</th>
         <th style="text-align: center">所在地区</th>
-        <th style="text-align: center">状态</th>
+        <th style="text-align: center">联系人姓名</th>
+        <th style="text-align: center">联系人电话</th>
+        <!-- <th style="text-align: center">状态</th> -->
         <th style="text-align: center">操作</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let data of rowSelectionTable.data">
         <td style="text-align: center" nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="refreshStatus()"></td>
-        <td style="text-align: center">{{data.code}}</td>
         <td style="text-align: center">{{data.name}}</td>
         <td style="text-align: center">{{data.typeName}}</td>
         <td style="text-align: center">{{data.region.split(',')[1]}}</td>
-        <td style="text-align: center" *ngIf="data.status == 0">停用</td>
-        <td style="text-align: center" *ngIf="data.status == 1">正常</td>
+        <td style="text-align: center">{{data.contactsUserName}}</td>
+        <td style="text-align: center">{{data.phone}}</td>
+        <!-- <td style="text-align: center" *ngIf="data.status == 0">停用</td>
+        <td style="text-align: center" *ngIf="data.status == 1">正常</td> -->
         <td style="text-align: center">
           <button style="margin:0 2px" nz-button nzType="default" (click)="goto('infomation/supplier/add',data.id)">编辑</button>
           <button style="margin:0 2px" nz-button nzType="default" (click)="operateData(data.id)">删除</button>

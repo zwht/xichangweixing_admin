@@ -1,0 +1,32 @@
+<div class="detail-box">
+  <div class="heard">
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <a [routerLink]="['/admin/logistics/car']">车辆接送</a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <span>车辆接送详情</span>
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </div>
+  <div class="main-box">
+    <ul class="ul">
+      <li *ngFor="let item of detailList">
+        <span class="lab">{{item.name}}：</span>
+        <span class="txt">{{item.value}}</span>
+      </li>
+      <li>
+          <span class="lab">状态：</span>
+          <span class="txt">
+            <nz-tag [nzColor]="'magenta'" *ngIf="detail.status=='0'">未处理</nz-tag>
+            <nz-tag [nzColor]="'green'" *ngIf="detail.status=='1'">已处理</nz-tag>
+          </span>
+        </li>
+    </ul>
+    <div class="but" *ngIf="detail.status=='0'">
+      <button (click)="save()" nz-button nzType="primary" [nzSize]="size" nzShape="round">
+        <i nz-icon type="download"></i>
+        确认已经处理</button>
+    </div>
+  </div>
+</div>

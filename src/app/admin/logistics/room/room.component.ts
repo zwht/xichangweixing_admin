@@ -12,59 +12,27 @@ export class RoomComponent implements OnInit {
 
   dateRange = [];
   list = [];
-
-  title = "";
-  startTime = null;
-  endTime = null;
-  
-  pageNum = 1
+  title = '';
+  pageNum = 1;
   totalCount = 0;
   pageSize = 10;
 
   constructor(
     private logisticsService: LogisticsService,
-    private _message: NzMessageService,
-    private sessionService: SessionService,
-     ) { }
+  ) { }
 
-    ngOnInit() {
-      this.getList();
-    }
-    onChange(e){
-      if(e.length){
-        this.startTime = e[0].getTime()
-        this.endTime = e[1].getTime()
-      }else{
-        this.startTime = null;
-        this.endTime = null;
-      }
-    }
-  click(d) {
-    let data = JSON.parse(JSON.stringify(d))
-    data.status = 1;
-    this.logisticsService.roomReservationSaveOrUpdate({
-      data
-    }).subscribe(response => {
-      if (response.errorCode === 0) {
-        this.getList();
-      }
-    })
+  ngOnInit() {
+    this.getList();
   }
+
   getList() {
-    let params = {
-      // endTime:"",
-      // startTime:"",
-      // departmentId:"",
-      name: "",
+    const params = {
+      livingStartTime: this.dateRange[0] ? this.dateRange[0].getTime() : '',
+      livingEndTime: this.dateRange[1] ? this.dateRange[1].getTime() : '',
+      name: this.title,
       pageNumber: this.pageNum,
       pageSize: this.pageSize,
     };
-    if (this.endTime) {
-      params["vehicleEndTime"] = this.endTime;
-    }
-    if (this.startTime) {
-      params["vehicleStartTime"] = this.startTime;
-    }
     if (this.title) {
       params.name = this.title;
     }
@@ -75,6 +43,6 @@ export class RoomComponent implements OnInit {
         this.list = response.data.pageData;
         this.totalCount = response.data.totalCount;
       }
-    })
+    });
   }
 }
