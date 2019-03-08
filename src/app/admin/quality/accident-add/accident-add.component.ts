@@ -48,7 +48,7 @@ export class AccidentAddComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.router.url.indexOf('edit') > -1) {
-      this.title = '编辑事件'
+      this.title = '编辑事件';
       this.id = this.route.snapshot.params['id'];
       this.qualityEventService['getById']({
         params: {
@@ -69,7 +69,7 @@ export class AccidentAddComponent implements OnInit {
           this.validateForm.get('eventLevel').setValue(detail.eventLevel);
           this.validateForm.get('materials').setValue(detail.materials);
           this.validateForm.get('occurrenceTime').setValue(detail.occurrenceTime);
-          this.validateForm.get('top').setValue(detail.top === 'true' ? '1' : '0');
+          this.validateForm.get('top').setValue(detail.flag === 'true' ? '1' : '0');
         } else {
           this._message.create('error', response.msg, { nzDuration: 4000 });
         }
@@ -82,7 +82,7 @@ export class AccidentAddComponent implements OnInit {
       materials: [null, [Validators.required]],
       occurrenceTime: [null, [Validators.required]],
       supplierId: [null, [Validators.required]],
-      top: [0, []],
+      top: [null, []],
     });
     this.getIndustry();
   }

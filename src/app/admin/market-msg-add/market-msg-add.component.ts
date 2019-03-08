@@ -18,7 +18,7 @@ export class MarketMsgAddComponent implements OnInit {
   loading = false;
   checkOptionsOne = [];
   parentIdList = [];
-  title = '新增强市场信息';
+  title = '新增市场信息';
   roleList = [];
   id = 0;
   upLoading = false;
@@ -63,8 +63,7 @@ export class MarketMsgAddComponent implements OnInit {
           this.validateForm.get('title').setValue(detail.title);
           this.validateForm.get('content').setValue(detail.content);
           this.validateForm.get('industry').setValue(detail.industry);
-          // this.validateForm.get('face').setValue(detail.face);
-          this.validateForm.get('top').setValue(Number(detail.top));
+          this.validateForm.get('top').setValue(detail.flag === 'true' ? '1' : '0');
         } else {
           this._message.create('error', response.msg, { nzDuration: 4000 });
         }

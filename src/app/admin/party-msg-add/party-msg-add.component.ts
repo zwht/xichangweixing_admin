@@ -66,7 +66,7 @@ export class PartyMsgAddComponent implements OnInit {
           let detail = response.data;
           this.validateForm.get('title').setValue(detail.title);
           this.validateForm.get('content').setValue(detail.content);
-          this.validateForm.get('top').setValue(detail.top);
+          this.validateForm.get('top').setValue(detail.flag === 'true' ? '1' : '0');
         } else {
           this._message.create('error', response.msg, { nzDuration: 4000 });
         }

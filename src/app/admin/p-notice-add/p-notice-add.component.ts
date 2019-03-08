@@ -57,9 +57,7 @@ export class PNoticeAddComponent implements OnInit {
           }
           this.validateForm.get('title').setValue(detail.title);
           this.validateForm.get('content').setValue(detail.content);
-          // this.validateForm.get('abstracts').setValue(detail.abstracts);
-          // this.validateForm.get('face').setValue(detail.face);
-          this.validateForm.get('top').setValue(Number(detail.top) );
+          this.validateForm.get('top').setValue(detail.flag === 'true' ? '1' : '0');
         } else {
           this._message.create('error', response.msg, { nzDuration: 4000 });
         }

@@ -8,7 +8,7 @@
         </div>
         <div class="chaxun">
           <span>行业</span>
-          <nz-select style="width: 120px;" [(ngModel)]="industry" nzAllowClear nzPlaceHolder="状态">
+          <nz-select style="width: 120px;" [(ngModel)]="industry" nzAllowClear nzPlaceHolder="行业">
             <nz-option *ngFor="let item of industryList"  [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
           </nz-select>
         </div>
