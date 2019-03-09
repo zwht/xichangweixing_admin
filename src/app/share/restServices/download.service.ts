@@ -20,7 +20,7 @@ export class DownloadService {
     params: {
       params1: 'addAndUpdate'
     },
-    
+
   })
   addAndUpdate(data: HttpData): Observable<any> {
     return data.observable;
@@ -32,31 +32,31 @@ export class DownloadService {
     params: {
       params1: 'getAll'
     },
-    
+
   })
   getAll(data: HttpData): Observable<any> {
     return data.observable;
   }
-  
+
   // getById
   @HttpConfig({
     method: 'get',
     params: {
       params1: 'getById'
     },
-    
+
   })
   getById(data: HttpData): Observable<any> {
     return data.observable;
   }
-  
+
   // line
   @HttpConfig({
     method: 'post',
     params: {
       params1: 'line'
     },
-    
+
   })
   line(data: HttpData): Observable<any> {
     return data.observable;
@@ -68,7 +68,7 @@ export class DownloadService {
     params: {
       params1: 'top'
     },
-    
+
   })
   top(data: HttpData): Observable<any> {
     return data.observable;
@@ -80,9 +80,21 @@ export class DownloadService {
     params: {
       params1: 'push'
     },
-    
+
   })
   push(data: HttpData): Observable<any> {
+    return data.observable;
+  }
+
+  // push
+  @HttpConfig({
+    method: 'post',
+    params: {
+      params1: 'delete'
+    },
+
+  })
+  del(data: HttpData): Observable<any> {
     return data.observable;
   }
 }

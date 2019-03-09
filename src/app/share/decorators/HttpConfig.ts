@@ -29,7 +29,9 @@ function setData(config, data) {
   if (config.data) {
     newData = Object.assign(newData, config.data);
   }
-  if (data.data) {
+  if (Array.isArray(data.data)) {
+    newData = data.data;
+  } else {
     newData = Object.assign(newData, data.data);
   }
   return newData;

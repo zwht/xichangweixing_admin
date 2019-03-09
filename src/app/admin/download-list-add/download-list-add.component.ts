@@ -145,13 +145,17 @@ export class DownloadListAddComponent implements OnInit {
         this.validateForm.controls[i].updateValueAndValidity();
       }
     }
+    if (!this.fileUrl) {
+      this._message.error('请上传文件');
+      return;
+    }
 
     if (this.validateForm.valid) {
       this.loading = true;
       let data = {
         reportName: this.fileName,
         subjectId: this.validateForm.value.subject,
-        flag: this.fileUrl,
+        fileUrl: this.fileUrl,
         status: 0,
         top: Number(this.validateForm.value.top),
       }

@@ -55,7 +55,7 @@
         <tbody>
           <tr *ngFor="let data of list let i= index">
             <td nzShowCheckbox [(nzChecked)]="data.checked" ></td>
-            <td>{{i}}</td>
+            <td>{{i+1}}</td>
             <td>{{data.reportName}}</td>
             <td>{{data.subjectName}}</td>
             <td>{{data.updateTime}}</td>
