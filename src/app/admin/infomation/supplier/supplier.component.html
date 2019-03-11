@@ -29,7 +29,7 @@
       <span style="margin-right: 8px;">您已选择{{checkedNumber}}项</span>
       <button style="margin:0 10px" nz-button [nzType]="'primary'" [disabled]="disabledButton" (click)="operateData()">批量删除</button>
       <button style="margin:0 10px" nz-button (click)="goto('infomation/supplier/add','add')">新增供应商</button>
-      <button style="margin:0 10px" nz-button (click)="goto('infomation/equipment/import','')">导入供应商</button>
+      <button style="margin:0 10px" nz-button (click)="goto('infomation/supplier/import','')">导入供应商</button>
     </div>
   </div>
   <nz-table #rowSelectionTable [nzData]="dataSet" [nzTotal]="totalCount" [nzFrontPagination]="false" [(nzPageSize)]="pageSize"
@@ -52,7 +52,7 @@
         <td style="text-align: center" nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="refreshStatus()"></td>
         <td style="text-align: center">{{data.name}}</td>
         <td style="text-align: center">{{data.typeName}}</td>
-        <td style="text-align: center">{{data.region.split(',')[1]}}</td>
+        <td style="text-align: center">{{data.region.split(',')[1]||data.region}}</td>
         <td style="text-align: center">{{data.contactsUserName}}</td>
         <td style="text-align: center">{{data.phone}}</td>
         <!-- <td style="text-align: center" *ngIf="data.status == 0">停用</td>

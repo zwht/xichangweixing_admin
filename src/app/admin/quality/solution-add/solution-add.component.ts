@@ -31,6 +31,7 @@ export class SolutionAddComponent implements OnInit {
   dealStartTime = '';
   supplierList = [];
   dealEndTime = '';
+  fileList = [];
   constructor(
     private supplierService: SupplierService,
     private qualityDealService: QualityDealService,
@@ -74,6 +75,22 @@ export class SolutionAddComponent implements OnInit {
           this.validateForm.get('materials').setValue(detail.materials);
           this.validateForm.get('dealStartTime').setValue(new Date(detail.dealStartTime));
           this.validateForm.get('dealEndTime').setValue(new Date(detail.dealEndTime));
+
+          if (detail.fileUrl) {
+            const fl = [];
+            detail.fileUrl.split('&*&*&').forEach(item => {
+              if (item) {
+                const bb = item.split('%#%$%');
+                fl.push({
+                  uid: bb[0],
+                  name: bb[1],
+                  url: bb[0],
+                  status: 'done',
+                });
+              }
+            });
+            this.fileList = fl;
+          }
         } else {
           this._message.create('error', response.msg, { nzDuration: 4000 });
         }
@@ -109,35 +126,42 @@ export class SolutionAddComponent implements OnInit {
 
   openFile() {
     if (this.upLoading) {
-      return this._message.create('info', '文件上传中，请稍后')
+      return this._message.create('info', '文件上传中，请稍后');
     }
-    document.getElementById('file').click()
+    document.getElementById('file').click();
   }
-  uploadFile(element) {
-    if (!element.target.files.length) {
-      return;
-    }
-    const file = element.target.files[0];
+  uploadFile = (file) => {
     const param = new FormData();
     param.append('file', file, file.name);
-
-    const a = param.get('file')['type'];
-    if (a != 'image/png' && a != 'image/jpeg' && a != 'image/gif' && a != 'image/bmp') {
-      element.target.value = ''
-      return this._message.create('info', '请上传图片', { nzDuration: 4000 });
-    }
-    // this.fileName = file.name
     this.upLoading = true;
-    this.fileService.uploadHead({
+    this.fileService.add({
       data: param
     }).subscribe(res => {
-      element.target.value = '';
       this.upLoading = false;
       if (res.errorCode === 0) {
-        // res.data.fileUrl
-        this.validateForm.get('face').setValue(res.data.fileUrl.replace(/\//, '%2f'));
+        this.fileList.push({
+          uid: new Date().getTime(),
+          name: file.name,
+          url: res.data.fileUrl.replace(/\//, '%2f'),
+          status: 'done',
+        });
+        this.fileList.filter(item => {
+          if (item.status === 'removed') {
+            return false;
+          } else {
+            return true;
+          }
+        });
+        this.fileList = [...this.fileList.filter(item => {
+          if (item.status === 'removed') {
+            return false;
+          } else {
+            return true;
+          }
+        })];
       }
     });
+    return false;
   }
 
   preview() {
@@ -167,6 +191,12 @@ export class SolutionAddComponent implements OnInit {
         dealStartTime: this.dealStartTime,
         content: this.validateForm.value.content,
         top: Number(this.validateForm.value.top),
+        fileUrl: this.fileList.reduce((pr, item) => {
+          if (item.status !== 'removed') {
+            pr += item.url + '%#%$%' + item.name + '&*&*&';
+          }
+          return pr;
+        }, ''),
         status: 0,
       };
       if (this.id) {

@@ -35,8 +35,8 @@
   <div class="form-box" style="width:1100px">
     <div class="btn-box" style=" text-align: right; margin: 10px auto;">
       <button nz-button [routerLink]="['/admin/quality/solution']" style="margin:0 10px" nzType="default">返回</button>
-      <button *ngIf="showEdit" style="margin:0 10px" (click)="submitForm()" nzType="primary" nz-button>保存</button>
-      <button *ngIf="showEdit" style="margin:0 10px" (click)="submitForm(1)" nzType="primary" nz-button>保存并发布</button>
+      <button style="margin:0 10px" (click)="submitForm()" nzType="primary" nz-button>保存</button>
+      <button style="margin:0 10px" (click)="submitForm(1)" nzType="primary" nz-button>保存并发布</button>
     </div>
     <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
       <!--  -->
@@ -61,7 +61,8 @@
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="materials" nzRequired>涉及物料</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
-          <input [readonly]="!showEdit" appTrim nz-input id="materials" formControlName="materials" placeholder="请输入涉及物料">
+          <input [readonly]="!showEdit" appTrim nz-input id="materials" formControlName="materials"
+            placeholder="请输入涉及物料">
           <nz-form-explain *ngIf="validateForm.get('materials').dirty && validateForm.get('materials').errors">
             <ng-container *ngIf="validateForm.get('materials').hasError('required')">
             </ng-container>
@@ -72,7 +73,8 @@
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="dealStartTime" nzRequired>开始处理时间</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
-          <nz-date-picker [nzDisabled]="!showEdit" formControlName="dealStartTime" (ngModelChange)="dateChange($event)"></nz-date-picker>
+          <nz-date-picker [nzDisabled]="!showEdit" formControlName="dealStartTime" (ngModelChange)="dateChange($event)">
+          </nz-date-picker>
           <br>
           <nz-form-explain *ngIf="validateForm.get('dealStartTime').dirty && validateForm.get('dealStartTime').errors">
             <ng-container *ngIf="validateForm.get('dealStartTime').hasError('required')">
@@ -84,7 +86,8 @@
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="dealEndTime" nzRequired>完成处理时间</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
-          <nz-date-picker [nzDisabled]="!showEdit" formControlName="dealEndTime" (ngModelChange)="dateChange2($event)"></nz-date-picker>
+          <nz-date-picker [nzDisabled]="!showEdit" formControlName="dealEndTime" (ngModelChange)="dateChange2($event)">
+          </nz-date-picker>
           <br>
           <nz-form-explain *ngIf="validateForm.get('dealEndTime').dirty && validateForm.get('dealEndTime').errors">
             <ng-container *ngIf="validateForm.get('dealEndTime').hasError('required')">
@@ -101,7 +104,8 @@
           </span>
         </nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
-          <textarea [readonly]="!showEdit" appTrim nz-input placeholder="事件描述" id="remark" formControlName="remark"></textarea>
+          <textarea [readonly]="!showEdit" appTrim nz-input placeholder="事件描述" id="remark"
+            formControlName="remark"></textarea>
           <nz-form-explain *ngIf="validateForm.get('remark').dirty && validateForm.get('remark').errors">
             请输入事件描述
           </nz-form-explain>
@@ -121,7 +125,21 @@
           </nz-radio-group>
         </nz-form-control>
       </nz-form-item>
-
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="fileUrl" nzRequired>
+          <span>
+            附件文件
+          </span>
+        </nz-form-label>
+        <nz-form-control formControlName="fileUrl" [nzSm]="14" [nzXs]="24">
+          <nz-upload  [nzBeforeUpload]="uploadFile"
+          [nzFileList]="fileList">
+            <a nz-button>
+              <i nz-icon type="upload"></i><span>上传文件</span>
+            </a>
+          </nz-upload>
+        </nz-form-control>
+      </nz-form-item>
     </form>
   </div>
 </div>

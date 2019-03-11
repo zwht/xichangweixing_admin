@@ -54,7 +54,7 @@
       <tr *ngFor="let data of rowSelectionTable.data">
         <td style="text-align: center" nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="refreshStatus()"></td>
         <td style="text-align: center">{{data.name}}</td>
-        <td style="text-align: center">{{data.region.split(',')[1]}}</td>
+        <td style="text-align: center">{{data.region.split(',')[1]||data.region}}</td>
         <td style="text-align: center">{{data.grade}}🌟</td>
         <td style="text-align: center">{{data.contactsUserName}}</td>
         <td style="text-align: center">{{data.phone}}</td>

@@ -61,7 +61,7 @@
             <td>{{data.readCount}}</td>
             <td>{{data.status==1?'已发布':'未发布'}}</td>
             <td>
-              <a class="op" [routerLink]="'./edit/'+data.id">查看</a>
+              <a class="op" [routerLink]="'./edit/'+data.id">编辑</a>
               <a class="op" *ngIf="data.status==1"  (click)="line(data)">下线</a>
               <a class="op" *ngIf="data.status==1" (click)="top(data)">置顶</a>
               <a class="op" *ngIf="data.status==0"  (click)="push(data)">发布</a>

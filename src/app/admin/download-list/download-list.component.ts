@@ -53,6 +53,25 @@ export class DownloadListComponent implements OnInit {
       }
     });
   }
+  batchDelete() {
+    const d = [];
+    for (const item of this.list) {
+      if (item.checked) {
+        d.push(item.id);
+      }
+    }
+    this.downloadService.del({
+      params: {
+        ids: d
+      }
+    }).subscribe(res => {
+      if (res.errorCode === 0) {
+        this.getList();
+      } else {
+        this._message.info(res.msg || res.data || '删除失败');
+      }
+    });
+  }
   getList() {
     const params = {
       title: '',

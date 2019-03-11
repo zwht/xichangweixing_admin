@@ -9,6 +9,8 @@ import { AddComponent } from './equipment/add/add.component';
 import { SupplierAddComponent } from './supplier/supplier-add/supplier-add.component';
 import { BigsAddComponent } from './bids/bigs-add/bigs-add.component';
 import { ImportequipmentComponent } from './equipment/importequipment/importequipment.component';
+import { ImportSupplierComponent } from './supplier/importequipment/importequipment.component';
+import { ImportBidsComponent } from './bids/importequipment/importequipment.component';
 
 export const routes: Routes = [
     {
@@ -56,6 +58,14 @@ export const routes: Routes = [
         },
     },
     {
+        path: 'supplier/import',
+        component: ImportSupplierComponent,
+        data: {
+            name: '导入供应商',
+            roles: [1001],
+        },
+    },
+    {
         path: 'bids',
         component: BidsComponent,
         data: {
@@ -73,6 +83,14 @@ export const routes: Routes = [
             roles: [1001],
         },
     },
+    {
+        path: 'bids/import',
+        component: ImportBidsComponent,
+        data: {
+            name: '导入招标机构',
+            roles: [1001],
+        },
+    },
 ];
 
 @NgModule({
@@ -80,7 +98,7 @@ export const routes: Routes = [
         ShareModule,
         RouterModule.forChild(routes)
     ],
-    declarations: [EquipmentComponent, SupplierComponent, SupplierAddComponent,
+    declarations: [ImportBidsComponent,ImportSupplierComponent, EquipmentComponent, SupplierComponent, SupplierAddComponent,
         ImportequipmentComponent, AddComponent, BidsComponent, BigsAddComponent]
 })
 export class InfomationModule { }

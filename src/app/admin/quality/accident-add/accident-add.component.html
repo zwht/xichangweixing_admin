@@ -124,6 +124,21 @@
           </nz-radio-group>
         </nz-form-control>
       </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="fileUrl" nzRequired>
+          <span>
+            附件文件
+          </span>
+        </nz-form-label>
+        <nz-form-control formControlName="fileUrl" [nzSm]="14" [nzXs]="24">
+          <nz-upload  [nzBeforeUpload]="uploadFile"
+          [nzFileList]="fileList">
+            <a nz-button>
+              <i nz-icon type="upload"></i><span>上传文件</span>
+            </a>
+          </nz-upload>
+        </nz-form-control>
+      </nz-form-item>
     </form>
   </div>
 </div>

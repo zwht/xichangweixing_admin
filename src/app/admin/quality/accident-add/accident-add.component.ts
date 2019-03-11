@@ -26,9 +26,9 @@ export class AccidentAddComponent implements OnInit {
   preivewShow = false;
   preivewHtml;
   readOnlyText;
-
+  time = '';
   categorysFoundId = [];
-
+  fileList = [];
   supplierList = [];
 
   constructor(
@@ -57,8 +57,8 @@ export class AccidentAddComponent implements OnInit {
       }).subscribe(response => {
         this.loading = false;
         if (response.errorCode === 0) {
-          let detail = response.data;
-          if (detail.status == 1) {
+          const detail = response.data;
+          if (detail.status === 1) {
             this.showEdit = false;
             this.readOnlyText = this.sanitizer.bypassSecurityTrustHtml(detail.content);
             this.title = '查看事件';
@@ -70,6 +70,22 @@ export class AccidentAddComponent implements OnInit {
           this.validateForm.get('materials').setValue(detail.materials);
           this.validateForm.get('occurrenceTime').setValue(detail.occurrenceTime);
           this.validateForm.get('top').setValue(detail.flag === 'true' ? '1' : '0');
+
+          if (detail.fileUrl) {
+            const fl = [];
+            detail.fileUrl.split('&*&*&').forEach(item => {
+              if (item) {
+                const bb = item.split('%#%$%');
+                fl.push({
+                  uid: bb[0],
+                  name: bb[1],
+                  url: bb[0],
+                  status: 'done',
+                });
+              }
+            });
+            this.fileList = fl;
+          }
         } else {
           this._message.create('error', response.msg, { nzDuration: 4000 });
         }
@@ -93,10 +109,10 @@ export class AccidentAddComponent implements OnInit {
         pageSize: 1000,
       }
     }).subscribe(res => {
-      this.supplierList = res.data.pageData
-    })
+      this.supplierList = res.data.pageData;
+    });
   }
-  time = '';
+
   dateChange(e: Date) {
     this.time = e.getFullYear() + '-' + ('00' + (e.getMonth() + 1)).substr(-2) + '-' + ('00' + e.getDate()).substr(-2);
   }
@@ -111,40 +127,42 @@ export class AccidentAddComponent implements OnInit {
 
   openFile() {
     if (this.upLoading) {
-      return this._message.create('info', '文件上传中，请稍后')
+      return this._message.create('info', '文件上传中，请稍后');
     }
-    document.getElementById('file').click()
+    document.getElementById('file').click();
   }
-  uploadFile(element) {
-    if (!element.target.files.length) {
-      return
-    }
-    let file = element.target.files[0];
-    let param = new FormData();
-    console.log(param)
+  uploadFile = (file) => {
+    const param = new FormData();
     param.append('file', file, file.name);
-    //param.append('chunk','0'); 
-    // if(param.get('file')['size'] > 2 * 1024 * 1024){
-    //   return  this._message.create('info', '回复文件不能大于2M', { nzDuration: 4000 });
-    // }
-    let a = param.get('file')['type']
-    if (a != 'image/png' && a != 'image/jpeg' && a != 'image/gif' && a != 'image/bmp') {
-      element.target.value = ''
-      return this._message.create('info', '请上传图片', { nzDuration: 4000 });
-    }
-    // this.fileName = file.name
-    this.upLoading = true
-    this.fileService.uploadHead({
+    this.upLoading = true;
+    this.fileService.add({
       data: param
     }).subscribe(res => {
-      console.log(res)
-      element.target.value = '';
       this.upLoading = false;
-      if (res.errorCode == 0) {
-        // res.data.fileUrl
-        this.validateForm.get('face').setValue(res.data.fileUrl.replace(/\//, '%2f'));
+      if (res.errorCode === 0) {
+        this.fileList.push({
+          uid: new Date().getTime(),
+          name: file.name,
+          url: res.data.fileUrl.replace(/\//, '%2f'),
+          status: 'done',
+        });
+        this.fileList.filter(item => {
+          if (item.status === 'removed') {
+            return false;
+          } else {
+            return true;
+          }
+        });
+        this.fileList = [...this.fileList.filter(item => {
+          if (item.status === 'removed') {
+            return false;
+          } else {
+            return true;
+          }
+        })];
       }
-    })
+    });
+    return false;
   }
 
   preview() {
@@ -166,7 +184,7 @@ export class AccidentAddComponent implements OnInit {
 
     if (this.validateForm.valid) {
       this.loading = true;
-      let data = {
+      const data = {
         name: this.validateForm.value.name,
         supplierId: this.validateForm.value.supplierId,
         remark: this.validateForm.value.remark,
@@ -175,13 +193,19 @@ export class AccidentAddComponent implements OnInit {
         occurrenceTime: this.time,
         content: this.validateForm.value.content,
         top: Number(this.validateForm.value.top),
+        fileUrl: this.fileList.reduce((pr, item) => {
+          if (item.status !== 'removed') {
+            pr += item.url + '%#%$%' + item.name + '&*&*&';
+          }
+          return pr;
+        }, ''),
         status: 0,
-      }
+      };
       if (this.id) {
         data['id'] = this.id;
       }
       if (k) {
-        data['status'] = 1
+        data['status'] = 1;
       }
 
       this.qualityEventService.addAndUpdate({

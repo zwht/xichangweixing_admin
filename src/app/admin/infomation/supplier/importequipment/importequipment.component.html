@@ -1,0 +1,36 @@
+<div class="title">导入供应商</div>
+<div class="fuckBB">
+  <div style="overflow:auto">
+    <div style="margin-bottom: 16px; float: right;">
+      <input *ngIf="fuckK" (change)="fileChange($event)" [(ngModel)]="excle" type="file" id="upload_file1"
+        style="display: none" />
+      <button style="margin:0 10px" nz-button (click)="chooseType()" [nzLoading]="isLoadingOne">选择文件</button>
+      <button style="margin:0 10px" nz-button (click)="down()">下载模板</button>
+      <button style="margin:0 10px" nz-button [disabled]='OJBK' (click)="shangchuan()">确定导入</button>
+    </div>
+  </div>
+  <nz-alert *ngFor="let i of dataMessage" nzType="error" [nzMessage]="i"></nz-alert>
+  <nz-table #basicTable [nzData]="dataSet" nzPageSize="10">
+    <thead>
+      <tr>
+        <th *ngFor="let item of dataHead">{{item}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{data.name}}</td>
+        <td>{{data.typeName}}</td>
+        <td>{{data.region}}</td>
+        <td>{{data.address}}</td>
+        <td>{{data.socialCreditCode}}</td>
+        <td>{{data.registDate}}</td>
+        <td>{{data.legalPerson}}</td>
+        <td>{{data.legalPersonName}}</td>
+        <td>{{data.contactsUserName}}</td>
+        <td>{{data.contactsUseIdnum}}</td>
+        <td>{{data.phone}}</td>
+        <td>{{data.remark}}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
