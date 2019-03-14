@@ -8,11 +8,23 @@
   <div class="waikuang">
     <div class="user-add">
       <div nz-row>
-        <span nz-col nzSpan="4">输入新密码:</span>
+        <span nz-col nzSpan="4">原始密码:</span>
         <span nz-col nzSpan="20">
-          <input nz-input type="text" [(ngModel)]="password">
+          <input nz-input type="password" [(ngModel)]="oldPassword">
         </span>
       </div>
+      <div nz-row>
+        <span nz-col nzSpan="4">新密码:</span>
+        <span nz-col nzSpan="20">
+          <input nz-input type="password" [(ngModel)]="password">
+        </span>
+      </div>
+      <div nz-row>
+          <span nz-col nzSpan="4">确认新密码:</span>
+          <span nz-col nzSpan="20">
+            <input nz-input type="password" [(ngModel)]="password1">
+          </span>
+        </div>
       <div class="div11">
         <button (click)="save()" nz-button nzType="primary">保存</button>
       </div>

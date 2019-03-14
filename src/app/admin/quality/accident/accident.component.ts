@@ -15,7 +15,7 @@ export class AccidentComponent implements OnInit {
     private qualityEventService: QualityEventService,
     private _message: NzMessageService,
   ) { }
-  
+
   dateRange = [];
   list = [];
   supplierList = [];
@@ -25,88 +25,102 @@ export class AccidentComponent implements OnInit {
   status = null;
   eventLevel = null;
   supplierId = null;
-  
+
   pageNum = 1
   totalCount = 0;
   pageSize = 10;
-  
+
   ngOnInit() {
     this.getList()
     this.getIndustry();
   }
-  getIndustry(){
+  getIndustry() {
     this.supplierService.getAllByQuery({
-      params:{
-        pageNumber:1,
-        pageSize:1000,
+      params: {
+        pageNumber: 1,
+        pageSize: 1000,
       }
-    }).subscribe(res=>{
+    }).subscribe(res => {
       this.supplierList = res.data.pageData
     })
   }
-  onChange(e){
-    if(e){
-      this.endTime = e.getFullYear()+"-"+("00"+( e.getMonth()+1)).substr(-2)+"-"+("00"+ e.getDate()).substr(-2);
-    }else{
+  onChange(e) {
+    if (e) {
+      this.endTime = e.getFullYear() + "-" + ("00" + (e.getMonth() + 1)).substr(-2) + "-" + ("00" + e.getDate()).substr(-2);
+    } else {
       this.endTime = null;
     }
   }
 
   allCk = false;
-  allChecked(v){
-    for(let item of this.list){
+  allChecked(v) {
+    for (let item of this.list) {
       item.checked = v;
     }
   }
-  batchDelete(){
+  batchDelete() {
     let d = [];
-    for(let item of this.list){
-      if(item.checked){
+    for (let item of this.list) {
+      if (item.checked) {
         d.push(item.id);
       }
     }
-    
+
     this.qualityEventService.delete({
-      params:{
+      params: {
         ids: d
       }
     }).subscribe(res => {
       if (res.errorCode === 0) {
         this.getList()
-      }else{
+      } else {
         this._message.info(res.msg || res.data || '删除失败')
       }
     })
   }
+  setHe(item, key) {
+    this.qualityEventService.hdSet({
+      params: {
+        id: item.id,
+        key
+      }
+    }).subscribe(res => {
+      if (res.errorCode === 0) {
+        this.getList();
+      } else {
+        this._message.info(res.msg || res.data || '删除失败');
+      }
+    });
+  }
 
-  getList(){
+  getList() {
     let params = {
-      name:"",
-      pageNumber:this.pageNum,
-      pageSize:this.pageSize,
+      name: "",
+      pageNumber: this.pageNum,
+      pageSize: this.pageSize,
     };
-    
-    if(this.status||this.status === 0){
+
+    if (this.status || this.status === 0) {
       params["status"] = this.status;
     }
-    if(this.eventLevel){
+    if (this.eventLevel) {
       params["eventLevel"] = this.eventLevel;
     }
-    if(this.supplierId){
+    if (this.supplierId) {
       params["supplierId"] = this.supplierId;
     }
-    if(this.endTime){
+    if (this.endTime) {
       params["occurrenceTime"] = this.endTime;
     }
-    if(this.name){
+    if (this.name) {
       params.name = this.name;
     }
     this.qualityEventService.getAllByQuery({
-        params
-    }).subscribe(response =>{
+      params
+    }).subscribe(response => {
       if (response.errorCode === 0) {
         this.list = response.data.pageData;
-        for(let item of this.list){
+        for (let item of this.list) {
           item.checked = false;
         }
         this.allCk = false;
@@ -114,57 +128,57 @@ export class AccidentComponent implements OnInit {
       }
     })
   }
-  delete(d){
+  delete(d) {
     this.qualityEventService.delete({
-      params:{
+      params: {
         ids: d.id
       }
     }).subscribe(res => {
       if (res.errorCode === 0) {
         this.getList()
-      }else{
+      } else {
         this._message.info(res.msg || res.data || '删除失败')
       }
     })
   }
   // 下线
-  line(d){
+  line(d) {
     this.qualityEventService.line({
-      params:{
+      params: {
         id: d.id
       }
     }).subscribe(res => {
       if (res.errorCode === 0) {
         this.getList()
-      }else{
+      } else {
         this._message.info(res.msg || res.data || '操作失败')
       }
     })
   }
   // 发布
-  push(d){
+  push(d) {
     this.qualityEventService.push({
-      params:{
+      params: {
         id: d.id
       }
     }).subscribe(res => {
       if (res.errorCode === 0) {
         this.getList()
-      }else{
+      } else {
         this._message.info(res.msg || res.data || '发布失败')
       }
     })
   }
   // 置顶
-  top(d){
+  top(d) {
     this.qualityEventService.top({
-      params:{
+      params: {
         id: d.id
       }
     }).subscribe(res => {
       if (res.errorCode === 0) {
         this.getList()
-      }else{
+      } else {
         this._message.info(res.msg || res.data || '发布失败')
       }
     })

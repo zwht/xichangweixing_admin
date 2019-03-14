@@ -4,7 +4,7 @@
       <div>
         <div class="chaxun">
           <span>涉及物料</span>
-          <input nz-input [(ngModel)]="title" placeholder="查询标题" >
+          <input nz-input [(ngModel)]="title" placeholder="查询标题">
         </div>
         <div class="chaxun">
           <span>供应商</span>
@@ -14,7 +14,8 @@
         </div>
         <div class="chaxun">
           <span>更新时间</span>
-          <nz-date-picker  [nzFormat]="'yyyy/MM/dd'" [(ngModel)]="dateRange" (ngModelChange)="onChange($event)" ></nz-date-picker>
+          <nz-date-picker [nzFormat]="'yyyy/MM/dd'" [(ngModel)]="dateRange" (ngModelChange)="onChange($event)">
+          </nz-date-picker>
         </div>
         <div class="chaxun">
           <span>状态</span>
@@ -33,43 +34,50 @@
         <span>要闻列表</span>
       </div>
       <div class="btn-box">
-        <button nz-button nzType="danger" (click)="batchDelete()" >批量删除</button>
+        <button nz-button nzType="danger" (click)="batchDelete()">批量删除</button>
         <button nz-button nzType="tianjia" routerLink="./add">新增质量问题</button>
       </div>
     </div>
     <div class="table-box">
-      <nz-table #basicTable 
-        [nzData]="list" [nzFrontPagination]="false"
-        [(nzPageIndex)]="pageNum"
-        [nzTotal]="totalCount"
-        [(nzPageSize)]="pageSize"
-        (nzPageIndexChange)="getList()">
+      <nz-table #basicTable [nzData]="list" [nzFrontPagination]="false" [(nzPageIndex)]="pageNum" [nzTotal]="totalCount"
+        [(nzPageSize)]="pageSize" (nzPageIndexChange)="getList()">
         <!-- <nz-table #basicTable [nzData]="list" [nzShowPagination]="false"> -->
         <thead>
           <tr>
-            <th nzShowCheckbox [(nzChecked)]="allCk"  (nzCheckedChange)="allChecked($event)"></th>
+            <th nzShowCheckbox [(nzChecked)]="allCk" (nzCheckedChange)="allChecked($event)"></th>
             <th>序号</th>
             <th>涉及物料</th>
             <th>更新时间</th>
             <th>操作人</th>
-            <th>状态</th>
+            <th>处理状态</th>
+            <th>发布状态</th>
             <th>操作</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let data of list let i= index">
-            <td nzShowCheckbox [(nzChecked)]="data.checked" ></td>
+            <td nzShowCheckbox [(nzChecked)]="data.checked"></td>
             <td>{{i}}</td>
             <td>{{data.materials}}</td>
             <td>{{data.updateTime}}</td>
             <td>{{data.updateUser}}</td>
+            <td>
+              <nz-tag [nzColor]="'magenta'" *ngIf="data.handle==1||!data.handle">未处理</nz-tag>
+              <nz-tag [nzColor]="'lime'" *ngIf="data.handle==2">处理中</nz-tag>
+              <nz-tag [nzColor]="'green'" *ngIf="data.handle==3">已处理</nz-tag>
+            </td>
             <td>{{data.status==1?'已发布':'未发布'}}</td>
             <td>
               <a class="op" [routerLink]="'./edit/'+data.id">编辑</a>
-              <a class="op" *ngIf="data.status==1"  (click)="line(data)">下线</a>
+              <a class="op" *ngIf="data.status==1" (click)="line(data)">下线</a>
               <a class="op" *ngIf="data.status==1" (click)="top(data)">置顶</a>
-              <a class="op" *ngIf="data.status==0"  (click)="push(data)">发布</a>
-              <a class="op" *ngIf="data.status==0" (click)="delete(data)">删除</a>
+              <a class="op" *ngIf="data.status==0" (click)="push(data)">发布</a>
+              <a class="op" *ngIf="data.status==0" nz-popconfirm nzTitle="确定删除吗?" (nzOnConfirm)="delete(data)">删除</a>
+
+              <a class="op" *ngIf="data.handle==1||!data.handle" nz-popconfirm nzTitle="确定处理中?"
+                (nzOnConfirm)="setHe(data,2)">处理中</a>
+              <a class="op" *ngIf="data.handle==2" nz-popconfirm nzTitle="确定完成处理吗?"
+                (nzOnConfirm)="setHe(data,3)">完成处理</a>
             </td>
           </tr>
         </tbody>

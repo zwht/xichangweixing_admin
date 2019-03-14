@@ -72,13 +72,26 @@ export class SolutionComponent implements OnInit {
       }
     }).subscribe(res => {
       if (res.errorCode === 0) {
-        this.getList()
+        this.getList();
       } else {
-        this._message.info(res.msg || res.data || '删除失败')
+        this._message.info(res.msg || res.data || '删除失败');
       }
-    })
+    });
   }
-
+  setHe(item, key) {
+    this.qualityDealService.hdSet({
+      params: {
+        id: item.id,
+        key
+      }
+    }).subscribe(res => {
+      if (res.errorCode === 0) {
+        this.getList();
+      } else {
+        this._message.info(res.msg || res.data || '删除失败');
+      }
+    });
+  }
   getList() {
     let params = {
       materials: "",

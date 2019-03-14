@@ -31,8 +31,7 @@ export class ComplainService {
     method: 'post',
     params: {
       params1: 'handl'
-    },
-    
+    }
   })
   handl(data: HttpData): Observable<any> {
     return data.observable;

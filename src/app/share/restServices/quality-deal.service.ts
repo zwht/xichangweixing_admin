@@ -21,18 +21,18 @@ export class QualityDealService {
     params: {
       params1: 'saveOrUpdate'
     },
-    
+
   })
   addAndUpdate(data: HttpData): Observable<any> {
     return data.observable;
   }
-// getAllByQuery
+  // getAllByQuery
   @HttpConfig({
     method: 'get',
     params: {
       params1: 'getAllByQuery'
     },
-    
+
   })
   getAllByQuery(data: HttpData): Observable<any> {
     return data.observable;
@@ -44,31 +44,31 @@ export class QualityDealService {
     params: {
       params1: 'getAll'
     },
-    
+
   })
   getAll(data: HttpData): Observable<any> {
     return data.observable;
   }
-  
+
   // getById
   @HttpConfig({
     method: 'get',
     params: {
       params1: 'getById'
     },
-    
+
   })
   getById(data: HttpData): Observable<any> {
     return data.observable;
   }
-  
+
   // line
   @HttpConfig({
     method: 'post',
     params: {
       params1: 'line'
     },
-    
+
   })
   line(data: HttpData): Observable<any> {
     return data.observable;
@@ -80,19 +80,29 @@ export class QualityDealService {
     params: {
       params1: 'delete'
     },
-    
+
   })
   delete(data: HttpData): Observable<any> {
     return data.observable;
   }
-  
+  // top
+  @HttpConfig({
+    method: 'post',
+    params: {
+      params1: 'hdSet'
+    },
+
+  })
+  hdSet(data: HttpData): Observable<any> {
+    return data.observable;
+  }
   // top
   @HttpConfig({
     method: 'post',
     params: {
       params1: 'top'
     },
-    
+
   })
   top(data: HttpData): Observable<any> {
     return data.observable;
@@ -104,7 +114,7 @@ export class QualityDealService {
     params: {
       params1: 'push'
     },
-    
+
   })
   push(data: HttpData): Observable<any> {
     return data.observable;

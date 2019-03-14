@@ -90,6 +90,18 @@ export class QualityEventService {
   @HttpConfig({
     method: 'post',
     params: {
+      params1: 'hdSet'
+    },
+    
+  })
+  hdSet(data: HttpData): Observable<any> {
+    return data.observable;
+  }
+
+  // top
+  @HttpConfig({
+    method: 'post',
+    params: {
       params1: 'top'
     },
     

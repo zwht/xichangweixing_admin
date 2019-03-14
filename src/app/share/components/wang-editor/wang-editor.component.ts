@@ -25,6 +25,7 @@ export class WangEditorComponent implements ControlValueAccessor {
     this.editor = new E(this.box.nativeElement);
     // 自定义 onchange 触发的延迟时间，默认为 200 ms
     this.editor.customConfig.onchangeTimeout = 1000; // 单位 ms
+    this.editor.customConfig.uploadImgShowBase64 = true;
     this.editor.customConfig.onchange = function (html) {
       thart.onModelChange(html);
     };

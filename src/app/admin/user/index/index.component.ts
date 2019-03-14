@@ -12,7 +12,7 @@ export class IndexComponent implements OnInit {
 
   loginName = null;
   name = '';
-  phone = null;
+  phone = '';
   zhungtai = null;
   pageSize = 10;
   pageNum = 1;

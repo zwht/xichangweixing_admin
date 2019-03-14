@@ -11,6 +11,8 @@ import { NzMessageService } from 'ng-zorro-antd';
 })
 export class SelfChangePwdComponent implements OnInit {
   password = null;
+  oldPassword = null;
+  password1 = null;
   constructor(
     private userService: UserService,
     private sessionService: SessionService,
@@ -20,9 +22,16 @@ export class SelfChangePwdComponent implements OnInit {
   ngOnInit() {
   }
   save() {
+    if (!this.password || !this.password1 || !this.oldPassword) {
+      this.msg.error('请输入完整信息');
+    }
+    if (this.password !== this.password1) {
+      this.msg.error('两次新密码不相同');
+    }
     this.userService.updatePassword({
       params: {
         password: this.password,
+        lodPassword: this.oldPassword,
         userId: this.sessionService.getItem('id')
       }
     })
@@ -37,7 +46,7 @@ export class SelfChangePwdComponent implements OnInit {
           this.sessionService.removeItem('roles');
           this.router.navigate(['/']);
         } else {
-          this.msg.error('修改失败');
+          this.msg.error(response.msg);
         }
       });
   }
